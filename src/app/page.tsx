@@ -1,8 +1,25 @@
-export default function HomePage() {
+"use client";
+
+import useStore from "@/store/store";
+import { useEffect } from "react";
+
+export default function Homepage() {
+  const fetchProducts = useStore((state) => state.fetchProducts);
+  const products = useStore((state) => state.products);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts()]);
+
   return (
-    <div className="max-w-5xl mx-auto bg-amber-200 w-full text-7xl">
-      <h1 className="text-3xl font-bold mb-4">Welcome to My Store</h1>
-      <p className="text-gray-700">Check out our amazing products below.</p>
+    <div>
+      {products.map((product) => {
+        return (
+          <div>
+            <div>{product.name}</div>
+          </div>
+        );
+      })}
     </div>
   );
 }
