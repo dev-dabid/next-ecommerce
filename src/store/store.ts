@@ -1,30 +1,11 @@
-import { create, StateCreator } from "zustand";
-import type { Product, CartProduct } from "@/types/types";
+import { create } from "zustand";
+import { createProductsSlice } from "./productsSlice";
+import { createCartSlice } from "./cartSlice";
+import type { Store } from "@/types/types";
 
-interface Store {
-  products: Product[];
-  isFetch: boolean;
-  cart: CartProduct[];
-
-  fetchProducts: () => Promise<void>;
-}
-
-const useStore = create<Store>((set, get) => ({
-  products: [],
-  isFetch: false,
-
-  fetchProducts: async () => {
-    try {
-      if (get().isFetch) return;
-      const response = await fetch("../../public/backend/products.json");
-      const data = (await response.json()) as Product[];
-      set({ products: data });
-    } catch (error) {
-      console.log(error);
-    }
-  },
-
-  cart: [],
+const useStore = create<Store>((...a) => ({
+  ...createProductsSlice(...a),
+  ...createCartSlice(...a),
 }));
 
 export default useStore;

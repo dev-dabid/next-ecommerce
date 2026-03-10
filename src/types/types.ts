@@ -14,3 +14,15 @@ export interface CartProduct extends Product {
   quantity: number;
   isChecked: boolean;
 }
+
+export interface ProductsState {
+  products: Product[];
+  isFetched: boolean;
+  fetchProducts: () => Promise<void>;
+}
+
+export interface CartState {
+  cart: CartProduct[];
+}
+
+export type Store = ProductsState & CartState;
