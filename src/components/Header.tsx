@@ -24,7 +24,7 @@ const Header = () => {
   ];
 
   return (
-    <header className=" bg-gray-50 p-5 border-b border-b-sky-100">
+    <header className=" bg-gray-50 p-5 border-b border-b-sky-100 sticky top-0">
       <div className="flex justify-between max-w-7xl mx-auto ">
         <div className="flex gap-5 items-center">
           <div className="flex gap-2">
