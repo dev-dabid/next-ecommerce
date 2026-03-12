@@ -24,11 +24,11 @@ const Header = () => {
   ];
 
   return (
-    <header className=" bg-white p-5 border-b-2 border-b-cyan-50">
+    <header className=" bg-gray-50 p-5 border-b border-b-sky-100">
       <div className="flex justify-between max-w-7xl mx-auto ">
         <div className="flex gap-5 items-center">
           <div className="flex gap-2">
-            <Gem className="text-cyan-500" size={32} />
+            <Gem className="text-sky-500" size={32} />
             <p className="font-semibold text-xl">Lumina</p>
           </div>
           <nav className="hidden lg:flex gap-5">
@@ -37,7 +37,7 @@ const Header = () => {
                 <a
                   key={index}
                   href={item.href}
-                  className="relative cursor-pointer active:text-cyan-700 hover:text-cyan-500 text-md w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-cyan-500 after:w-full after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
+                  className="relative cursor-pointer active:text-sky-700 hover:text-sky-500 text-md w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-sky-500 after:w-full after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
                 >
                   {item.label}
                 </a>
