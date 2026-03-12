@@ -13,6 +13,7 @@ export default function Homepage() {
 
   return (
     <div>
+      <p>fsdfsdfsdasdsdf</p>
       {products.map((product) => {
         return (
           <div>
