@@ -46,16 +46,14 @@ const CategorySection = ({ products }: CategorySectionProps) => {
             Shop by Category
           </p>
         </div>
-        <div className="grid grid-cols-4 mt-10  gap-5">
-          {homepageCategories.map((category, index) => {
-            return (
-              <CategoryCard
-                key={index}
-                name={category}
-                image={getCategoryImage(category)}
-              />
-            );
-          })}
+        <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-5 lg:overflow-visible mt-10">
+          {homepageCategories.map((category, index) => (
+            <CategoryCard
+              key={index}
+              name={category}
+              image={getCategoryImage(category)}
+            />
+          ))}
         </div>
       </div>
     </div>
