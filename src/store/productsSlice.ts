@@ -7,10 +7,10 @@ export const createProductsSlice: StateCreator<ProductsState> = (set, get) => ({
 
   fetchProducts: async () => {
     try {
-      if (!get().isFetched) return;
-      const response = await fetch("../../public/backend/products.json");
+      if (get().isFetched) return;
+      const response = await fetch("/backend/products.json");
       const data = await response.json();
-      set({ products: data });
+      set({ products: data, isFetched: true });
     } catch (error) {
       console.log(error);
     }

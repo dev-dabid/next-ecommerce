@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Woman from "@/images/products/woman.png";
+import Woman from "@/images/woman.png";
 
 const Hero = () => {
   return (
