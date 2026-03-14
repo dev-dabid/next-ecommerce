@@ -30,7 +30,7 @@ const CategorySection = ({ products }: CategorySectionProps) => {
         <div>
           <p
             className="
-           text-3xl font-bold relative 
+           text-4xl font-bold relative 
            after:content-[''] 
            after:absolute 
            after:-bottom-2 
