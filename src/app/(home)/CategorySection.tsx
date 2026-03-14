@@ -1,6 +1,7 @@
 import CategoryCard from "./CategoryCard";
 import { Product } from "@/types/types";
 import DefaultImage from "@/images/backpack.jpg";
+import { MoveRight } from "lucide-react";
 
 type CategorySectionProps = {
   products: Product[];
@@ -27,10 +28,10 @@ const CategorySection = ({ products }: CategorySectionProps) => {
   return (
     <div className="mt-30 h-full">
       <div className="flex flex-col">
-        <div>
+        <div className="flex justify-between items-center">
           <p
             className="
-           text-4xl font-bold relative 
+           text-[clamp(1.1rem,5vw,2.5rem)] font-bold relative 
            after:content-[''] 
            after:absolute 
            after:-bottom-2 
@@ -45,6 +46,13 @@ const CategorySection = ({ products }: CategorySectionProps) => {
           >
             Shop by Category
           </p>
+          <a
+            className="text-[clamp(0.875rem,2vw,1.2rem)] flex items-center gap-1 text-sky-400"
+            href=""
+          >
+            View All
+            <MoveRight />
+          </a>
         </div>
         <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-5 lg:overflow-visible mt-10">
           {homepageCategories.map((category, index) => (
