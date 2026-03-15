@@ -26,7 +26,7 @@ const CategorySection = ({ products }: CategorySectionProps) => {
   };
 
   return (
-    <div className="mt-30 h-full">
+    <div className="mt-30 h-full pb-20">
       <div className="flex flex-col">
         <div className="flex justify-between items-center">
           <p
