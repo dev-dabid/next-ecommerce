@@ -1,4 +1,4 @@
-import TrendingCard from "./TrendCard";
+import TrendCard from "./TrendCard";
 
 const TrendSection = () => {
   return (
@@ -15,10 +15,10 @@ const TrendSection = () => {
         </div>
 
         <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-          <TrendingCard />
-          <TrendingCard />
-          <TrendingCard />
-          <TrendingCard />
+          <TrendCard />
+          <TrendCard />
+          <TrendCard />
+          <TrendCard />
         </div>
       </div>
     </div>
