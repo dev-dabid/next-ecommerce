@@ -19,7 +19,7 @@ export default function Homepage() {
   console.log(products);
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-300 mx-auto">
       <Hero />
       <CategorySection products={products || []} />
     </div>

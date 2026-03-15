@@ -7,7 +7,7 @@ type CardProps = {
 
 const CategoryCard = ({ name, image }: CardProps) => {
   return (
-    <div className="relative rounded-2xl bg-white p-5 max-h-75 shadow-lg flex-shrink-0 scroll-snap-start">
+    <div className="relative rounded-2xl bg-white p-5 max-h-70 shadow-lg shrink-0 scroll-snap-start">
       <div className="absolute inset-0 bg-linear-to-b hover:from-white/15 active:from-white/30 from-white/5 to-gray-950/50 rounded-2xl z-10"></div>
 
       <div className="relative w-full h-full rounded-2xl overflow-hidden">

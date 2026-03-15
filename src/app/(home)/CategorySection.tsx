@@ -31,7 +31,7 @@ const CategorySection = ({ products }: CategorySectionProps) => {
         <div className="flex justify-between items-center">
           <p
             className="
-           text-[clamp(1.1rem,5vw,2.5rem)] font-bold relative 
+           text-[clamp(1.1rem,5vw,2rem)] font-bold relative 
            after:content-[''] 
            after:absolute 
            after:-bottom-2 
