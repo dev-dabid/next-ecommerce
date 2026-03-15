@@ -7,7 +7,7 @@ type CardProps = {
 
 const CategoryCard = ({ name, image }: CardProps) => {
   return (
-    <div className="relative rounded-2xl bg-white p-5 max-h-70 shadow-lg shrink-0 scroll-snap-start">
+    <div className="relative rounded-2xl bg-white p-5 max-h-50 max-w-50 lg:max-w-full lg:max-h-70 shadow-lg shrink-0 scroll-snap-start">
       <div className="absolute inset-0 bg-linear-to-b hover:from-white/15 active:from-white/30 from-white/5 to-gray-950/50 rounded-2xl z-10"></div>
 
       <div className="relative w-full h-full rounded-2xl overflow-hidden">
@@ -20,7 +20,7 @@ const CategoryCard = ({ name, image }: CardProps) => {
         />
       </div>
 
-      <p className="absolute bottom-15 left-8 z-20 font-semibold text-white text-2xl">
+      <p className="absolute bottom-10 left-8 z-20 font-semibold text-white text-[clamp(1.125rem,2vw,1.5rem)]">
         {name[0].toUpperCase() + name.slice(1)}
       </p>
     </div>

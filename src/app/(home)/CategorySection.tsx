@@ -1,7 +1,6 @@
 import CategoryCard from "./CategoryCard";
 import { Product } from "@/types/types";
 import DefaultImage from "@/images/backpack.jpg";
-import { MoveRight } from "lucide-react";
 
 type CategorySectionProps = {
   products: Product[];
@@ -51,10 +50,9 @@ const CategorySection = ({ products }: CategorySectionProps) => {
             href=""
           >
             View All
-            <MoveRight />
           </a>
         </div>
-        <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-5 lg:overflow-visible mt-10">
+        <div className="flex gap-2 overflow-x-auto snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-5 lg:overflow-visible mt-10">
           {homepageCategories.map((category, index) => (
             <CategoryCard
               key={index}
