@@ -25,7 +25,7 @@ const Header = () => {
 
   return (
     <header className=" bg-gray-50 p-5 border-b border-b-sky-100 sticky top-0 z-50">
-      <div className="flex justify-between max-w-7xl mx-auto ">
+      <div className="flex justify-between max-w-300 mx-auto ">
         <div className="flex gap-5 items-center">
           <div className="flex gap-2">
             <Gem className="text-sky-500" size={32} />

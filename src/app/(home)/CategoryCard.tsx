@@ -21,7 +21,7 @@ const CategoryCard = ({ name, image }: CardProps) => {
       </div>
 
       <p className="absolute bottom-15 left-8 z-20 font-semibold text-white text-2xl">
-        {name}
+        {name[0].toUpperCase() + name.slice(1)}
       </p>
     </div>
   );
