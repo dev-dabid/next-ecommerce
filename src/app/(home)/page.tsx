@@ -4,7 +4,7 @@ import useProducts from "@/hooks/useProducts";
 import { useState, useEffect } from "react";
 import Hero from "./Hero";
 import CategorySection from "./CategorySection";
-import TrendingSection from "./TrendingSection";
+import TrendSection from "./TrendSection";
 
 export default function Homepage() {
   const { products, isFetched, fetchProducts } = useProducts();
@@ -23,7 +23,7 @@ export default function Homepage() {
     <div className="">
       <Hero />
       <CategorySection products={products || []} />
-      <TrendingSection />
+      <TrendSection />
     </div>
   );
 }
