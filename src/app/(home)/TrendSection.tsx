@@ -1,10 +1,19 @@
+import { Product } from "@/types/types";
 import TrendCard from "./TrendCard";
 
-const TrendSection = () => {
+type TrendSectionProps = {
+  products: Product[];
+};
+
+const TrendSection = ({ products }: TrendSectionProps) => {
+  const trendProducts = products
+    .filter((product) => product.rating.count > 100)
+    .slice(0, 4);
+
   return (
-    <div className="bg-white py-20">
+    <div className="bg-white py-[clamp(1rem,5vw,5rem)]">
       <div className="max-w-300 mx-auto">
-        <div className="text-center mb-15">
+        <div className="text-center mb-5">
           <h1 className="text-[clamp(1.1rem,5vw,2rem)] font-bold">
             Trending Now
           </h1>
@@ -14,11 +23,10 @@ const TrendSection = () => {
           </p>
         </div>
 
-        <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-          <TrendCard />
-          <TrendCard />
-          <TrendCard />
-          <TrendCard />
+        <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6 mb-20">
+          {trendProducts.map((product, index) => (
+            <TrendCard key={index} product={product} />
+          ))}
         </div>
       </div>
     </div>

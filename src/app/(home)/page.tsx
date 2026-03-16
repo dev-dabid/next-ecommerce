@@ -24,7 +24,7 @@ export default function Homepage() {
     <div className="">
       <Hero />
       <CategorySection products={products || []} />
-      <TrendSection />
+      <TrendSection products={products || []} />
       <NewsLetterSection />
     </div>
   );

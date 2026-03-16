@@ -25,7 +25,7 @@ const CategorySection = ({ products }: CategorySectionProps) => {
   };
 
   return (
-    <div className="mt-30 h-full pb-20 max-w-300 mx-auto">
+    <div className="mt-20 h-full py-[clamp(1rem,5vw,5rem)] max-w-300 mx-auto">
       <div className="flex flex-col">
         <div className="flex justify-between items-center">
           <p

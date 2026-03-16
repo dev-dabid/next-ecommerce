@@ -2,8 +2,8 @@ import NewsLetterInput from "./NewsLetterInput";
 
 const NewsLetterSection = () => {
   return (
-    <div className="py-[clamp()]">
-      <div className="max-w-300 mx-auto bg-sky-400 flex justify-center items-center rounded-2xl py-20 flex-col px-5">
+    <div className="py-[clamp(1rem,5vw,5rem)]">
+      <div className="max-w-300 mx-auto bg-sky-400 flex justify-center items-center rounded-2xl py-[clamp(1rem,5vw,5rem)] flex-col px-5">
         <h1 className="text-[clamp(1.25rem,6vw,3rem)] font-bold">
           Join the Lumina Collective
         </h1>
