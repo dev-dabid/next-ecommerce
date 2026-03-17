@@ -6,6 +6,7 @@ import Hero from "./Hero";
 import CategorySection from "./CategorySection";
 import TrendSection from "./TrendSection";
 import NewsLetterSection from "./NewsLetterSection";
+import Footer from "@/components/Footer";
 
 export default function Homepage() {
   const { products, isFetched, fetchProducts } = useProducts();
@@ -26,6 +27,7 @@ export default function Homepage() {
       <CategorySection products={products || []} />
       <TrendSection products={products || []} />
       <NewsLetterSection />
+      <Footer />
     </div>
   );
 }
