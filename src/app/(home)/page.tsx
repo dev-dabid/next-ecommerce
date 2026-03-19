@@ -8,7 +8,7 @@ import TrendSection from "./TrendSection";
 import NewsLetterSection from "./NewsLetterSection";
 import Footer from "@/components/Footer";
 
-export default function Homepage() {
+export default function Page() {
   const { products, isFetched, fetchProducts } = useProducts();
   const [isClient, setIsClient] = useState(false);
 
