@@ -45,7 +45,7 @@ const Header = () => {
             {navItems.map((item) => {
               return (
                 <Link
-                  className={`${pathname === item.href ? "after:scale-x-100" : ""} relative cursor-pointer  active:text-sky-700 hover:text-sky-500 text-md w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-sky-500 after:w-full after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left`}
+                  className={`${pathname === item.href ? "after:scale-x-100 text-sky-500 -translate-y-1" : ""} relative cursor-pointer active:text-sky-700 hover:text-sky-500 text-md w-fit block after:block after:content-[''] after:absolute after:h-0.75 after:bg-sky-500 after:w-full after:scale-x-0  after:transition-transform after:duration-300 after:origin-left`}
                   key={item.href}
                   href={item.href}
                 >
