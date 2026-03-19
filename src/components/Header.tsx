@@ -1,9 +1,13 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Input from "@/components/Input";
 import { ShoppingBag, Gem, CircleUserRound } from "lucide-react";
 
 type NavItem = {
   label: string;
-  href?: string;
+  href: string;
   children?: NavItem[];
 };
 
@@ -11,17 +15,23 @@ const Header = () => {
   const navItems: NavItem[] = [
     {
       label: "Home",
+      href: "/",
     },
     {
       label: "Collections",
+      href: "/collections",
     },
     {
       label: "New Arrivals",
+      href: "/newarrivals",
     },
     {
       label: "Sale",
+      href: "/sale",
     },
   ];
+
+  const pathname = usePathname();
 
   return (
     <header className=" bg-gray-50 p-5 border-b border-b-sky-100 sticky top-0 z-50">
@@ -32,15 +42,15 @@ const Header = () => {
             <p className="font-semibold text-xl">Lumina</p>
           </div>
           <nav className="hidden lg:flex gap-5">
-            {navItems.map((item, index) => {
+            {navItems.map((item) => {
               return (
-                <a
-                  key={index}
+                <Link
+                  className={`${pathname === item.href ? "after:scale-x-100" : ""} relative cursor-pointer  active:text-sky-700 hover:text-sky-500 text-md w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-sky-500 after:w-full after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left`}
+                  key={item.href}
                   href={item.href}
-                  className="relative cursor-pointer active:text-sky-700 hover:text-sky-500 text-md w-fit block after:block after:content-[''] after:absolute after:h-[3px] after:bg-sky-500 after:w-full after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
                 >
                   {item.label}
-                </a>
+                </Link>
               );
             })}
           </nav>
