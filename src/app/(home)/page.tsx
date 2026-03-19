@@ -13,13 +13,8 @@ export default function Page() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
     fetchProducts();
   }, [fetchProducts]);
-
-  if (!isClient) return null;
-
-  console.log(products);
 
   return (
     <div className="">

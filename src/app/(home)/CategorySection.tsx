@@ -28,21 +28,7 @@ const CategorySection = ({ products }: CategorySectionProps) => {
     <div className="mt-20 h-full py-[clamp(1rem,5vw,5rem)] max-w-300 mx-auto">
       <div className="flex flex-col">
         <div className="flex justify-between items-center">
-          <p
-            className="
-           text-[clamp(1.1rem,5vw,2rem)] font-bold relative 
-           after:content-[''] 
-           after:absolute 
-           after:-bottom-2 
-           after:left-0 
-           after:w-[32%] 
-           after:h-1.25 
-           after:bg-sky-400 
-           after:origin-left 
-           after:scale-x-100 
-           after:rounded-2xl
-           inline-block"
-          >
+          <p className="text-[clamp(1.1rem,5vw,2rem)] font-bold relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-[32%] after:h-1.25after:bg-sky-400 after:origin-left after:scale-x-100 after:rounded-2xl inline-block">
             Shop by Category
           </p>
           <a
