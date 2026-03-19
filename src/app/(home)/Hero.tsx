@@ -3,15 +3,15 @@ import Woman from "@/images/woman.png";
 
 const Hero = () => {
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-around bg-white py-[clamp(2rem,10vw,5rem)] px-[clamp(1.5rem,1vw,2.5rem)] rounded-3xl mt-[clamp(1rem,5vw,5rem)] gap-[clamp(4rem,2vw,5rem)] max-w-300 mx-auto">
+    <div className="flex flex-col lg:flex-row items-center justify-around bg-white py-[clamp(2rem,10vw,5rem)] px-[clamp(1.5rem,5vw,4rem)] rounded-3xl mt-[clamp(1rem,5vw,5rem)] gap-[clamp(4rem,2vw,5rem)] max-w-300 mx-auto">
       <div className="flex flex-col">
         <p className="text-[clamp(0.7rem,1vw,1rem)] text-sky-400 font-semibold tracking-widest">
           NEW SEASON ARRIVAL
         </p>
-        <p className="text-[clamp(2.5rem,13vw,4.5rem)] leading-none text-gray-950 font-semibold max-w-[12ch] mt-5">
+        <p className="text-[clamp(2.5rem,13vw,4.5rem)] leading-none text-gray-950 font-semibold max-w-[10ch] mt-5">
           Elevate Your <span className="text-sky-400">Everyday</span> Style
         </p>
-        <p className="text-[clamp(0.8rem,3.8vw,1.3rem)] max-w-[42ch] mt-5">
+        <p className="text-[clamp(0.8rem,3.8vw,1.3rem)] max-w-[40ch] mt-5">
           Experience premium craftsmanship with our sustainably sourced
           materials and timeless minimalist designs.
         </p>
