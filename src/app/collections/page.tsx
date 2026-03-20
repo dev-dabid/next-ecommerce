@@ -10,15 +10,18 @@ export default function Page() {
         <div className="mb-10">
           <div>
             <h1 className="text-5xl font-bold mb-2">Summer Essentials</h1>
-            <p className="text-lg max-w-[55ch]">
+            <p className="text-lg max-w-[53ch]">
               Curated selection of premium pieces designed for light, airy
               comfort and timeless style.
             </p>
           </div>
         </div>
 
-        <div className="">
-          <FilterDropdown />
+        <div className="hidden md:flex gap-5">
+          <FilterDropdown title={"Category"} />
+          <FilterDropdown title={"Price Range"} />
+          <FilterDropdown title={"Color"} />
+          <FilterDropdown title={"Material"} />
         </div>
       </div>
       <Footer />
