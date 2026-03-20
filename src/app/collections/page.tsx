@@ -9,8 +9,10 @@ export default function Page() {
         <Breadcrumb />
         <div className="mb-10">
           <div>
-            <h1 className="text-5xl font-bold mb-2">Summer Essentials</h1>
-            <p className="text-lg max-w-[53ch]">
+            <h1 className="text-[clamp(1.9rem,5vw,3rem)] font-bold mb-2">
+              Summer Essentials
+            </h1>
+            <p className="text-[clamp(1rem,2vw,1.125rem)] max-w-[30ch] md:max-w-[53ch]">
               Curated selection of premium pieces designed for light, airy
               comfort and timeless style.
             </p>
