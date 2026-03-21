@@ -9,12 +9,7 @@ import NewsLetterSection from "./NewsLetterSection";
 import Footer from "@/components/Footer";
 
 export default function Page() {
-  const { products, isFetched, fetchProducts } = useProducts();
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+  const { products } = useProducts();
 
   return (
     <div className="">

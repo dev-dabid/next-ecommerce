@@ -18,7 +18,7 @@ export interface CartProduct extends Product {
 export interface ProductsState {
   products: Product[];
   isFetched: boolean;
-  fetchProducts: () => Promise<void>;
+  fetchProducts: (data: Product[]) => void;
 }
 
 export interface CartState {
