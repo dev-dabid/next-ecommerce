@@ -9,16 +9,17 @@ const CollectionCard = ({ product }: CollectionCardProps) => {
   const { image, name, priceCents } = product;
   return (
     <div className="flex flex-col">
-      <div className="px-3 h-100 bg-white rounded-xl">
+      <div className="px-3 h-full bg-white rounded-xl relative overflow-hidden flex justify-center">
+        <div className="inset-0 bg-linear-to-b from-white/15 to-black/10 w-full h-full absolute"></div>
         <Image
-          className="w-full h-full object-contain"
+          className="w-auto h-50 md:h-80 lg:h-100 object-contain"
           alt=""
           src={`/${image}` || "/fallback.jpg"}
           width={200}
           height={200}
         />
       </div>
-      <div className="flex gap-5 justify-between">
+      <div className="flex gap-2 justify-between mt-3 font-semibold text-[clamp(0.75rem,4vw,1.125rem)]">
         <p className="truncate">{name}</p>
         <p>${priceCents}</p>
       </div>

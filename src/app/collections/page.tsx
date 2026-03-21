@@ -1,6 +1,7 @@
 "use client";
 
 import useProducts from "@/hooks/useProducts";
+import { useState, useEffect } from "react";
 import Breadcrumb from "@/components/Breadcrumb";
 import FilterDropdown from "./FilterDropdown";
 import CollectionCard from "./CollectionCard";
@@ -9,9 +10,17 @@ import Footer from "@/components/Footer";
 export default function Page() {
   const { products } = useProducts();
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <div className="">
-      <div className="max-w-300 mx-auto">
+      <div className="max-w-300 mx-auto mb-10">
         <Breadcrumb />
         <div className="mb-10">
           <div>
@@ -33,7 +42,7 @@ export default function Page() {
             <FilterDropdown title={"Material"} />
           </div>
 
-          <div className="mt-10 grid grid-cols-4 gap-5">
+          <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 gap-y-5">
             {products.map((product, index) => {
               return <CollectionCard key={index} product={product} />;
             })}
