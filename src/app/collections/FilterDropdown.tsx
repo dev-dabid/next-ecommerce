@@ -12,6 +12,8 @@ import { ChevronDown } from "lucide-react";
 const FilterDropdown = ({ title, menuItem }: FilterDropdownProps) => {
   const { filters, setFilter } = useProducts();
 
+  console.log(filters);
+
   return (
     <Menu>
       {({ open }) => (
@@ -30,8 +32,8 @@ const FilterDropdown = ({ title, menuItem }: FilterDropdownProps) => {
             {menuItem?.map((item, index) => (
               <MenuItem key={index}>
                 <button
-                  onClick={() => setFilter(filters.category, item)}
-                  className="block data-focus:bg-blue-100"
+                  onClick={() => setFilter("category", item)}
+                  className="block w-full text-start data-focus:bg-blue-100"
                 >
                   {item}
                 </button>
