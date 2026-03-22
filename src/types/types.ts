@@ -17,7 +17,10 @@ export interface CartProduct extends Product {
 
 export interface ProductsState {
   products: Product[];
-  filters: {};
+  filters: {
+    category: string;
+    priceRange: number;
+  };
   isFetched: boolean;
   fetchProducts: (data: Product[]) => void;
   setFilter: (key: string, value: string) => void;

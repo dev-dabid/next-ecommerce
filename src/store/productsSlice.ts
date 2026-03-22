@@ -3,7 +3,10 @@ import { ProductsState } from "@/types/types";
 
 export const createProductsSlice: StateCreator<ProductsState> = (set, get) => ({
   products: [],
-  filters: {},
+  filters: {
+    category: "",
+    priceRange: 0,
+  },
   isFetched: false,
 
   fetchProducts: (data) => {
