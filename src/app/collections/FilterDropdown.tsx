@@ -5,10 +5,13 @@ type FilterDropdownProps = {
   menuItem?: string[];
 };
 
+import useProducts from "@/hooks/useProducts";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDown } from "lucide-react";
 
 const FilterDropdown = ({ title, menuItem }: FilterDropdownProps) => {
+  const { filters, setFilter } = useProducts();
+
   return (
     <Menu>
       {({ open }) => (
@@ -26,9 +29,12 @@ const FilterDropdown = ({ title, menuItem }: FilterDropdownProps) => {
           >
             {menuItem?.map((item, index) => (
               <MenuItem key={index}>
-                <a className="block data-focus:bg-blue-100" href="/settings">
+                <button
+                  onClick={() => setFilter(filters.category, item)}
+                  className="block data-focus:bg-blue-100"
+                >
                   {item}
-                </a>
+                </button>
               </MenuItem>
             ))}
           </MenuItems>
