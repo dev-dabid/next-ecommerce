@@ -13,6 +13,9 @@ export default function Page() {
 
   const [mounted, setMounted] = useState(false);
 
+  const [visible, setVisible] = useState(8);
+  const total = products.length;
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -30,11 +33,15 @@ export default function Page() {
     return [...keywords];
   }, [products]);
 
-  console.log(uniqueKeywords);
+  const progressPercentage = (visible / total) * 100;
+
+  const handleExploreMore = () => {
+    setVisible((prev) => Math.min(prev + 8, total));
+  };
 
   return (
     <div className="">
-      <div className="max-w-300 mx-auto mb-10">
+      <div className="max-w-300 mx-auto mb-30">
         <Breadcrumb />
         <div className="mb-10">
           <div>
@@ -54,10 +61,29 @@ export default function Page() {
             <FilterDropdown title={"Price Range"} />
           </div>
 
-          <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 gap-y-5">
-            {products.map((product, index) => {
-              return <CollectionCard key={index} product={product} />;
-            })}
+          <div className="flex flex-col gap-15">
+            <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 gap-y-5">
+              {products.slice(0, visible).map((product, index) => {
+                return <CollectionCard key={index} product={product} />;
+              })}
+            </div>
+            <div className="flex justify-center items-center flex-col">
+              <p className="mb-4">
+                Showing {visible} of {products.length} products
+              </p>
+              <div className={`w-[clamp(17.5rem,80vw,25rem)] bg-gray-200 mb-7`}>
+                <div
+                  className="h-2 bg-sky-400 transition-all duration-500 ease-out"
+                  style={{ width: `${progressPercentage}%` }}
+                ></div>
+              </div>
+              <button
+                onClick={handleExploreMore}
+                className="py-3 px-8 font-semibold border-2 border-gray-300 rounded-xl"
+              >
+                Explore More
+              </button>
+            </div>
           </div>
         </div>
       </div>
