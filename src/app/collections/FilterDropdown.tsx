@@ -24,7 +24,7 @@ const FilterDropdown = ({ title, menuItem }: FilterDropdownProps) => {
             />
           </MenuButton>
           <MenuItems
-            className="bg-white w-30  p-2 rounded focus:outline-none"
+            className="bg-white w-auto pl-2 rounded focus:outline-none"
             anchor="bottom"
           >
             {menuItem?.map((item, index) => (
