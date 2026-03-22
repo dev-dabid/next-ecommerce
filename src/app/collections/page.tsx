@@ -1,11 +1,12 @@
 "use client";
 
 import useProducts from "@/hooks/useProducts";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Breadcrumb from "@/components/Breadcrumb";
 import FilterDropdown from "./FilterDropdown";
 import CollectionCard from "./CollectionCard";
 import Footer from "@/components/Footer";
+import { UserSquareIcon } from "lucide-react";
 
 export default function Page() {
   const { products } = useProducts();
@@ -17,6 +18,19 @@ export default function Page() {
   }, []);
 
   if (!mounted) return null;
+
+  const uniqueKeywords = useMemo(() => {
+    const keywords = new Set<string>();
+    const flatKeywords = products.flatMap((p) => p.keywords);
+
+    flatKeywords.forEach((keyword) => {
+      keywords.add(keyword);
+    });
+
+    return [...keywords];
+  }, [products]);
+
+  console.log(uniqueKeywords);
 
   return (
     <div className="">
@@ -36,10 +50,8 @@ export default function Page() {
 
         <div>
           <div className="hidden md:flex gap-5">
-            <FilterDropdown title={"Category"} />
+            <FilterDropdown title={"Category"} menuItem={uniqueKeywords} />
             <FilterDropdown title={"Price Range"} />
-            <FilterDropdown title={"Color"} />
-            <FilterDropdown title={"Material"} />
           </div>
 
           <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 gap-y-5">
