@@ -8,7 +8,7 @@ import CollectionCard from "./CollectionCard";
 import Footer from "@/components/Footer";
 import { UserSquareIcon } from "lucide-react";
 
-export default function Page() {
+export default function Collections() {
   const { products } = useProducts();
 
   const [mounted, setMounted] = useState(false);
