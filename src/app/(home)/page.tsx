@@ -8,7 +8,7 @@ import TrendSection from "./TrendSection";
 import NewsLetterSection from "./NewsLetterSection";
 import Footer from "@/components/Footer";
 
-export default function Page() {
+export default function Home() {
   const { products } = useProducts();
 
   return (
