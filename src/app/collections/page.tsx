@@ -79,7 +79,7 @@ export default function Collections() {
               </div>
               <button
                 onClick={handleExploreMore}
-                className="py-3 px-8 font-semibold border-2 border-gray-300 rounded-xl"
+                className={`${visible >= total ? "hidden" : "flex"} py-3 px-8 font-semibold border-2 border-gray-300 rounded-xl`}
               >
                 Explore More
               </button>
