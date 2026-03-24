@@ -1,5 +1,7 @@
+"use client";
+
 import { Product } from "@/types/types";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 type ProductCardProps = {
@@ -7,9 +9,14 @@ type ProductCardProps = {
 };
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { image, name, priceCents } = product;
+  const { id, image, name, priceCents } = product;
+
+  const router = useRouter();
   return (
-    <div className="flex flex-col">
+    <div
+      onClick={() => router.push(`/collections/${id}`)}
+      className="flex flex-col"
+    >
       <div className="px-3 h-full bg-white rounded-xl relative overflow-hidden flex justify-center">
         <div className="inset-0 bg-linear-to-b from-white/15 to-black/10 w-full h-full absolute"></div>
         <Image
