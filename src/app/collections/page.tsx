@@ -4,9 +4,8 @@ import useProducts from "@/hooks/useProducts";
 import { useState, useEffect, useMemo } from "react";
 import Breadcrumb from "@/components/Breadcrumb";
 import FilterDropdown from "./FilterDropdown";
-import CollectionCard from "./CollectionCard";
+import ProductCard from "../../components/ProductCard";
 import Footer from "@/components/Footer";
-import { UserSquareIcon } from "lucide-react";
 
 export default function Collections() {
   const { products } = useProducts();
@@ -64,7 +63,7 @@ export default function Collections() {
           <div className="flex flex-col gap-15">
             <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 gap-y-5">
               {products.slice(0, visible).map((product, index) => {
-                return <CollectionCard key={index} product={product} />;
+                return <ProductCard key={index} product={product} />;
               })}
             </div>
             <div className="flex justify-center items-center flex-col">

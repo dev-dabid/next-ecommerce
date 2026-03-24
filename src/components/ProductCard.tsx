@@ -1,11 +1,12 @@
 import { Product } from "@/types/types";
+import Link from "next/link";
 import Image from "next/image";
 
-type CollectionCardProps = {
+type ProductCardProps = {
   product: Product;
 };
 
-const CollectionCard = ({ product }: CollectionCardProps) => {
+const ProductCard = ({ product }: ProductCardProps) => {
   const { image, name, priceCents } = product;
   return (
     <div className="flex flex-col">
@@ -27,4 +28,4 @@ const CollectionCard = ({ product }: CollectionCardProps) => {
   );
 };
 
-export default CollectionCard;
+export default ProductCard;
