@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { formattedPrice } from "@/app/lib/utils/money";
 import ProductRating from "./ProductRating";
+import SizeSelector from "./SizeSelector";
 
 type ProductViewProps = {
   id: string;
@@ -59,13 +60,17 @@ const ProductView = ({ id }: ProductViewProps) => {
             </div>
           </div>
           <div className="mt-7">
-            <p className="inline-block max-w-[50ch] text-gray-500">
+            <p className="inline-block max-w-[50ch] text-gray-700">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat
             </p>
-            <div></div>
+            <div>
+              <div className="mt-5">
+                <SizeSelector />
+              </div>
+            </div>
           </div>
         </div>
       </div>
