@@ -6,6 +6,7 @@ import Image from "next/image";
 import { formattedPrice } from "@/app/lib/utils/money";
 import ProductRating from "./ProductRating";
 import SizeSelector from "./SizeSelector";
+import ColorSelector from "./ColorSelector";
 
 type ProductViewProps = {
   id: string;
@@ -34,7 +35,7 @@ const ProductView = ({ id }: ProductViewProps) => {
 
   return (
     <div>
-      <div className="flex gap-10">
+      <div className="flex flex-col lg:flex-row gap-10">
         <div>
           <div className="overflow-hidden rounded-2xl">
             <Image
@@ -68,6 +69,7 @@ const ProductView = ({ id }: ProductViewProps) => {
             </p>
             <div>
               <div className="mt-5">
+                <ColorSelector />
                 <SizeSelector />
               </div>
             </div>

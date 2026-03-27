@@ -34,12 +34,9 @@ const SizeSelector = () => {
         {sizes.map((plan) => (
           <Field key={plan.id}>
             <Radio
-              className={({ checked, disabled }) => `
-      relative text-sm flex gap-2 cursor-pointer rounded-lg border py-3 px-5 
-      transition focus:outline-none  
-      ${checked ? " text-white border-sky-400 bg-sky-400  ring-blue-100" : "border-sky-200 bg-white"}
-      ${disabled ? "cursor-not-allowed border-sky-500 bg-slate-50 opacity-60 " : ""}
-    `}
+              className={({ checked, disabled }) =>
+                `relative text-sm flex gap-2 cursor-pointer rounded-lg border py-3 px-5 transition focus:outline-none ${checked ? " text-white border-sky-400 bg-sky-400  ring-blue-100" : "border-sky-200 bg-white"} ${disabled ? "cursor-not-allowed border-sky-500 bg-slate-50 opacity-60 " : ""}`
+              }
               value={plan}
             >
               <Label className={`font-semibold`}>{plan.name}</Label>
