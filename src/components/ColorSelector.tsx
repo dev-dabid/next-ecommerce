@@ -2,7 +2,7 @@ import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
 import { useState } from "react";
 
 const colors = [
-  { name: "white", color: "bg-white" },
+  { name: "white", color: "bg-gray-200" },
   { name: "black", color: "bg-gray-950" },
   { name: "blue", color: "bg-blue-500" },
 ];
@@ -12,9 +12,9 @@ const ColorSelector = () => {
 
   return (
     <div>
-      <p className="font-semibold mb-2 text-gray-500 text-sm">COLOR</p>
+      <p className="font-semibold mb-4 text-gray-500 text-sm">COLOR</p>
       <RadioGroup
-        className="flex gap-3"
+        className="flex gap-4"
         value={selected}
         onChange={setSelected}
         aria-label="Server size"
@@ -23,9 +23,11 @@ const ColorSelector = () => {
           return (
             <Field key={color.name}>
               <Radio
-                className={` ${color.color} relative block  p-1 size-8 rounded-2xl data-checked:border data-checked:border-sky-500 data-disabled:border-none`}
+                className={`relative ${color.color} data-checked:after:border-sky-500 after:rounded-3xl flex justify-center items-center after:block data-checked:after:border-2 after:size-10 after:absolute after:content-[''] size-8 rounded-2xl  data-disabled:border-none`}
                 value={color.name}
-              ></Radio>
+              >
+                <span className="block size-8 rounded-2xl"></span>
+              </Radio>
             </Field>
           );
         })}

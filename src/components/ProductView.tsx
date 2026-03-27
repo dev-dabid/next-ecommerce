@@ -34,7 +34,7 @@ const ProductView = ({ id }: ProductViewProps) => {
   const { image, name, priceCents, rating } = getProduct;
 
   return (
-    <div>
+    <div className="py-10">
       <div className="flex flex-col lg:flex-row gap-10">
         <div>
           <div className="overflow-hidden rounded-2xl">
@@ -68,7 +68,7 @@ const ProductView = ({ id }: ProductViewProps) => {
               nisi ut aliquip ex ea commodo consequat
             </p>
             <div>
-              <div className="mt-5">
+              <div className="mt-5 flex flex-col gap-5">
                 <ColorSelector />
                 <SizeSelector />
               </div>
