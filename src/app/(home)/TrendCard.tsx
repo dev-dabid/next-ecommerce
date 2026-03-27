@@ -1,4 +1,5 @@
 import { Product } from "@/types/types";
+import { formattedPrice } from "../lib/utils/money";
 import Image from "next/image";
 import Model from "@/images/backpack.jpg";
 
@@ -29,7 +30,7 @@ const TrendCard = ({ product }: TrendCardProps) => {
           {name}
         </p>
         <p className="text-sky-500 font-bold text-[clamp(0.95rem,2vw,1.125rem)]">
-          ${priceCents}
+          ${formattedPrice(priceCents)}
         </p>
       </div>
     </div>
