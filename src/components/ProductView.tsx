@@ -7,6 +7,7 @@ import { formattedPrice } from "@/app/lib/utils/money";
 import ProductRating from "./ProductRating";
 import SizeSelector from "./SizeSelector";
 import ColorSelector from "./ColorSelector";
+import QuantitySelector from "./QuantitySelector";
 
 type ProductViewProps = {
   id: string;
@@ -28,10 +29,13 @@ const ProductView = ({ id }: ProductViewProps) => {
     { id: 5, name: "XL" },
   ];
 
+  const quantities = [{ id: 1, count: 1 }];
+
   const [mounted, setMounted] = useState(false);
   const [selected, setSelected] = useState({
     color: colors[0],
     size: sizes[1],
+    count: 1,
   });
 
   const { products } = useProducts();
@@ -98,6 +102,10 @@ const ProductView = ({ id }: ProductViewProps) => {
                   selected={selected}
                   setSelected={setSelected}
                   sizes={sizes}
+                />
+                <QuantitySelector
+                  selected={selected}
+                  setSelected={setSelected}
                 />
               </div>
             </div>

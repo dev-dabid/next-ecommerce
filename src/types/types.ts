@@ -45,4 +45,5 @@ export type Size = {
 export type SelectProperty = {
   color: Color;
   size: Size;
+  count: number;
 };
