@@ -31,3 +31,18 @@ export interface CartState {
 }
 
 export type Store = ProductsState & CartState;
+
+export type Color = {
+  name: string;
+  color: string;
+};
+
+export type Size = {
+  id: number;
+  name: string;
+};
+
+export type SelectProperty = {
+  color: Color;
+  size: Size;
+};

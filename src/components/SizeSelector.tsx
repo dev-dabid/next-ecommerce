@@ -1,22 +1,8 @@
 "use client";
 
+import type { Size, SelectProperty } from "@/types/types";
 import { Dispatch, SetStateAction } from "react";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
-
-type Color = {
-  name: string;
-  color: string;
-};
-
-interface Size {
-  id: number;
-  name: string;
-}
-
-type SelectProperty = {
-  color: Color;
-  size: Size;
-};
 
 type SizeSelectorProps = {
   selected: SelectProperty;
