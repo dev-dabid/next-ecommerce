@@ -21,6 +21,10 @@ const QuantitySelector = ({ selected, setSelected }: QuantitySelectorProps) => {
         : { ...prev, count: prev.count + 1 };
     });
   };
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.name);
+  };
   return (
     <div>
       <p className="font-semibold mb-2 text-gray-500 text-sm">QUANTITY</p>
@@ -33,8 +37,10 @@ const QuantitySelector = ({ selected, setSelected }: QuantitySelectorProps) => {
         </button>
         <input
           className="text-center border-l border-l-sky-200  border-r border-r-sky-200 outline-none max-w-[100]"
+          name="count"
           value={selected.count}
           type="text"
+          onChange={(e) => handleInput(e)}
         />
         <button
           className="text-xl text-sky-500  font-bold flex gap-2 cursor-pointer py-3 px-5 active:bg-sky-500 active:text-white hover:bg-sky-200"
