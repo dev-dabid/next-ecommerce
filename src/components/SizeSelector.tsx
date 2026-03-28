@@ -1,45 +1,51 @@
+"use client";
+
+import { Dispatch, SetStateAction } from "react";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
-import { useState, useEffect } from "react";
+
+type Color = {
+  name: string;
+  color: string;
+};
 
 interface Size {
   id: number;
   name: string;
 }
 
-const sizes: Size[] = [
-  { id: 1, name: "XS" },
-  { id: 2, name: "S" },
-  { id: 3, name: "M" },
-  { id: 4, name: "L" },
-  { id: 5, name: "XL" },
-];
+type SelectProperty = {
+  color: Color;
+  size: Size;
+};
 
-function comparePlans(a: Size, b: Size) {
-  return a.name.toLowerCase() === b.name.toLowerCase();
-}
+type SizeSelectorProps = {
+  selected: SelectProperty;
+  setSelected: Dispatch<SetStateAction<SelectProperty>>;
+  sizes: Size[];
+};
 
-const SizeSelector = () => {
-  const [selected, setSelected] = useState(sizes[1]);
-
+const SizeSelector = ({ selected, setSelected, sizes }: SizeSelectorProps) => {
   return (
     <div>
       <p className="font-semibold mb-2 text-gray-500 text-sm">SIZE</p>
       <RadioGroup
-        value={selected}
-        by={comparePlans}
-        onChange={setSelected}
+        by="name"
+        value={selected.size}
+        onChange={(newSize) =>
+          setSelected((prev) => ({ ...prev, size: newSize }))
+        }
         aria-label="Server size"
         className="flex gap-2"
       >
-        {sizes.map((plan) => (
-          <Field key={plan.id}>
+        {sizes.map((size) => (
+          <Field key={size.id}>
             <Radio
               className={({ checked, disabled }) =>
                 `relative text-sm flex gap-2 cursor-pointer rounded-lg border py-3 px-5 transition focus:outline-none ${checked ? " text-white border-sky-400 bg-sky-400  ring-blue-100" : "border-sky-200 bg-white"} ${disabled ? "cursor-not-allowed border-sky-500 bg-slate-50 opacity-60 " : ""}`
               }
-              value={plan}
+              value={size}
             >
-              <Label className={`font-semibold`}>{plan.name}</Label>
+              <Label className={`font-semibold`}>{size.name}</Label>
             </Radio>
           </Field>
         ))}

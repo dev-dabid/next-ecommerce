@@ -13,7 +13,26 @@ type ProductViewProps = {
 };
 
 const ProductView = ({ id }: ProductViewProps) => {
+  const colors = [
+    { name: "white", color: "bg-gray-200" },
+    { name: "black", color: "bg-gray-950" },
+    { name: "blue", color: "bg-blue-500" },
+  ];
+
+  const sizes = [
+    { id: 1, name: "XS" },
+    { id: 2, name: "S" },
+    { id: 3, name: "M" },
+    { id: 4, name: "L" },
+    { id: 5, name: "XL" },
+  ];
+
   const [mounted, setMounted] = useState(false);
+  const [selected, setSelected] = useState({
+    color: colors[0],
+    size: sizes[1],
+  });
+
   const { products } = useProducts();
 
   useEffect(() => {
@@ -24,14 +43,14 @@ const ProductView = ({ id }: ProductViewProps) => {
     String(product.id).includes(String(id)),
   );
 
-  console.log(getProduct);
-
   if (!mounted)
     return <div className="animate-pulse bg-gray-200 h-96 rounded-xl" />;
 
   if (!getProduct) return <p>Product not found, bro.</p>;
 
   const { image, name, priceCents, rating } = getProduct;
+
+  console.log(selected);
 
   return (
     <div className="py-10">
@@ -69,8 +88,16 @@ const ProductView = ({ id }: ProductViewProps) => {
             </p>
             <div>
               <div className="mt-5 flex flex-col gap-5">
-                <ColorSelector />
-                <SizeSelector />
+                <ColorSelector
+                  selected={selected}
+                  setSelected={setSelected}
+                  colors={colors}
+                />
+                <SizeSelector
+                  selected={selected}
+                  setSelected={setSelected}
+                  sizes={sizes}
+                />
               </div>
             </div>
           </div>

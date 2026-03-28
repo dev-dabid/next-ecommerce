@@ -1,22 +1,42 @@
+"use client";
+
+import { Dispatch, SetStateAction } from "react";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
-import { useState } from "react";
 
-const colors = [
-  { name: "white", color: "bg-gray-200" },
-  { name: "black", color: "bg-gray-950" },
-  { name: "blue", color: "bg-blue-500" },
-];
+type Color = {
+  name: string;
+  color: string;
+};
 
-const ColorSelector = () => {
-  let [selected, setSelected] = useState(colors[0]);
+interface Size {
+  id: number;
+  name: string;
+}
 
+type SelectProperty = {
+  color: Color;
+  size: Size;
+};
+
+type ColorSelectorProps = {
+  selected: SelectProperty;
+  setSelected: Dispatch<SetStateAction<SelectProperty>>;
+  colors: Color[];
+};
+
+const ColorSelector = ({
+  selected,
+  setSelected,
+  colors,
+}: ColorSelectorProps) => {
   return (
     <div>
       <p className="font-semibold mb-4 text-gray-500 text-sm">COLOR</p>
       <RadioGroup
+        by="name"
         className="flex gap-4"
-        value={selected}
-        onChange={setSelected}
+        value={selected.color}
+        onChange={(newColor) => setSelected({ ...selected, color: newColor })}
         aria-label="Server size"
       >
         {colors.map((color) => {
@@ -24,7 +44,7 @@ const ColorSelector = () => {
             <Field key={color.name}>
               <Radio
                 className={`relative ${color.color} data-checked:after:border-sky-500 after:rounded-3xl flex justify-center items-center after:block data-checked:after:border-2 after:size-10 after:absolute after:content-[''] size-8 rounded-2xl  data-disabled:border-none`}
-                value={color.name}
+                value={color}
               >
                 <span className="block size-8 rounded-2xl"></span>
               </Radio>
