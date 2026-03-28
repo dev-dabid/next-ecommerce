@@ -17,6 +17,7 @@ const ProductView = ({ id }: ProductViewProps) => {
     { name: "white", color: "bg-gray-200" },
     { name: "black", color: "bg-gray-950" },
     { name: "blue", color: "bg-blue-500" },
+    { name: "red", color: "bg-green-600" },
   ];
 
   const sizes = [
