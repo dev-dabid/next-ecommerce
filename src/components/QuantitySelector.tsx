@@ -23,7 +23,14 @@ const QuantitySelector = ({ selected, setSelected }: QuantitySelectorProps) => {
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name);
+    const name = e.target.name;
+    const quantity = Number(e.target.value);
+
+    setSelected((prev) => {
+      return prev.count < 0 || quantity > 20
+        ? { ...prev }
+        : { ...prev, [name]: quantity };
+    });
   };
   return (
     <div>
