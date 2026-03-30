@@ -30,7 +30,12 @@ export interface CartState {
   cart: CartProduct[];
 }
 
-export type Store = ProductsState & CartState;
+export interface WishlistState {
+  wishlist: Set<string>;
+  updateWishlist: (productId: string) => void;
+}
+
+export type Store = ProductsState & CartState & WishlistState;
 
 export type Color = {
   name: string;

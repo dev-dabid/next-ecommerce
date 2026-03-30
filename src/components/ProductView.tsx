@@ -1,6 +1,7 @@
 "use client";
 
 import useProducts from "@/hooks/useProducts";
+import useWishList from "@/hooks/useWishlist";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { formattedPrice } from "@/app/lib/utils/money";
@@ -38,6 +39,7 @@ const ProductView = ({ id }: ProductViewProps) => {
   });
 
   const { products } = useProducts();
+  const { wishlist, updateWishlist } = useWishList();
 
   useEffect(() => {
     setMounted(true);
@@ -54,7 +56,7 @@ const ProductView = ({ id }: ProductViewProps) => {
 
   const { image, name, priceCents, rating } = getProduct;
 
-  console.log(selected);
+  console.log(wishlist);
 
   return (
     <div className="py-10">
@@ -113,8 +115,12 @@ const ProductView = ({ id }: ProductViewProps) => {
                       <ShoppingCart /> Add to Cart
                     </p>
                   </button>
-                  <button className="px-4 border border-sky-200 rounded-xl">
-                    <Heart />
+                  <button
+                    className="group px-4 border border-sky-200 rounded-xl"
+                    onClick={() => updateWishlist(id)}
+                  >
+                    <Heart className="group-hover:text-red-400" />
+                    {wishlist.has(id) ? "hatdog" : "wala"}
                   </button>
                 </div>
               </div>
