@@ -26,6 +26,8 @@ const QuantitySelector = ({ selected, setSelected }: QuantitySelectorProps) => {
     const name = e.target.name;
     const quantity = Number(e.target.value);
 
+    if (isNaN(quantity)) return;
+
     setSelected((prev) => {
       return prev.count < 0 || quantity > 20
         ? { ...prev }
