@@ -56,8 +56,6 @@ const ProductView = ({ id }: ProductViewProps) => {
 
   const { image, name, priceCents, rating } = getProduct;
 
-  console.log(wishlist);
-
   return (
     <div className="py-10">
       <div className="flex flex-col lg:flex-row gap-10">
@@ -119,8 +117,10 @@ const ProductView = ({ id }: ProductViewProps) => {
                     className="group px-4 border border-sky-200 rounded-xl"
                     onClick={() => updateWishlist(id)}
                   >
-                    <Heart className="group-hover:text-red-400" />
-                    {wishlist.has(id) ? "hatdog" : "wala"}
+                    <Heart
+                      fill="currentColor"
+                      className={`${wishlist.has(id) ? "text-sky-500" : "text-gray-300"}`}
+                    />
                   </button>
                 </div>
               </div>
