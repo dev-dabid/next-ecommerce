@@ -1,6 +1,7 @@
 "use client";
 
 import useProducts from "@/hooks/useProducts";
+import useCart from "@/hooks/useCart";
 import useWishList from "@/hooks/useWishlist";
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -40,6 +41,7 @@ const ProductView = ({ id }: ProductViewProps) => {
 
   const { products } = useProducts();
   const { wishlist, updateWishlist } = useWishList();
+  const { cart, addToCart } = useCart();
 
   useEffect(() => {
     setMounted(true);
@@ -55,6 +57,16 @@ const ProductView = ({ id }: ProductViewProps) => {
   if (!getProduct) return <p>Product not found, bro.</p>;
 
   const { image, name, priceCents, rating } = getProduct;
+
+  const product = {
+    ...getProduct,
+    color: selected.color.name,
+    size: selected.size.name,
+    quantity: selected.count,
+    isChecked: true,
+  };
+
+  console.log(cart);
 
   return (
     <div className="py-10">
@@ -108,7 +120,10 @@ const ProductView = ({ id }: ProductViewProps) => {
                 />
 
                 <div className="flex gap-3">
-                  <button className="text-center text-white font-semibold bg-sky-500 w-full py-4 rounded-xl">
+                  <button
+                    className="text-center text-white font-semibold bg-sky-500 w-full py-4 rounded-xl"
+                    onClick={() => addToCart(product)}
+                  >
                     <p className="flex justify-center items-center gap-3">
                       <ShoppingCart /> Add to Cart
                     </p>

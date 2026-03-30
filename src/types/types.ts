@@ -11,6 +11,8 @@ export interface Product {
 }
 
 export interface CartProduct extends Product {
+  color: string;
+  size: string;
   quantity: number;
   isChecked: boolean;
 }
@@ -28,6 +30,8 @@ export interface ProductsState {
 
 export interface CartState {
   cart: CartProduct[];
+
+  addToCart: (product: CartProduct) => void;
 }
 
 export interface WishlistState {
