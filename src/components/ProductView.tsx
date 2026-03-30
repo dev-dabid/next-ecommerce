@@ -8,6 +8,7 @@ import ProductRating from "./ProductRating";
 import SizeSelector from "./SizeSelector";
 import ColorSelector from "./ColorSelector";
 import QuantitySelector from "./QuantitySelector";
+import { Heart, ShoppingCart } from "lucide-react";
 
 type ProductViewProps = {
   id: string;
@@ -28,8 +29,6 @@ const ProductView = ({ id }: ProductViewProps) => {
     { id: 4, name: "L" },
     { id: 5, name: "XL" },
   ];
-
-  const quantities = [{ id: 1, count: 1 }];
 
   const [mounted, setMounted] = useState(false);
   const [selected, setSelected] = useState({
@@ -107,6 +106,17 @@ const ProductView = ({ id }: ProductViewProps) => {
                   selected={selected}
                   setSelected={setSelected}
                 />
+
+                <div className="flex gap-3">
+                  <button className="text-center text-white font-semibold bg-sky-500 w-full py-4 rounded-xl">
+                    <p className="flex justify-center items-center gap-3">
+                      <ShoppingCart /> Add to Cart
+                    </p>
+                  </button>
+                  <button className="px-4 border border-sky-200 rounded-xl">
+                    <Heart />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
