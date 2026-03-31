@@ -58,13 +58,15 @@ const ProductView = ({ id }: ProductViewProps) => {
 
   const { image, name, priceCents, rating } = getProduct;
 
-  const product = {
-    ...getProduct,
-    color: selected.color.name,
-    size: selected.size.name,
-    quantity: selected.count,
-    isChecked: true,
-  };
+  const product = getProduct.keywords.includes("apparel")
+    ? {
+        ...getProduct,
+        color: selected.color.name,
+        size: selected.size.name,
+        quantity: selected.count,
+        isChecked: true,
+      }
+    : { ...getProduct, quantity: selected.count, isChecked: true };
 
   console.log(cart);
 

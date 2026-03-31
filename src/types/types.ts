@@ -11,8 +11,8 @@ export interface Product {
 }
 
 export interface CartProduct extends Product {
-  color: string;
-  size: string;
+  color?: string;
+  size?: string;
   quantity: number;
   isChecked: boolean;
 }
