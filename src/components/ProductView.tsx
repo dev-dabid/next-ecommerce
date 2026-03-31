@@ -106,16 +106,20 @@ const ProductView = ({ id }: ProductViewProps) => {
             </p>
             <div>
               <div className="mt-5 flex flex-col gap-5">
-                <ColorSelector
-                  selected={selected}
-                  setSelected={setSelected}
-                  colors={colors}
-                />
-                <SizeSelector
-                  selected={selected}
-                  setSelected={setSelected}
-                  sizes={sizes}
-                />
+                {getProduct.keywords.includes("apparel") && (
+                  <>
+                    <ColorSelector
+                      selected={selected}
+                      setSelected={setSelected}
+                      colors={colors}
+                    />
+                    <SizeSelector
+                      selected={selected}
+                      setSelected={setSelected}
+                      sizes={sizes}
+                    />
+                  </>
+                )}
                 <QuantitySelector
                   selected={selected}
                   setSelected={setSelected}
