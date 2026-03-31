@@ -2,7 +2,22 @@ import { StateCreator } from "zustand";
 import type { CartState } from "@/types/types";
 
 export const createCartSlice: StateCreator<CartState> = (set, get) => ({
-  cart: [],
+  cart: new Map(),
 
-  addToCart: (product) => set((state) => ({ cart: [...state.cart, product] })),
+  addToCart: (product) => {
+    const currentCart = new Map(get().cart);
+    const itemKey = `${product.id}-${product.color}-${product.size}`;
+    const existingItem = currentCart.get(itemKey);
+
+    if (existingItem) {
+      currentCart.set(itemKey, {
+        ...existingItem,
+        quantity: existingItem.quantity + product.quantity,
+      });
+      set({ cart: currentCart });
+    } else {
+      currentCart.set(itemKey, product);
+      set({ cart: currentCart });
+    }
+  },
 });

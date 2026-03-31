@@ -28,8 +28,10 @@ export interface ProductsState {
   setFilter: (key: string, value: string) => void;
 }
 
+export type Id = string;
+
 export interface CartState {
-  cart: CartProduct[];
+  cart: Map<Id, CartProduct>;
 
   addToCart: (product: CartProduct) => void;
 }
