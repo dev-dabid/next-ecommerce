@@ -1,7 +1,6 @@
 import { Product } from "@/types/types";
 import { formattedPrice } from "../lib/utils/money";
 import Image from "next/image";
-import Model from "@/images/backpack.jpg";
 
 type TrendCardProps = {
   product: Product;

@@ -3,6 +3,7 @@
 import { Product } from "@/types/types";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import image from "@/content/images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg";
 
 type ProductCardProps = {
   product: Product;
