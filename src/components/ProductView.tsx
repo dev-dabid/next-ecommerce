@@ -72,23 +72,26 @@ const ProductView = ({ id }: ProductViewProps) => {
 
   return (
     <div className="py-10">
-      <div className="flex flex-col lg:flex-row gap-10">
-        <div>
-          <div className="overflow-hidden rounded-2xl">
+      <div className="flex flex-col md:items-center lg:flex-row gap-5">
+        <div className="flex-shrink-0 w-full max-w-[500px]">
+          <div className="relative overflow-hidden w-full aspect-[500/613] rounded-2xl bg-white flex items-center justify-center">
             <Image
-              className="object-contain"
               src={`/${image}`}
-              alt=""
-              width={500}
-              height={500}
+              alt="description"
+              fill
+              className="object-contain p-4"
+              sizes="(max-width: 500px) 100vw, 500px"
+              priority
             />
           </div>
         </div>
         <div>
-          <div className="mt-2  border-b border-b-sky-100 pb-8">
-            <h1 className="text-4xl font-bold">{name}</h1>
-            <div className="mt-4 flex items-center gap-4">
-              <h1 className="text-3xl font-bold text-sky-400">
+          <div className="mt-1 border-b border-b-sky-100 pb-8">
+            <h1 className="text-[clamp(1.5rem,5vw,2.25rem)] font-bold line-clamp-2 leading-tight">
+              {name}
+            </h1>
+            <div className="mt-2 flex items-center gap-4">
+              <h1 className="text-[clamp(1.5rem,5vw,2.25rem)] font-bold text-sky-400">
                 ${formattedPrice(priceCents)}
               </h1>
               <ProductRating
@@ -127,7 +130,7 @@ const ProductView = ({ id }: ProductViewProps) => {
 
                 <div className="flex gap-3">
                   <button
-                    className="text-center text-white font-semibold bg-sky-500 w-full py-4 rounded-xl"
+                    className=" text-center text-white font-semibold bg-sky-500 w-full max-w-[434.69px] py-4 rounded-xl"
                     onClick={() => addToCart(product)}
                   >
                     <p className="flex justify-center items-center gap-3">
