@@ -72,7 +72,7 @@ const ProductView = ({ id }: ProductViewProps) => {
 
   return (
     <div className="py-10">
-      <div className="flex flex-col sm:items-center lg:flex-row gap-5 lg:gap-10">
+      <div className="flex flex-col sm:items-center lg:flex-row lg:items-start gap-5 lg:gap-10">
         <div className="flex-shrink-0 w-full max-w-[500px]">
           <div className="relative overflow-hidden w-full aspect-[500/613] rounded-2xl bg-white flex items-center justify-center">
             <Image
