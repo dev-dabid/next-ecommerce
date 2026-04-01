@@ -2,6 +2,7 @@
 
 import { Product } from "@/types/types";
 import useProducts from "@/hooks/useProducts";
+import { useRef } from "react";
 
 type StoreInitializerProps = {
   data: Product[];
@@ -9,8 +10,12 @@ type StoreInitializerProps = {
 
 const StoreInitializer = ({ data }: StoreInitializerProps) => {
   const { fetchProducts } = useProducts();
+  const initialized = useRef(false);
 
-  fetchProducts(data);
+  if (!initialized.current) {
+    fetchProducts(data);
+    initialized.current = true;
+  }
 
   return null;
 };
