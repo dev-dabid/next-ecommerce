@@ -9,6 +9,7 @@ import { useMemo } from "react";
 const Breadcrumb = () => {
   const { products } = useProducts();
   const pathname = usePathname();
+
   const productMap = useMemo(() => {
     const map = new Map();
     products.forEach((p) => map.set(p.id, p.name));
@@ -24,35 +25,24 @@ const Breadcrumb = () => {
           <Link href="/" className="hover:text-sky-500 transition-colors">
             Home
           </Link>
-          {segments.length > 0 && <ChevronRight size={16} aria-hidden="true" />}
+          {segments.length > 0 && <ChevronRight size={16} />}
         </li>
 
         {segments.map((segment, index) => {
           const href = `/${segments.slice(0, index + 1).join("/")}`;
           const isLast = index === segments.length - 1;
-
           const displayName =
             productMap.get(segment) ||
             segment.charAt(0).toUpperCase() + segment.slice(1);
 
           return (
-            <li key={href} className="flex items-center gap-2">
+            <li className="flex items-center gap-2">
               {isLast ? (
-                <span
-                  className="text-zinc-900 font-semibold"
-                  aria-current="page"
-                >
-                  {displayName}
-                </span>
+                <span className="text-gray-950">{displayName}</span>
               ) : (
                 <>
-                  <Link
-                    href={href}
-                    className="hover:text-sky-500 transition-colors"
-                  >
-                    {displayName}
-                  </Link>
-                  <ChevronRight size={16} aria-hidden="true" />
+                  <Link href={href}>{displayName}</Link>
+                  <ChevronRight size={16} />
                 </>
               )}
             </li>

@@ -72,7 +72,7 @@ const ProductView = ({ id }: ProductViewProps) => {
   console.log(cart);
 
   return (
-    <div className="py-10">
+    <div className="pb-10">
       <Breadcrumb />
       <div className="flex flex-col sm:items-center lg:flex-row lg:items-start gap-5 lg:gap-10">
         <div className="flex-shrink-0 w-full max-w-[500px]">
