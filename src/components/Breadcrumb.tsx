@@ -20,7 +20,7 @@ const Breadcrumb = () => {
 
   return (
     <nav aria-label="Breadcrumb" className="py-6">
-      <ol className="flex items-center gap-2 text-sm font-medium text-zinc-500">
+      <ol className="flex flex-nowrap scrollbar-hide [&-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:display-none overflow-x-auto whitespace-nowrap items-center gap-2 text-sm font-medium text-zinc-500">
         <li className="flex items-center gap-2">
           <Link href="/" className="hover:text-sky-500 transition-colors">
             Home
@@ -36,7 +36,7 @@ const Breadcrumb = () => {
             segment.charAt(0).toUpperCase() + segment.slice(1);
 
           return (
-            <li className="flex items-center gap-2">
+            <li className="flex items-center gap-2" key={index}>
               {isLast ? (
                 <span className="text-gray-950">{displayName}</span>
               ) : (
