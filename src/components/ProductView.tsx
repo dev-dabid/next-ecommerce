@@ -155,11 +155,13 @@ const ProductView = ({ id }: ProductViewProps) => {
           </div>
         </div>
       </div>
-      <RelatedProducts
-        mainProductId={id}
-        products={products}
-        relatedKey={getProduct.keywords[0]}
-      />
+      <div className="py-10">
+        <RelatedProducts
+          mainProductId={id}
+          products={products}
+          relatedKey={getProduct.keywords[0]}
+        />
+      </div>
     </div>
   );
 };
