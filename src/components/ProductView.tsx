@@ -6,6 +6,7 @@ import useWishList from "@/hooks/useWishlist";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { formattedPrice } from "@/app/lib/utils/money";
+import Breadcrumb from "./Breadcrumb";
 import ProductRating from "./ProductRating";
 import SizeSelector from "./SizeSelector";
 import ColorSelector from "./ColorSelector";
@@ -72,6 +73,7 @@ const ProductView = ({ id }: ProductViewProps) => {
 
   return (
     <div className="py-10">
+      <Breadcrumb />
       <div className="flex flex-col sm:items-center lg:flex-row lg:items-start gap-5 lg:gap-10">
         <div className="flex-shrink-0 w-full max-w-[500px]">
           <div className="relative overflow-hidden w-full aspect-[500/613] rounded-2xl bg-white flex items-center justify-center">
