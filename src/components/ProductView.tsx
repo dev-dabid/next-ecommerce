@@ -11,6 +11,7 @@ import ProductRating from "./ProductRating";
 import SizeSelector from "./SizeSelector";
 import ColorSelector from "./ColorSelector";
 import QuantitySelector from "./QuantitySelector";
+import RelatedProducts from "./RelatedProducts";
 import { Heart, ShoppingCart } from "lucide-react";
 
 type ProductViewProps = {
@@ -70,7 +71,7 @@ const ProductView = ({ id }: ProductViewProps) => {
     : { ...getProduct, quantity: selected.count, isChecked: true };
 
   console.log(cart);
-
+  console.log(getProduct.keywords[0]);
   return (
     <div className="pb-10">
       <Breadcrumb />
@@ -154,6 +155,11 @@ const ProductView = ({ id }: ProductViewProps) => {
           </div>
         </div>
       </div>
+      <RelatedProducts
+        mainProductId={id}
+        products={products}
+        relatedKey={getProduct.keywords[0]}
+      />
     </div>
   );
 };
