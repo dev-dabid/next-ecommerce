@@ -60,7 +60,9 @@ const Header = () => {
             <Input />
           </div>
           <div className="relative after:conte">
-            <ShoppingBag />
+            <Link href={"/cart"}>
+              <ShoppingBag />
+            </Link>
           </div>
           <div className="hidden lg:block">
             <CircleUserRound />
