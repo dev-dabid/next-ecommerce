@@ -1,5 +1,6 @@
 import type { Product } from "@/types/types";
 import Image from "next/image";
+import Link from "next/link";
 import { formattedPrice } from "@/app/lib/utils/money";
 
 type RelatedProductsProps = {
@@ -24,7 +25,13 @@ const RelatedProducts = ({
     <>
       {filteredProducts.length > 0 ? (
         <div className="mt-20">
-          <h1 className="text-xl font-bold lg:px-0">Related Products</h1>
+          <div className="flex justify-between">
+            <h1 className="text-xl font-bold lg:px-0">Related Products</h1>
+            <Link className="font-semibold text-sky-500" href={""}>
+              View all
+            </Link>
+          </div>
+
           <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide lg:grid lg:grid-cols-4 lg:gap-6 mt-4 pb-4 px-4 lg:px-0">
             {filteredProducts.map((product, index) => (
               <div
