@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import Woman from "@/images/woman.png";
 
@@ -18,7 +19,7 @@ const Hero = () => {
 
         <div className="flex gap-4 mt-7">
           <button className="text-[clamp(0.60rem,3vw,1.125rem)] active:bg-sky-600  hover:bg-sky-300 bg-sky-400 font-[550] py-3 px-3 lg:px-6 rounded-xl w-full">
-            Shop Collection
+            <Link href={"/collections"}>Shop Collection</Link>
           </button>
           <button className="text-[clamp(0.55rem,3vw,1.125rem)] active:bg-gray-400 hover:bg-gray-200 bg white font-[550] py-3 px-3 lg:px-6 rounded-xl border-2 border-gray-300 w-full">
             Explore Lookbook
