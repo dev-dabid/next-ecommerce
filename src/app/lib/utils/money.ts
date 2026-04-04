@@ -1,2 +1,2 @@
 export const formattedPrice = (priceCents: number) =>
-  (priceCents / 100).toFixed(2);
+  Number((priceCents / 100).toFixed(2));

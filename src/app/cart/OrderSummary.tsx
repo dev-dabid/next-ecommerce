@@ -1,6 +1,28 @@
-type OrderSummaryProps = {};
+import type { CartProduct } from "@/types/types";
+import { formattedPrice } from "../lib/utils/money";
+import { format } from "path";
 
-const OrderSummary = () => {
+type OrderSummaryProps = {
+  cartItems: CartProduct[];
+};
+
+const OrderSummary = ({ cartItems }: OrderSummaryProps) => {
+  const subtotal = cartItems.reduce(
+    (acc, cartItem) => acc + cartItem.priceCents * cartItem.quantity,
+    0,
+  );
+  const taxCents = cartItems.length > 0 ? 1000 : 0;
+
+  const estimatedTax = subtotal * 0.07;
+
+  const isFree =
+    formattedPrice(subtotal) > 500 ? "FREE" : `$${formattedPrice(taxCents)}`;
+
+  const totalPrice =
+    formattedPrice(subtotal) < 500
+      ? subtotal + estimatedTax + taxCents
+      : subtotal + estimatedTax;
+
   return (
     <div className="p-6 max-w-100 w-full bg-white h-fit rounded-2xl">
       <div className="flex flex-col">
@@ -8,21 +30,23 @@ const OrderSummary = () => {
         <div className="flex flex-col gap-3">
           <div className="flex justify-between">
             <p className="text-gray-500">Subtotal</p>
-            <p className="font-semibold">$768.00</p>
+            <p className="font-semibold">${formattedPrice(subtotal)}</p>
           </div>
           <div className="flex justify-between">
             <p className="text-gray-500">Shipping</p>
-            <p className="font-semibold text-sky-400">FREE</p>
+            <p className="font-semibold text-sky-400">{isFree}</p>
           </div>
           <div className="flex justify-between">
             <p className="text-gray-500">Estimated Tax</p>
-            <p className="font-semibold">$61.44</p>
+            <p className="font-semibold">${formattedPrice(estimatedTax)}</p>
           </div>
 
           <div className="py-2 border-t border-t-sky-200">
             <div className="flex justify-between">
               <p className="text-lg font-semibold">Total</p>
-              <p className="text-2xl text-sky-500 font-bold">$829.00</p>
+              <p className="text-2xl text-sky-500 font-bold">
+                ${formattedPrice(totalPrice)}
+              </p>
             </div>
           </div>
 

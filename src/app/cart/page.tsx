@@ -27,7 +27,7 @@ export default function Cart() {
             })}
           </div>
         </div>
-        <OrderSummary />
+        <OrderSummary cartItems={cartItems} />
       </div>
     </div>
   );
