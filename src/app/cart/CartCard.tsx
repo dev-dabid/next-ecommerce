@@ -49,7 +49,7 @@ const CartCard = ({ product }: CartCardProps) => {
 
       <div className="shrink-0 text-right ml-2">
         <p className="text-sm font-bold text-sky-600">
-          {formattedPrice(totalPrice)}
+          ${formattedPrice(totalPrice)}
         </p>
         <button className="text-[10px] text-gray-300 hover:text-red-500 transition-colors mt-1">
           Remove
