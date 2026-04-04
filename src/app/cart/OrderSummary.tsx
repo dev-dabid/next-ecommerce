@@ -7,21 +7,26 @@ type OrderSummaryProps = {
 };
 
 const OrderSummary = ({ cartItems }: OrderSummaryProps) => {
-  const subtotal = cartItems.reduce(
-    (acc, cartItem) => acc + cartItem.priceCents * cartItem.quantity,
+  const subtotalCents = cartItems.reduce(
+    (acc, item) => acc + item.priceCents * item.quantity,
     0,
   );
-  const taxCents = cartItems.length > 0 ? 1000 : 0;
 
-  const estimatedTax = subtotal * 0.07;
+  const FREE_SHIPPING_THRESHOLD = 5000;
+  const hasFreeShipping =
+    subtotalCents >= FREE_SHIPPING_THRESHOLD || subtotalCents === 0;
+  const actualShippingFee = hasFreeShipping ? 0 : 1000;
 
-  const isFree =
-    formattedPrice(subtotal) > 500 ? "FREE" : `$${formattedPrice(taxCents)}`;
+  const estimatedTaxCents = Math.round(subtotalCents * 0.07);
 
-  const totalPrice =
-    formattedPrice(subtotal) < 500
-      ? subtotal + estimatedTax + taxCents
-      : subtotal + estimatedTax;
+  const totalCents = subtotalCents + estimatedTaxCents + actualShippingFee;
+
+  const preTotalDisplay = `$${formattedPrice(subtotalCents)}`;
+  const estimatedTaxDisplay = `$${formattedPrice(estimatedTaxCents)}`;
+  const shippingDisplay = hasFreeShipping
+    ? "FREE"
+    : `$${formattedPrice(actualShippingFee)}`;
+  const totalDisplay = `$${formattedPrice(totalCents)}`;
 
   return (
     <div className="p-6 max-w-100 w-full bg-white h-fit rounded-2xl">
@@ -30,23 +35,21 @@ const OrderSummary = ({ cartItems }: OrderSummaryProps) => {
         <div className="flex flex-col gap-3">
           <div className="flex justify-between">
             <p className="text-gray-500">Subtotal</p>
-            <p className="font-semibold">${formattedPrice(subtotal)}</p>
+            <p className="font-semibold">{preTotalDisplay}</p>
           </div>
           <div className="flex justify-between">
             <p className="text-gray-500">Shipping</p>
-            <p className="font-semibold text-sky-400">{isFree}</p>
+            <p className="font-semibold text-sky-400">{shippingDisplay}</p>
           </div>
           <div className="flex justify-between">
             <p className="text-gray-500">Estimated Tax</p>
-            <p className="font-semibold">${formattedPrice(estimatedTax)}</p>
+            <p className="font-semibold">{estimatedTaxDisplay}</p>
           </div>
 
           <div className="py-2 border-t border-t-sky-200">
             <div className="flex justify-between">
               <p className="text-lg font-semibold">Total</p>
-              <p className="text-2xl text-sky-500 font-bold">
-                ${formattedPrice(totalPrice)}
-              </p>
+              <p className="text-2xl text-sky-500 font-bold">{totalDisplay}</p>
             </div>
           </div>
 
