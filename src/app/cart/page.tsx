@@ -10,7 +10,7 @@ export default function Cart() {
 
   return (
     <div className="">
-      <div className="flex flex-col lg:flex-row justify-between max-w-300 mx-auto">
+      <div className="flex flex-col lg:flex-row justify-between max-w-300 mx-auto h-screen">
         <div className="flex flex-col w-full">
           <div className="flex justify-between">
             <h1>Shopping Cart</h1>
