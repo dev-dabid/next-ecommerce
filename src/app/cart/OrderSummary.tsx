@@ -1,4 +1,4 @@
-type OrderSummaryPros = {};
+type OrderSummaryProps = {};
 
 const OrderSummary = () => {
   return (

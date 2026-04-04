@@ -7,7 +7,9 @@ type CartCardProps = {
 };
 
 const CartCard = ({ product }: CartCardProps) => {
-  const { image, name, priceCents } = product;
+  const { image, name, quantity, priceCents } = product;
+
+  const totalPrice = priceCents * quantity;
 
   return (
     <div className="flex gap-3 p-3 bg-white rounded-xl border border-sky-50 shadow-sm w-full overflow-hidden group hover:border-sky-200 transition-colors">
@@ -27,13 +29,27 @@ const CartCard = ({ product }: CartCardProps) => {
           {name}
         </h1>
         <p className="text-[10px] uppercase tracking-wider text-gray-400 mt-0.5">
-          Premium Edition
+          Quantity: {product.quantity}
         </p>
+        <div className="flex gap-2">
+          {product.color && product.size ? (
+            <>
+              <p className="text-[10px] uppercase tracking-wider text-gray-400 mt-0.5">
+                color: {product.color}
+              </p>
+              <p className="text-[10px] uppercase tracking-wider text-gray-400 mt-0.5">
+                size: {product.size}
+              </p>
+            </>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
 
       <div className="shrink-0 text-right ml-2">
         <p className="text-sm font-bold text-sky-600">
-          {formattedPrice(priceCents)}
+          {formattedPrice(totalPrice)}
         </p>
         <button className="text-[10px] text-gray-300 hover:text-red-500 transition-colors mt-1">
           Remove
