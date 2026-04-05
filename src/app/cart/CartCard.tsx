@@ -1,11 +1,11 @@
-import type { CartProduct } from "@/types/types";
+import type { CartProduct, UpdateType } from "@/types/types";
 import Image from "next/image";
 import { formattedPrice } from "../lib/utils/money";
 import { generateCartKey } from "../lib/utils/cart";
 
 type CartCardProps = {
   product: CartProduct;
-  updateQuantity: (itemKey: string, value: number) => void;
+  updateQuantity: (itemKey: string, value: number, type: UpdateType) => void;
 };
 
 const CartCard = ({ product, updateQuantity }: CartCardProps) => {
@@ -14,6 +14,7 @@ const CartCard = ({ product, updateQuantity }: CartCardProps) => {
   const keyItem = generateCartKey(id, color, size);
 
   const totalPrice = priceCents * quantity;
+  const displayTotalPrice = `$${formattedPrice(totalPrice)}`;
 
   return (
     <div className="flex gap-3 p-3 bg-white rounded-xl border border-sky-50 shadow-sm w-full overflow-hidden group hover:border-sky-200 transition-colors">
@@ -45,20 +46,18 @@ const CartCard = ({ product, updateQuantity }: CartCardProps) => {
                 size: {product.size}
               </p>
             </>
-          ) : (
-            ""
-          )}
+          ) : null}
         </div>
         <div className="flex items-end mt-3">
-          <button onClick={() => updateQuantity(keyItem, 1)}>+</button>
-          <button>-</button>
+          <button onClick={() => updateQuantity(keyItem, 1, "add")}>+</button>
+          <button onClick={() => updateQuantity(keyItem, 1, "reduce")}>
+            -
+          </button>
         </div>
       </div>
 
       <div className="shrink-0 text-right ml-2">
-        <p className="text-sm font-bold text-sky-600">
-          ${formattedPrice(totalPrice)}
-        </p>
+        <p className="text-sm font-bold text-sky-600">{displayTotalPrice}</p>
         <button className="text-[10px] text-gray-300 hover:text-red-500 transition-colors mt-1">
           Remove
         </button>

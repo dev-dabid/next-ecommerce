@@ -22,15 +22,14 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
     }
   },
 
-  updateQuantity: (itemKey, value) => {
+  updateQuantity: (itemKey, value, type) => {
     const newCart = new Map(get().cart);
     const item = newCart.get(itemKey);
 
-    console.log(item);
-
     if (item) {
-      newCart.set(itemKey, { ...item, quantity: item.quantity + value });
-      console.log("added");
+      const newQuantity =
+        type === "add" ? item.quantity + value : item.quantity - value;
+      newCart.set(itemKey, { ...item, quantity: newQuantity });
       set({ cart: newCart });
     } else {
       console.log(`item is ${itemKey} ${newCart}`);
