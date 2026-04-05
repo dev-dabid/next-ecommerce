@@ -1,6 +1,7 @@
 import type { CartProduct } from "@/types/types";
 import Image from "next/image";
 import { formattedPrice } from "../lib/utils/money";
+import { generateCartKey } from "../lib/utils/cart";
 
 type CartCardProps = {
   product: CartProduct;
@@ -8,7 +9,9 @@ type CartCardProps = {
 };
 
 const CartCard = ({ product, updateQuantity }: CartCardProps) => {
-  const { id, image, name, quantity, priceCents } = product;
+  const { id, image, name, quantity, priceCents, color, size } = product;
+
+  const keyItem = generateCartKey(id, color, size);
 
   const totalPrice = priceCents * quantity;
 
@@ -47,7 +50,7 @@ const CartCard = ({ product, updateQuantity }: CartCardProps) => {
           )}
         </div>
         <div className="flex items-end mt-3">
-          <button onClick={() => updateQuantity(id, 1)}>+</button>
+          <button onClick={() => updateQuantity(keyItem, 1)}>+</button>
           <button>-</button>
         </div>
       </div>
