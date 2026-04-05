@@ -62,8 +62,8 @@ export default function Collections() {
 
           <div className="flex flex-col gap-15">
             <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 gap-y-5">
-              {products.slice(0, visible).map((product, index) => {
-                return <ProductCard key={index} product={product} />;
+              {products.slice(0, visible).map((product) => {
+                return <ProductCard key={product.id} product={product} />;
               })}
             </div>
             <div className="flex justify-center items-center flex-col">
