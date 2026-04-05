@@ -2,19 +2,33 @@ import type { CartProduct, UpdateType } from "@/types/types";
 import Image from "next/image";
 import { formattedPrice } from "../lib/utils/money";
 import { generateCartKey } from "../lib/utils/cart";
+import { Minus } from "lucide-react";
+import { Plus } from "lucide-react";
+import { SyntheticEvent } from "react";
 
 type CartCardProps = {
   product: CartProduct;
   updateQuantity: (itemKey: string, value: number, type: UpdateType) => void;
+  inputQuantity: (itemKey: string, value: number) => void;
 };
 
-const CartCard = ({ product, updateQuantity }: CartCardProps) => {
+const CartCard = ({
+  product,
+  updateQuantity,
+  inputQuantity,
+}: CartCardProps) => {
   const { id, image, name, quantity, priceCents, color, size } = product;
 
   const keyItem = generateCartKey(id, color, size);
   const totalPrice = priceCents * quantity;
 
   const displayTotalPrice = `$${formattedPrice(totalPrice)}`;
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+
+    inputQuantity(keyItem, value);
+  };
 
   return (
     <div className="flex gap-3 p-3 bg-white rounded-xl border border-sky-50 shadow-sm w-full overflow-hidden group hover:border-sky-200 transition-colors">
@@ -49,9 +63,16 @@ const CartCard = ({ product, updateQuantity }: CartCardProps) => {
           ) : null}
         </div>
         <div className="flex items-end mt-3">
-          <button onClick={() => updateQuantity(keyItem, 1, "add")}>+</button>
           <button onClick={() => updateQuantity(keyItem, 1, "reduce")}>
-            -
+            <Minus size={15} />
+          </button>
+          <input
+            type="text"
+            value={quantity}
+            onChange={(e) => handleInput(e)}
+          />
+          <button onClick={() => updateQuantity(keyItem, 1, "add")}>
+            <Plus size={15} />
           </button>
         </div>
       </div>

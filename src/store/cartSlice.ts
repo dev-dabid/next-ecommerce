@@ -31,10 +31,25 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
         type === "add" ? item.quantity + value : item.quantity - value;
 
       if (newQuantity > 0 && newQuantity <= 20) {
-        newCart.set(itemKey, { ...item, quantity: newQuantity });
+        newCart.set(itemKey, {
+          ...item,
+          quantity: newQuantity,
+        });
         set({ cart: newCart });
       } else {
         console.log("Limit reached or invalid quantity");
+      }
+    }
+  },
+
+  inputQuantity: (itemKey, value) => {
+    const newCart = new Map(get().cart);
+    const item = newCart.get(itemKey);
+
+    if (item) {
+      if (value <= 20 && value >= 1) {
+        newCart.set(itemKey, { ...item, quantity: value });
+        set({ cart: newCart });
       }
     }
   },

@@ -34,10 +34,10 @@ export type UpdateType = "add" | "reduce";
 
 export interface CartState {
   cart: Map<Id, CartProduct>;
-  updateQuantity: (itemKey: string, value: number, type: UpdateType) => void;
-  removeItem: (itemKey: string) => void;
-
   addToCart: (product: CartProduct) => void;
+  updateQuantity: (itemKey: string, value: number, type?: UpdateType) => void;
+  inputQuantity: (itemKey: string, value: number) => void;
+  removeItem: (itemKey: string) => void;
 }
 
 export interface WishlistState {

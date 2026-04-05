@@ -5,7 +5,7 @@ import CartCard from "./CartCard";
 import OrderSummary from "./OrderSummary";
 
 export default function Cart() {
-  const { cart, updateQuantity } = useCart();
+  const { cart, updateQuantity, inputQuantity } = useCart();
 
   const cartItems = Array.from(cart.values());
 
@@ -30,6 +30,7 @@ export default function Cart() {
                   key={index}
                   product={item}
                   updateQuantity={updateQuantity}
+                  inputQuantity={inputQuantity}
                 />
               );
             })}
