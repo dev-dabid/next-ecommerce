@@ -32,6 +32,8 @@ export type Id = string;
 
 export interface CartState {
   cart: Map<Id, CartProduct>;
+  updateQuantity: (itemKey: string, value: number) => void;
+  removeItem: (itemKey: string) => void;
 
   addToCart: (product: CartProduct) => void;
 }

@@ -5,7 +5,7 @@ import CartCard from "./CartCard";
 import OrderSummary from "./OrderSummary";
 
 export default function Cart() {
-  const { cart, addToCart } = useCart();
+  const { cart, updateQuantity } = useCart();
 
   const cartItems = Array.from(cart.values());
 
@@ -23,7 +23,13 @@ export default function Cart() {
           </div>
           <div className="grid gap-5">
             {cartItems.map((item, index) => {
-              return <CartCard key={index} product={item} />;
+              return (
+                <CartCard
+                  key={index}
+                  product={item}
+                  updateQuantity={updateQuantity}
+                />
+              );
             })}
           </div>
         </div>

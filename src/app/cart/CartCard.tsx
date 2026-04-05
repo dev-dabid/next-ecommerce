@@ -24,7 +24,7 @@ const CartCard = ({ product }: CartCardProps) => {
         />
       </div>
 
-      <div className="flex flex-col flex-1 min-w-0">
+      <div className="flex flex-col flex-1 min-w-0 h-full">
         <h1 className="text-sm font-semibold text-gray-800 truncate leading-tight">
           {name}
         </h1>
@@ -44,6 +44,10 @@ const CartCard = ({ product }: CartCardProps) => {
           ) : (
             ""
           )}
+        </div>
+        <div className="flex items-end mt-3">
+          <button>+</button>
+          <button>-</button>
         </div>
       </div>
 
