@@ -43,44 +43,46 @@ const CartCard = ({
         />
       </div>
 
-      <div className="flex flex-col flex-1 min-w-0 h-full">
-        <h1 className="text-sm font-semibold text-gray-800 truncate leading-tight">
-          {name}
-        </h1>
-        <p className="text-[10px] uppercase tracking-wider text-gray-400 mt-0.5">
-          Quantity: {product.quantity}
-        </p>
-        <div className="flex gap-2">
-          {product.color && product.size ? (
-            <>
-              <p className="text-[10px] uppercase tracking-wider text-gray-400 mt-0.5">
-                color: {product.color}
-              </p>
-              <p className="text-[10px] uppercase tracking-wider text-gray-400 mt-0.5">
-                size: {product.size}
-              </p>
-            </>
-          ) : null}
+      <div className="flex flex-col justify-between flex-1 min-w-0 h-full">
+        <div className="flex flex-col">
+          <h1 className="text-sm font-semibold text-gray-800 truncate leading-tight">
+            {name}
+          </h1>
+          <div className="flex gap-2">
+            {product.color && product.size ? (
+              <>
+                <p className="text-[10px] uppercase tracking-wider text-gray-400 mt-0.5">
+                  color: {product.color}
+                </p>
+                <p className="text-[10px] uppercase tracking-wider text-gray-400 mt-0.5">
+                  size: {product.size}
+                </p>
+              </>
+            ) : null}
+          </div>
         </div>
-        <div className="flex items-center mt-3 border w-fit rounded-lg border-sky-200">
-          <button
-            className="py-3 px-2 font-bold"
-            onClick={() => updateQuantity(keyItem, 1, "reduce")}
-          >
-            <Minus size={15} />
-          </button>
-          <input
-            className="text-center w-full max-w-20"
-            type="text"
-            value={quantity}
-            onChange={(e) => handleInput(e)}
-          />
-          <button
-            className="py-3 px-2 text-sky-500 font-bold"
-            onClick={() => updateQuantity(keyItem, 1, "add")}
-          >
-            <Plus size={15} />
-          </button>
+
+        <div className="flex items-end">
+          <div className="flex items-center mt-3 border w-fit rounded-lg border-sky-200">
+            <button
+              className="py-3 px-2 font-bold"
+              onClick={() => updateQuantity(keyItem, 1, "reduce")}
+            >
+              <Minus size={15} />
+            </button>
+            <input
+              className="text-center w-full max-w-20"
+              type="text"
+              value={quantity}
+              onChange={(e) => handleInput(e)}
+            />
+            <button
+              className="py-3 px-2 text-sky-500 font-bold"
+              onClick={() => updateQuantity(keyItem, 1, "add")}
+            >
+              <Plus size={15} />
+            </button>
+          </div>
         </div>
       </div>
 
