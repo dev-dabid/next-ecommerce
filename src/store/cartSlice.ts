@@ -47,7 +47,7 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
     const item = newCart.get(itemKey);
 
     if (item) {
-      if (value <= 20 && value >= 1) {
+      if (value <= 20 && value >= 0) {
         newCart.set(itemKey, { ...item, quantity: value });
         set({ cart: newCart });
       }
