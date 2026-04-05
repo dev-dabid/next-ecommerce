@@ -12,8 +12,8 @@ const CartCard = ({ product, updateQuantity }: CartCardProps) => {
   const { id, image, name, quantity, priceCents, color, size } = product;
 
   const keyItem = generateCartKey(id, color, size);
-
   const totalPrice = priceCents * quantity;
+
   const displayTotalPrice = `$${formattedPrice(totalPrice)}`;
 
   return (
