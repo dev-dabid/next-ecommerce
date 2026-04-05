@@ -4,10 +4,11 @@ import { formattedPrice } from "../lib/utils/money";
 
 type CartCardProps = {
   product: CartProduct;
+  updateQuantity: (itemKey: string, value: number) => void;
 };
 
-const CartCard = ({ product }: CartCardProps) => {
-  const { image, name, quantity, priceCents } = product;
+const CartCard = ({ product, updateQuantity }: CartCardProps) => {
+  const { id, image, name, quantity, priceCents } = product;
 
   const totalPrice = priceCents * quantity;
 
@@ -46,7 +47,7 @@ const CartCard = ({ product }: CartCardProps) => {
           )}
         </div>
         <div className="flex items-end mt-3">
-          <button>+</button>
+          <button onClick={() => updateQuantity(id, 1)}>+</button>
           <button>-</button>
         </div>
       </div>
