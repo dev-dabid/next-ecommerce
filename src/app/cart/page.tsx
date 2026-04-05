@@ -1,6 +1,7 @@
 "use client";
 
 import useCart from "@/hooks/useCart";
+import { useMemo } from "react";
 import CartCard from "./CartCard";
 import OrderSummary from "./OrderSummary";
 
@@ -9,7 +10,12 @@ export default function Cart() {
 
   const cartItems = Array.from(cart.values());
 
-  console.log(cart);
+  const cartTotalItems = cartItems.reduce(
+    (acc, item) => acc + item.quantity,
+    0,
+  );
+
+  const displayCartTotalItems = `(${cartTotalItems} items)`;
 
   return (
     <div className="mt-5">
@@ -18,7 +24,7 @@ export default function Cart() {
           <div className="flex justify-between mb-5">
             <div className="flex items-center gap-3">
               <h1 className="text-2xl font-semibold">Shopping Cart</h1>
-              <p>{`(3 items)`}</p>
+              <p>{displayCartTotalItems}</p>
             </div>
 
             <p className="text-sky-500">Clear all</p>
