@@ -62,16 +62,23 @@ const CartCard = ({
             </>
           ) : null}
         </div>
-        <div className="flex items-end mt-3">
-          <button onClick={() => updateQuantity(keyItem, 1, "reduce")}>
+        <div className="flex items-center mt-3 border w-fit rounded-lg border-sky-200">
+          <button
+            className="py-3 px-2 font-bold"
+            onClick={() => updateQuantity(keyItem, 1, "reduce")}
+          >
             <Minus size={15} />
           </button>
           <input
+            className="text-center w-full max-w-20"
             type="text"
             value={quantity}
             onChange={(e) => handleInput(e)}
           />
-          <button onClick={() => updateQuantity(keyItem, 1, "add")}>
+          <button
+            className="py-3 px-2 text-sky-500 font-bold"
+            onClick={() => updateQuantity(keyItem, 1, "add")}
+          >
             <Plus size={15} />
           </button>
         </div>
