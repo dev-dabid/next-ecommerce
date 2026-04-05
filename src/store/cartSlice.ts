@@ -16,8 +16,19 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
       });
       set({ cart: currentCart });
     } else {
-      currentCart.set(itemKey, product);
+      currentCart.set(itemKey, { ...product, isChecked: true });
       set({ cart: currentCart });
+    }
+  },
+
+  updateQuantity: (itemKey: string, value: number) => {
+    const newCart = new Map(get().cart);
+    const item = newCart.get(itemKey);
+
+    if (item) {
+      newCart.set(itemKey, { ...item, quantity: value });
+
+      set({ cart: newCart });
     }
   },
 });
