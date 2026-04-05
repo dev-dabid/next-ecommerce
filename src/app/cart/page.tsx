@@ -9,6 +9,8 @@ export default function Cart() {
 
   const cartItems = Array.from(cart.values());
 
+  console.log(cart);
+
   return (
     <div className="mt-5">
       <div className="flex flex-col lg:flex-row justify-between max-w-300 mx-auto h-screen gap-10">

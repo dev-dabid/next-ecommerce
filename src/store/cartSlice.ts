@@ -6,7 +6,12 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
 
   addToCart: (product) => {
     const currentCart = new Map(get().cart);
-    const itemKey = `${product.id}-${product.color}-${product.size}`;
+
+    const itemKey =
+      product.color === undefined && product.size === undefined
+        ? `${product.id}`
+        : `${product.id}-${product.color}-${product.size}`;
+
     const existingItem = currentCart.get(itemKey);
 
     if (existingItem) {
@@ -27,7 +32,6 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
 
     if (item) {
       newCart.set(itemKey, { ...item, quantity: item.quantity + value });
-
       set({ cart: newCart });
     }
   },
