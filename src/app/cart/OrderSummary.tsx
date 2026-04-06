@@ -29,7 +29,7 @@ const OrderSummary = ({ cartItems }: OrderSummaryProps) => {
   const totalDisplay = `$${formattedPrice(totalCents)}`;
 
   return (
-    <div className="p-6 max-w-100 w-full bg-white h-fit rounded-2xl">
+    <div className="p-6 w-full bg-white h-fit rounded-2xl">
       <div className="flex flex-col">
         <h1 className="text-xl font-semibold mb-5">Order Summary</h1>
         <div className="flex flex-col gap-3">

@@ -19,7 +19,7 @@ export default function Cart() {
 
   return (
     <div className="mt-5">
-      <div className="flex flex-col lg:flex-row justify-between max-w-300 mx-auto h-screen gap-10">
+      <div className="flex flex-col lg:flex-row justify-between max-w-300 mx-auto gap-10">
         <div className="flex flex-col w-full">
           <div className="flex justify-between mb-5">
             <div className="flex items-center gap-3">
@@ -29,20 +29,23 @@ export default function Cart() {
 
             <p className="text-sky-500">Clear all</p>
           </div>
-          <div className="grid gap-5">
-            {cartItems.map((item, index) => {
-              return (
-                <CartCard
-                  key={index}
-                  product={item}
-                  updateQuantity={updateQuantity}
-                  inputQuantity={inputQuantity}
-                />
-              );
-            })}
+          <div className="max-h-[300px] lg:max-h-[500px] overflow-y-auto pr-2">
+            <div className="grid grid-cols-1 gap-5 content-start">
+              {cartItems.map((item, index) => (
+                <div key={index} className="h-fit w-full">
+                  <CartCard
+                    product={item}
+                    updateQuantity={updateQuantity}
+                    inputQuantity={inputQuantity}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-        <OrderSummary cartItems={cartItems} />
+        <div className="flex justify-center max-w-full lg:max-w-100  w-full">
+          <OrderSummary cartItems={cartItems} />
+        </div>
       </div>
     </div>
   );
