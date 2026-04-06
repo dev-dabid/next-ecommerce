@@ -4,6 +4,7 @@ import useCart from "@/hooks/useCart";
 import { useMemo } from "react";
 import CartCard from "./CartCard";
 import OrderSummary from "./OrderSummary";
+import Footer from "@/components/Footer";
 
 export default function Cart() {
   const { cart, updateQuantity, inputQuantity } = useCart();
@@ -47,6 +48,7 @@ export default function Cart() {
           <OrderSummary cartItems={cartItems} />
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
