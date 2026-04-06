@@ -11,32 +11,26 @@ export default function Collections() {
   const { products } = useProducts();
 
   const [mounted, setMounted] = useState(false);
-
   const [visible, setVisible] = useState(8);
+
   const total = products.length;
+
+  const uniqueKeywords = useMemo(() => {
+    return Array.from(new Set(products.flatMap((p) => p.keywords)));
+  }, [products]);
+
+  const progressPercentage = (visible / total) * 100;
+  const slicedProducts = products.slice(0, visible);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
-
-  const uniqueKeywords = useMemo(() => {
-    const keywords = new Set<string>();
-    const flatKeywords = products.flatMap((p) => p.keywords);
-
-    flatKeywords.forEach((keyword) => {
-      keywords.add(keyword);
-    });
-
-    return [...keywords];
-  }, [products]);
-
-  const progressPercentage = (visible / total) * 100;
-
   const handleExploreMore = () => {
     setVisible((prev) => Math.min(prev + 8, total));
   };
+
+  if (!mounted) return null;
 
   return (
     <div className="">
