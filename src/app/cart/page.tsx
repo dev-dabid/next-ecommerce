@@ -29,7 +29,7 @@ export default function Cart() {
 
             <p className="text-sky-500">Clear all</p>
           </div>
-          <div className="max-h-[300px] lg:max-h-[500px] overflow-y-auto pr-2">
+          <div className="max-h-[300px] lg:max-h-[500px] overflow-y-auto pr-2 py-2">
             <div className="grid grid-cols-1 gap-5 content-start">
               {cartItems.map((item, index) => (
                 <div key={index} className="h-fit w-full">
