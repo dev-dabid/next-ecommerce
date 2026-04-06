@@ -70,8 +70,6 @@ const ProductView = ({ id }: ProductViewProps) => {
       }
     : { ...getProduct, quantity: selected.count, isChecked: true };
 
-  console.log(cart);
-  console.log(getProduct.keywords[0]);
   return (
     <div className="pb-10">
       <Breadcrumb />
