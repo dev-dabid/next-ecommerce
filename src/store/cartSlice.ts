@@ -54,6 +54,17 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
     }
   },
 
+  selectItem: (itemKey, value) => {
+    const newCart = new Map(get().cart);
+    const item = newCart.get(itemKey);
+
+    if (item) {
+      newCart.set(itemKey, { ...item, isChecked: value });
+
+      set({ cart: newCart });
+    }
+  },
+
   removeAllItem: () => set({ cart: new Map() }),
 
   removeItem: (itemKey) => {

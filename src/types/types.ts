@@ -37,6 +37,7 @@ export interface CartState {
   addToCart: (product: CartProduct) => void;
   updateQuantity: (itemKey: string, value: number, type?: UpdateType) => void;
   inputQuantity: (itemKey: string, value: number) => void;
+  selectItem: (itemKey: string, value: boolean) => void;
   removeAllItem: () => void;
   removeItem: (itemKey: string) => void;
 }

@@ -7,8 +7,14 @@ import OrderSummary from "./OrderSummary";
 import Footer from "@/components/Footer";
 
 export default function Cart() {
-  const { cart, updateQuantity, inputQuantity, removeAllItem, removeItem } =
-    useCart();
+  const {
+    cart,
+    updateQuantity,
+    inputQuantity,
+    removeAllItem,
+    removeItem,
+    selectItem,
+  } = useCart();
 
   const [isConfirmingClear, setIsConfirmingClear] = useState(false);
 
@@ -80,6 +86,7 @@ export default function Cart() {
                     updateQuantity={updateQuantity}
                     inputQuantity={inputQuantity}
                     removeItem={removeItem}
+                    selectItem={selectItem}
                   />
                 </div>
               ))}
