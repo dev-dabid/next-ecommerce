@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import useCart from "@/hooks/useCart";
 import Input from "@/components/Input";
 import { ShoppingBag, Gem, CircleUserRound } from "lucide-react";
 
@@ -12,6 +13,11 @@ type NavItem = {
 };
 
 const Header = () => {
+  const { cart } = useCart();
+  const pathname = usePathname();
+
+  const cartDerive = Array.from(cart.values());
+
   const navItems: NavItem[] = [
     {
       label: "Home",
@@ -31,7 +37,12 @@ const Header = () => {
     },
   ];
 
-  const pathname = usePathname();
+  const cartItemCount = cartDerive.reduce(
+    (acc, item) => acc + item.quantity,
+    0,
+  );
+
+  const cartItemCountDisplay = cartItemCount;
 
   return (
     <header className=" bg-gray-50 p-5 border-b border-b-sky-100 sticky top-0 z-50">
@@ -59,11 +70,16 @@ const Header = () => {
           <div className="hidden lg:block">
             <Input />
           </div>
-          <div className="relative after:conte">
-            <Link href={"/cart"}>
+
+          <Link href={"/cart"}>
+            <div className="relative">
               <ShoppingBag />
-            </Link>
-          </div>
+              <div className="absolute w-5 h-5 rounded-full bg-sky-400 -top-2 -right-2.5 flex justify-center items-center text-xs text-white">
+                {cartItemCountDisplay}
+              </div>
+            </div>
+          </Link>
+
           <div className="hidden lg:block">
             <CircleUserRound />
           </div>
