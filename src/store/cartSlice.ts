@@ -60,7 +60,6 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
 
     if (item) {
       newCart.set(itemKey, { ...item, isChecked: value });
-
       set({ cart: newCart });
     }
   },

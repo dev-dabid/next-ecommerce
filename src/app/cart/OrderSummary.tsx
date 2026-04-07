@@ -8,7 +8,10 @@ type OrderSummaryProps = {
 
 const OrderSummary = ({ cartItems }: OrderSummaryProps) => {
   const subtotalCents = cartItems.reduce(
-    (acc, item) => acc + item.priceCents * item.quantity,
+    (acc, item) =>
+      item.isChecked && item.quantity > 0
+        ? acc + item.priceCents * item.quantity
+        : acc,
     0,
   );
 

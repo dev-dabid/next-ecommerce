@@ -39,6 +39,8 @@ export default function Cart() {
     removeAllItem();
   };
 
+  console.log(cartItems);
+
   return (
     <div className="mt-5">
       {isConfirmingClear && (

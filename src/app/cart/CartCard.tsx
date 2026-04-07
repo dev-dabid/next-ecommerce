@@ -31,13 +31,11 @@ const CartCard = ({
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
-
     inputQuantity(keyItem, value);
   };
 
   const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.checked;
-
     selectItem(keyItem, value);
   };
 
