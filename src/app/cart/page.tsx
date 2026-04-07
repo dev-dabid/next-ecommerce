@@ -7,7 +7,7 @@ import OrderSummary from "./OrderSummary";
 import Footer from "@/components/Footer";
 
 export default function Cart() {
-  const { cart, updateQuantity, inputQuantity } = useCart();
+  const { cart, updateQuantity, inputQuantity, removeItem } = useCart();
 
   const cartItems = Array.from(cart.values());
 
@@ -38,6 +38,7 @@ export default function Cart() {
                     product={item}
                     updateQuantity={updateQuantity}
                     inputQuantity={inputQuantity}
+                    removeItem={removeItem}
                   />
                 </div>
               ))}

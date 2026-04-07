@@ -10,12 +10,14 @@ type CartCardProps = {
   product: CartProduct;
   updateQuantity: (itemKey: string, value: number, type: UpdateType) => void;
   inputQuantity: (itemKey: string, value: number) => void;
+  removeItem: (itemKey: string) => void;
 };
 
 const CartCard = ({
   product,
   updateQuantity,
   inputQuantity,
+  removeItem,
 }: CartCardProps) => {
   const { id, image, name, quantity, priceCents, color, size } = product;
 
@@ -88,7 +90,10 @@ const CartCard = ({
 
       <div className="shrink-0 text-right ml-2">
         <p className="text-sm font-bold text-sky-600">{displayTotalPrice}</p>
-        <button className="text-[10px] text-gray-300 hover:text-red-500 transition-colors mt-1">
+        <button
+          className="text-[10px] text-gray-300 hover:text-red-500 transition-colors mt-1"
+          onClick={() => removeItem(keyItem)}
+        >
           Remove
         </button>
       </div>
