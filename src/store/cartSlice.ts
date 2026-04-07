@@ -54,6 +54,8 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
     }
   },
 
+  removeAllItem: () => set({ cart: new Map() }),
+
   removeItem: (itemKey) => {
     const newCart = new Map(get().cart);
     const item = newCart.get(itemKey);
