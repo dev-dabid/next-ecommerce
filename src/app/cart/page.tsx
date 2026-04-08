@@ -39,6 +39,8 @@ export default function Cart() {
     removeAllItem();
   };
 
+  //pahinga muna ngayon, kumuha ako requirements sorry pagod talaga
+
   console.log(cartItems);
 
   return (
