@@ -5,8 +5,9 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import CartCard from "./CartCard";
 import OrderSummary from "./OrderSummary";
+import CrossSellList from "./CrossSellList";
 import Footer from "@/components/Footer";
-import { MoveLeft } from "lucide-react";
+import { Cross, MoveLeft } from "lucide-react";
 
 export default function Cart() {
   const {
@@ -40,8 +41,6 @@ export default function Cart() {
     handleCancel();
     removeAllItem();
   };
-
-  console.log(cartItems);
 
   return (
     <div className="mt-8">
@@ -109,10 +108,9 @@ export default function Cart() {
               </Link>
             </div>
           </div>
-          <div></div>
         </div>
+        <CrossSellList />
       </div>
-
       <Footer />
     </div>
   );
