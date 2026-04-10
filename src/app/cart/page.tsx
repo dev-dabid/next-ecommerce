@@ -110,7 +110,7 @@ export default function Cart() {
               </div>
             </div>
           </div>
-          <div className="max-w-300 mx-auto flex flex-col gap-4 mt-5">
+          <div className="max-w-300 mx-auto flex flex-col gap-4 mt-10 lg:mt-5 items-center lg:items-start">
             <div className="flex gap-3 items-center">
               <Truck className=" fill-sky-500" size={30} />
               <p className="text-gray-700">Free shipping on orders over $500</p>
@@ -121,7 +121,7 @@ export default function Cart() {
             </div>
           </div>
         </div>
-        <CrossSellList />
+        {cartItems.length > 0 && <CrossSellList />}
       </div>
       <Footer />
     </div>
