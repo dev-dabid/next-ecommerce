@@ -7,7 +7,7 @@ import CartCard from "./CartCard";
 import OrderSummary from "./OrderSummary";
 import CrossSellList from "./CrossSellList";
 import Footer from "@/components/Footer";
-import { Cross, MoveLeft } from "lucide-react";
+import { Shield, MoveLeft, Truck } from "lucide-react";
 
 export default function Cart() {
   const {
@@ -69,43 +69,55 @@ export default function Cart() {
         </div>
       )}
       <div className="flex flex-col mb-15">
-        <div className="flex flex-col lg:flex-row justify-between max-w-300 mx-auto gap-10 w-full">
-          <div className="flex flex-col w-full">
-            <div className="flex justify-between mb-5">
-              <div className="flex items-center gap-3">
-                <h1 className="text-2xl font-semibold">Shopping Cart</h1>
-                <p>{displayCartTotalItems}</p>
-              </div>
+        <div>
+          <div className="flex flex-col lg:flex-row justify-between max-w-300 mx-auto gap-10 w-full">
+            <div className="flex flex-col w-full">
+              <div className="flex justify-between mb-5">
+                <div className="flex items-center gap-3">
+                  <h1 className="text-2xl font-semibold">Shopping Cart</h1>
+                  <p>{displayCartTotalItems}</p>
+                </div>
 
-              <button onClick={handleOpen}>
-                <p className="text-sky-500">Clear all</p>
-              </button>
+                <button onClick={handleOpen}>
+                  <p className="text-sky-500">Clear all</p>
+                </button>
+              </div>
+              <div className="max-h-75 lg:max-h-100 overflow-y-auto pr-2 py-2">
+                <div className="grid grid-cols-1 gap-5 content-start">
+                  {cartItems.map((item, index) => (
+                    <div key={index} className="h-fit w-full">
+                      <CartCard
+                        product={item}
+                        updateQuantity={updateQuantity}
+                        inputQuantity={inputQuantity}
+                        removeItem={removeItem}
+                        selectItem={selectItem}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className="max-h-75 lg:max-h-100 overflow-y-auto pr-2 py-2">
-              <div className="grid grid-cols-1 gap-5 content-start">
-                {cartItems.map((item, index) => (
-                  <div key={index} className="h-fit w-full">
-                    <CartCard
-                      product={item}
-                      updateQuantity={updateQuantity}
-                      inputQuantity={inputQuantity}
-                      removeItem={removeItem}
-                      selectItem={selectItem}
-                    />
-                  </div>
-                ))}
+            <div className="flex w-full lg:max-w-100 items-start">
+              <div className="flex flex-col justify-center text-center w-full">
+                <OrderSummary cartItems={cartItems} />
+                <Link
+                  className="mt-5 text-sm font-semibold flex justify-center items-center gap-2 text-gray-500 hover:text-gray-700"
+                  href={"/collections"}
+                >
+                  <MoveLeft className="inline-block w-4" /> Continue Shopping
+                </Link>
               </div>
             </div>
           </div>
-          <div className="flex w-full lg:max-w-100 items-start">
-            <div className="flex flex-col justify-center text-center w-full">
-              <OrderSummary cartItems={cartItems} />
-              <Link
-                className="mt-5 text-sm font-semibold flex justify-center items-center gap-2 text-gray-500 hover:text-gray-700"
-                href={"/collections"}
-              >
-                <MoveLeft className="inline-block w-4" /> Continue Shopping
-              </Link>
+          <div className="max-w-300 mx-auto flex flex-col gap-4 mt-5">
+            <div className="flex gap-3 items-center">
+              <Truck className=" fill-sky-500" size={30} />
+              <p className="text-gray-700">Free shipping on orders over $500</p>
+            </div>
+            <div className="flex gap-3 items-center">
+              <Shield className=" fill-sky-500" size={30} />
+              <p className="text-gray-700">Secure checkout powered by Stripe</p>
             </div>
           </div>
         </div>
