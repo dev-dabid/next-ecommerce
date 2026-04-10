@@ -1,23 +1,25 @@
 import useProducts from "@/hooks/useProducts";
 import useCart from "@/hooks/useCart";
 import { useMemo } from "react";
+import { generateCartKey } from "../lib/utils/cart";
 
 const CrossSellList = () => {
   const { products } = useProducts();
   const { cart } = useCart();
 
+  const cartIds = new Set(Array.from(cart.values()).map((item) => item.id));
   const cartKeywords = new Set(
     Array.from(cart.values()).flatMap((item) => item.keywords),
   );
 
-  const relatedProducts = products.filter((product) => {
-    const isInCart = cart.has(product.id);
-    const isRelated = product.keywords.some((key) => cartKeywords.has(key));
+  const relatedProducts = products.filter((item) => {
+    const isInCart = cartIds.has(item.id);
+    const isRelated = item.keywords.some((item) => cartKeywords.has(item));
 
     return !isInCart && isRelated;
   });
 
-  const crossSellList = relatedProducts.slice(0, 4);
+  const crossListProducts = relatedProducts.slice(0, 4);
 
   return (
     <div>
