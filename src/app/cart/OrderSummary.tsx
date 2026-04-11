@@ -15,7 +15,7 @@ const OrderSummary = ({ cartItems }: OrderSummaryProps) => {
     0,
   );
 
-  const FREE_SHIPPING_THRESHOLD = 5000;
+  const FREE_SHIPPING_THRESHOLD = 50000;
   const hasFreeShipping =
     subtotalCents >= FREE_SHIPPING_THRESHOLD || subtotalCents === 0;
   const actualShippingFee = hasFreeShipping ? 0 : 1000;
