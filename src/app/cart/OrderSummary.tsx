@@ -1,6 +1,7 @@
 import type { CartProduct } from "@/types/types";
 import { formattedPrice } from "../lib/utils/money";
 import { format } from "path";
+import Link from "next/link";
 
 type OrderSummaryProps = {
   cartItems: CartProduct[];
@@ -70,7 +71,7 @@ const OrderSummary = ({ cartItems }: OrderSummaryProps) => {
           </div>
 
           <button className="text-white bg-sky-400 py-4 rounded-xl mt-2">
-            PROCEED TO CHECKOUT
+            <Link href={"/cart/checkout"}>PROCEED TO CHECKOUT</Link>
           </button>
         </div>
       </div>
