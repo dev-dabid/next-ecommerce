@@ -4,9 +4,9 @@ type TitledInputProps = {
 
 const TitledInput = ({ title }: TitledInputProps) => {
   return (
-    <div>
+    <div className="w-full">
       <p className="mb-1">{title}</p>
-      <div className="p-2 border rounded border-gray-300 bg-white">
+      <div className="p-2 border rounded border-gray-300 bg-white w-full">
         <input className="w-full outline-none" type="text" />
       </div>
     </div>
