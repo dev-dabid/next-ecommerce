@@ -28,6 +28,7 @@ const OrderSummary = ({ cartItems, shipMethod }: OrderSummaryProps) => {
   const hasFreeShipping =
     subtotalCents >= FREE_SHIPPING_THRESHOLD || subtotalCents === 0;
   const actualShippingFee = hasFreeShipping ? 0 : 1000;
+
   const shippingTypePrice =
     shipMethod?.type === "express" ? shipMethod.price : 0;
 
@@ -36,12 +37,14 @@ const OrderSummary = ({ cartItems, shipMethod }: OrderSummaryProps) => {
   const actualTotalCents = shipMethod
     ? totalCents + shippingTypePrice
     : totalCents;
+  const shippingType = shipMethod?.price === 0 ? "Complimentary" : "Express";
 
   const preTotalDisplay = `$${formattedPrice(subtotalCents)}`;
   const estimatedTaxDisplay = `$${formattedPrice(estimatedTaxCents)}`;
   const shippingDisplay = hasFreeShipping
     ? "FREE"
     : `$${formattedPrice(actualShippingFee)}`;
+  const checkoutShippingDisplay = shipMethod ? shippingType : shippingDisplay;
   const totalDisplay = `$${formattedPrice(actualTotalCents)}`;
 
   console.log(totalCents, shippingTypePrice);
@@ -57,7 +60,9 @@ const OrderSummary = ({ cartItems, shipMethod }: OrderSummaryProps) => {
           </div>
           <div className="flex justify-between">
             <p className="text-gray-500">Shipping</p>
-            <p className="font-semibold text-sky-400">{shippingDisplay}</p>
+            <p className="font-semibold text-sky-400">
+              {checkoutShippingDisplay}
+            </p>
           </div>
           <div className="flex justify-between">
             <p className="text-gray-500">Estimated Tax</p>
