@@ -50,12 +50,12 @@ export default function Checkout() {
       <div className="max-w-300 mx-auto mb-20">
         <Breadcrumb />
         <h1 className="text-4xl font-bold mb-10">Finalize Order</h1>
-        <div className="flex gap-15 justify-between">
+        <div className="flex gap-15 flex-col lg:flex-row justify-between">
           <div className="flex flex-col flex-1">
             <div className="flex flex-col">
               <CircleTag count={1} title={"Shipping Information"} />
               <div className="mt-5">
-                <div className="flex gap-4">
+                <div className="flex flex-col lg:flex-row gap-4">
                   <TitledInput
                     title={"FIRST NAME"}
                     name={"firstName"}
@@ -77,7 +77,7 @@ export default function Checkout() {
                     setInput={setInput}
                   />
                 </div>
-                <div className="flex gap-4 mt-6">
+                <div className="flex flex-col lg:flex-row gap-4 mt-6">
                   <TitledInput
                     title={"CITY"}
                     name={"city"}
@@ -107,7 +107,7 @@ export default function Checkout() {
                 <RadioGroup
                   value={selected}
                   onChange={setSelected}
-                  className="flex flex-1 gap-5 mt-7"
+                  className="flex flex-1 gap-5 mt-7 flex-col lg:flex-row"
                   by="type"
                 >
                   {shipMethods.map((method) => (
