@@ -3,11 +3,19 @@ import { formattedPrice } from "../lib/utils/money";
 import { format } from "path";
 import Link from "next/link";
 
-type OrderSummaryProps = {
-  cartItems: CartProduct[];
+type ShippingMethod = {
+  type: string;
+  title: string;
+  days: string;
+  price: number;
 };
 
-const OrderSummary = ({ cartItems }: OrderSummaryProps) => {
+type OrderSummaryProps = {
+  cartItems: CartProduct[];
+  shipMethod?: ShippingMethod;
+};
+
+const OrderSummary = ({ cartItems, shipMethod }: OrderSummaryProps) => {
   const subtotalCents = cartItems.reduce(
     (acc, item) =>
       item.isChecked && item.quantity > 0
@@ -20,17 +28,21 @@ const OrderSummary = ({ cartItems }: OrderSummaryProps) => {
   const hasFreeShipping =
     subtotalCents >= FREE_SHIPPING_THRESHOLD || subtotalCents === 0;
   const actualShippingFee = hasFreeShipping ? 0 : 1000;
+  const shippingTypePrice =
+    shipMethod?.type === "express" ? shipMethod.price : actualShippingFee;
 
   const estimatedTaxCents = Math.round(subtotalCents * 0.07);
-
   const totalCents = subtotalCents + estimatedTaxCents + actualShippingFee;
+  const actualTotalCents = shipMethod
+    ? totalCents + shippingTypePrice
+    : totalCents;
 
   const preTotalDisplay = `$${formattedPrice(subtotalCents)}`;
   const estimatedTaxDisplay = `$${formattedPrice(estimatedTaxCents)}`;
   const shippingDisplay = hasFreeShipping
     ? "FREE"
     : `$${formattedPrice(actualShippingFee)}`;
-  const totalDisplay = `$${formattedPrice(totalCents)}`;
+  const totalDisplay = `$${formattedPrice(actualTotalCents)}`;
 
   return (
     <div className="p-6 w-full bg-white h-fit rounded-2xl">

@@ -97,7 +97,7 @@ export default function Checkout() {
             </div>
           </div>
           <div className="">
-            <OrderSummary cartItems={cartItems} />
+            <OrderSummary cartItems={cartItems} shipMethod={selected} />
           </div>
         </div>
       </div>
