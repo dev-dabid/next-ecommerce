@@ -27,6 +27,14 @@ export default function Checkout() {
       price: 3500,
     },
   ];
+  const [input, setInput] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+  });
   const [selected, setSelected] = useState(shipMethods[0]);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -36,7 +44,7 @@ export default function Checkout() {
 
   const cartItems = Array.from(cart.values());
 
-  console.log(selected);
+  console.log(input);
   return (
     <div>
       <div className="max-w-300 mx-auto mb-20">
@@ -48,17 +56,47 @@ export default function Checkout() {
               <CircleTag count={1} title={"Shipping Information"} />
               <div className="mt-5">
                 <div className="flex gap-4">
-                  <TitledInput title={"FIRST NAME"} />
-                  <TitledInput title={"LAST NAME"} />
+                  <TitledInput
+                    title={"FIRST NAME"}
+                    name={"firstName"}
+                    value={input.firstName}
+                    setInput={setInput}
+                  />
+                  <TitledInput
+                    title={"LAST NAME"}
+                    name={"lastName"}
+                    value={input.lastName}
+                    setInput={setInput}
+                  />
                 </div>
                 <div className="mt-6">
-                  <TitledInput title={"ADDRESS"} />
+                  <TitledInput
+                    title={"ADDRESS"}
+                    name={"address"}
+                    value={input.address}
+                    setInput={setInput}
+                  />
                 </div>
                 <div className="flex gap-4 mt-6">
-                  <TitledInput title={"CITY"} />
+                  <TitledInput
+                    title={"CITY"}
+                    name={"city"}
+                    value={input.city}
+                    setInput={setInput}
+                  />
                   <div className="flex gap-4 w-full">
-                    <TitledInput title={"STATE"} />
-                    <TitledInput title={"ZIP CODE"} />
+                    <TitledInput
+                      title={"STATE"}
+                      name={"state"}
+                      value={input.state}
+                      setInput={setInput}
+                    />
+                    <TitledInput
+                      title={"ZIP CODE"}
+                      name={"zipCode"}
+                      value={input.zipCode}
+                      setInput={setInput}
+                    />
                   </div>
                 </div>
               </div>

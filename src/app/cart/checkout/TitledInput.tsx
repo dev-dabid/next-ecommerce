@@ -1,13 +1,42 @@
-type TitledInputProps = {
-  title: string;
+import { Dispatch, SetStateAction } from "react";
+
+type Inputs = {
+  firstName: string;
+  lastName: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
 };
 
-const TitledInput = ({ title }: TitledInputProps) => {
+type TitledInputProps = {
+  title: string;
+  name: string;
+  value: string;
+  setInput: Dispatch<SetStateAction<Inputs>>;
+};
+
+const TitledInput = ({ title, name, value, setInput }: TitledInputProps) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setInput((preVal) => {
+      return { ...preVal, [name]: value };
+    });
+  };
+
   return (
     <div className="w-full">
       <p className="mb-1">{title}</p>
       <div className="p-2 border rounded border-gray-300 bg-white w-full">
-        <input className="w-full outline-none" type="text" />
+        <input
+          name={name}
+          value={value}
+          className="w-full outline-none"
+          type="text"
+          onChange={handleInput}
+        />
       </div>
     </div>
   );
