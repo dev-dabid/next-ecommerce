@@ -29,7 +29,7 @@ const OrderSummary = ({ cartItems, shipMethod }: OrderSummaryProps) => {
     subtotalCents >= FREE_SHIPPING_THRESHOLD || subtotalCents === 0;
   const actualShippingFee = hasFreeShipping ? 0 : 1000;
   const shippingTypePrice =
-    shipMethod?.type === "express" ? shipMethod.price : actualShippingFee;
+    shipMethod?.type === "express" ? shipMethod.price : 0;
 
   const estimatedTaxCents = Math.round(subtotalCents * 0.07);
   const totalCents = subtotalCents + estimatedTaxCents + actualShippingFee;
@@ -43,6 +43,8 @@ const OrderSummary = ({ cartItems, shipMethod }: OrderSummaryProps) => {
     ? "FREE"
     : `$${formattedPrice(actualShippingFee)}`;
   const totalDisplay = `$${formattedPrice(actualTotalCents)}`;
+
+  console.log(totalCents, shippingTypePrice);
 
   return (
     <div className="p-6 w-full bg-white h-fit rounded-2xl">
