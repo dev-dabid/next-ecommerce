@@ -76,8 +76,9 @@ export default function Checkout() {
                     <Radio
                       key={method.title}
                       value={method}
-                      className="border-2 border-transparent bg-white data-checked:border-sky-300 flex items-center p-4 w-full justify-between rounded-lg"
+                      className="relative border-2 border-transparent bg-white data-checked:border-sky-300 flex items-center p-4 w-full justify-between rounded-lg"
                     >
+                      <div className="absolute inset-0"></div>
                       <div>
                         <h2 className="mb-1 text-lg font-semibold">
                           {method.title}
@@ -87,7 +88,7 @@ export default function Checkout() {
                       <p className="text-sm font-semibold text-sky-400">
                         {method.price === 0
                           ? "Complimentary"
-                          : `${formattedPrice(method.price)}`}
+                          : `$${formattedPrice(method.price)}`}
                       </p>
                     </Radio>
                   ))}
