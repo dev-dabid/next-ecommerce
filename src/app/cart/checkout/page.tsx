@@ -8,6 +8,7 @@ import CircleTag from "./CircleTag";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
 import { useState, useEffect } from "react";
 import { formattedPrice } from "@/app/lib/utils/money";
+import Footer from "@/components/Footer";
 
 export default function Checkout() {
   const { cart } = useCart();
@@ -38,7 +39,7 @@ export default function Checkout() {
   console.log(selected);
   return (
     <div>
-      <div className="max-w-300 mx-auto">
+      <div className="max-w-300 mx-auto mb-20">
         <Breadcrumb />
         <h1 className="text-4xl font-bold mb-10">Finalize Order</h1>
         <div className="flex gap-15 justify-between">
@@ -99,6 +100,7 @@ export default function Checkout() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
