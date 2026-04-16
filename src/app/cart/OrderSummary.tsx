@@ -13,9 +13,16 @@ type ShippingMethod = {
 type OrderSummaryProps = {
   cartItems: CartProduct[];
   shipMethod?: ShippingMethod;
+  link: string;
+  buttonTitle: string;
 };
 
-const OrderSummary = ({ cartItems, shipMethod }: OrderSummaryProps) => {
+const OrderSummary = ({
+  cartItems,
+  shipMethod,
+  link,
+  buttonTitle,
+}: OrderSummaryProps) => {
   const subtotalCents = cartItems.reduce(
     (acc, item) =>
       item.isChecked && item.quantity > 0
@@ -88,10 +95,11 @@ const OrderSummary = ({ cartItems, shipMethod }: OrderSummaryProps) => {
               </button>
             </div>
           </div>
-
-          <button className="text-white bg-sky-400 py-4 rounded-xl mt-2">
-            <Link href={"/cart/checkout"}>PROCEED TO CHECKOUT</Link>
-          </button>
+          <Link className="" href={link}>
+            <button className="text-white bg-sky-400 py-4 rounded-xl mt-2 w-full cursor-pointer">
+              {buttonTitle}
+            </button>
+          </Link>
         </div>
       </div>
     </div>

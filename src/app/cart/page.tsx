@@ -100,7 +100,11 @@ export default function Cart() {
             </div>
             <div className="flex w-full lg:max-w-100 items-start">
               <div className="flex flex-col justify-center text-center w-full">
-                <OrderSummary cartItems={cartItems} />
+                <OrderSummary
+                  cartItems={cartItems}
+                  link={"/cart/checkout"}
+                  buttonTitle={"PROCEED TO CHECKOUT"}
+                />
                 <Link
                   className="mt-5 text-sm font-semibold flex justify-center items-center gap-2 text-gray-500 hover:text-gray-700"
                   href={"/collections"}
