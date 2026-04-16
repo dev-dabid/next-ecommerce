@@ -138,7 +138,7 @@ export default function Checkout() {
             <OrderSummary
               cartItems={cartItems}
               shipMethod={selected}
-              link=""
+              link={""}
               buttonTitle={"PLACE ORDER"}
             />
           </div>
