@@ -2,6 +2,7 @@
 
 import useCart from "@/hooks/useCart";
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CartCard from "./CartCard";
 import OrderSummary from "./OrderSummary";
@@ -21,6 +22,7 @@ export default function Cart() {
 
   const [isConfirmingClear, setIsConfirmingClear] = useState(false);
 
+  const router = useRouter();
   const cartItems = Array.from(cart.values());
   const cartTotalItems = cartItems.reduce(
     (acc, item) => acc + item.quantity,
@@ -40,6 +42,12 @@ export default function Cart() {
   const handleConfirm = () => {
     handleCancel();
     removeAllItem();
+  };
+
+  const onNavigate = () => {
+    const link = `/cart/checkout`;
+
+    router.push(link);
   };
 
   return (
@@ -102,7 +110,7 @@ export default function Cart() {
               <div className="flex flex-col justify-center text-center w-full">
                 <OrderSummary
                   cartItems={cartItems}
-                  link={"/cart/checkout"}
+                  onNavigate={onNavigate}
                   buttonTitle={"PROCEED TO CHECKOUT"}
                 />
                 <Link

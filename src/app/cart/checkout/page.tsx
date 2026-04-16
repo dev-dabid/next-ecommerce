@@ -9,8 +9,10 @@ import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
 import { useState, useEffect } from "react";
 import { formattedPrice } from "@/app/lib/utils/money";
 import Footer from "@/components/Footer";
+import { useRouter } from "next/navigation";
 
 export default function Checkout() {
+  const router = useRouter();
   const { cart } = useCart();
 
   const shipMethods = [
@@ -44,7 +46,13 @@ export default function Checkout() {
 
   const cartItems = Array.from(cart.values());
 
-  console.log(input);
+  const handlePlaceOrder = () => {
+    const generatedId = `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+    const destination = `/cart/checkout/success?orderId=${generatedId}&name=${input.firstName}`;
+
+    router.push(destination);
+  };
+
   return (
     <div>
       <div className="max-w-300 mx-auto mb-20">
@@ -138,8 +146,8 @@ export default function Checkout() {
             <OrderSummary
               cartItems={cartItems}
               shipMethod={selected}
-              link={""}
               buttonTitle={"PLACE ORDER"}
+              onNavigate={handlePlaceOrder}
             />
           </div>
         </div>

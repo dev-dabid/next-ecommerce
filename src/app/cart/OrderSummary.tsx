@@ -13,15 +13,16 @@ type ShippingMethod = {
 type OrderSummaryProps = {
   cartItems: CartProduct[];
   shipMethod?: ShippingMethod;
-  link: string;
+
   buttonTitle: string;
+  onNavigate?: () => void;
 };
 
 const OrderSummary = ({
   cartItems,
   shipMethod,
-  link,
   buttonTitle,
+  onNavigate,
 }: OrderSummaryProps) => {
   const subtotalCents = cartItems.reduce(
     (acc, item) =>
@@ -95,11 +96,13 @@ const OrderSummary = ({
               </button>
             </div>
           </div>
-          <Link className="" href={link}>
-            <button className="text-white bg-sky-400 py-4 rounded-xl mt-2 w-full cursor-pointer">
-              {buttonTitle}
-            </button>
-          </Link>
+
+          <button
+            className="text-white bg-sky-400 py-4 rounded-xl mt-2 w-full cursor-pointer"
+            onClick={onNavigate}
+          >
+            {buttonTitle}
+          </button>
         </div>
       </div>
     </div>
