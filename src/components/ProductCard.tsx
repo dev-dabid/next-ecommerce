@@ -3,6 +3,7 @@
 import { Product } from "@/types/types";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { formattedPrice } from "@/app/lib/utils/money";
 
 type ProductCardProps = {
   product: Product;
@@ -29,7 +30,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       </div>
       <div className="flex gap-2 justify-between mt-3 font-semibold text-[clamp(0.75rem,4vw,1.125rem)]">
         <p className="truncate">{name}</p>
-        <p>${priceCents}</p>
+        <p>${formattedPrice(priceCents)}</p>
       </div>
     </div>
   );
