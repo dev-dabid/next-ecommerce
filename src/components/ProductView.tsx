@@ -131,7 +131,7 @@ const ProductView = ({ id }: ProductViewProps) => {
 
                 <div className="flex gap-3">
                   <button
-                    className=" text-center text-white font-semibold bg-sky-500 w-full max-w-[434.69px] py-4 rounded-xl"
+                    className="hover:bg-sky-600 active:bg-sky-500 cursor-pointer text-center text-white font-semibold bg-sky-500 w-full max-w-[434.69px] py-4 rounded-xl"
                     onClick={() => addToCart(product)}
                   >
                     <p className="flex justify-center items-center gap-3">
@@ -139,12 +139,12 @@ const ProductView = ({ id }: ProductViewProps) => {
                     </p>
                   </button>
                   <button
-                    className="group px-4 border border-sky-200 rounded-xl"
+                    className="group px-4 border border-sky-200 rounded-xl cursor-pointer"
                     onClick={() => updateWishlist(id)}
                   >
                     <Heart
                       fill="currentColor"
-                      className={`${wishlist.has(id) ? "text-sky-500" : "text-gray-300"}`}
+                      className={`${wishlist.has(id) ? "text-sky-500" : "text-gray-300"} ${wishlist.has(id) ? "group-hover:text-sky-500" : "group-hover:text-sky-200"}`}
                     />
                   </button>
                 </div>
