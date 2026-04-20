@@ -122,7 +122,7 @@ export default function Checkout() {
                     <Radio
                       key={method.title}
                       value={method}
-                      className="relative border-2 border-transparent bg-white data-checked:border-sky-300 flex items-center p-4 w-full justify-between rounded-lg"
+                      className="cursor-pointer relative border-2 border-transparent bg-white data-checked:border-sky-300 flex items-center p-4 w-full justify-between rounded-lg"
                     >
                       <div className="absolute inset-0"></div>
                       <div>

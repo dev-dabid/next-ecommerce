@@ -1,6 +1,6 @@
 import type { CartProduct } from "@/types/types";
+import useCartTotals from "@/hooks/useCartTotals";
 import { formattedPrice } from "../lib/utils/money";
-import { format } from "path";
 import Link from "next/link";
 
 type ShippingMethod = {
@@ -19,29 +19,21 @@ type OrderSummaryProps = {
 };
 
 const OrderSummary = ({
-  cartItems,
   shipMethod,
   buttonTitle,
   onNavigate,
 }: OrderSummaryProps) => {
-  const subtotalCents = cartItems.reduce(
-    (acc, item) =>
-      item.isChecked && item.quantity > 0
-        ? acc + item.priceCents * item.quantity
-        : acc,
-    0,
-  );
-
-  const FREE_SHIPPING_THRESHOLD = 50000;
-  const hasFreeShipping =
-    subtotalCents >= FREE_SHIPPING_THRESHOLD || subtotalCents === 0;
-  const actualShippingFee = hasFreeShipping ? 0 : 1000;
+  const {
+    totalCents,
+    subtotalCents,
+    estimatedTaxCents,
+    hasFreeShipping,
+    actualShippingFee,
+  } = useCartTotals();
 
   const shippingTypePrice =
     shipMethod?.type === "express" ? shipMethod.price : 0;
 
-  const estimatedTaxCents = Math.round(subtotalCents * 0.07);
-  const totalCents = subtotalCents + estimatedTaxCents + actualShippingFee;
   const actualTotalCents = shipMethod
     ? totalCents + shippingTypePrice
     : totalCents;
