@@ -1,7 +1,5 @@
 import type { CartProduct } from "@/types/types";
 import useCartTotals from "@/hooks/useCartTotals";
-import { formattedPrice } from "../lib/utils/money";
-import Link from "next/link";
 
 type ShippingMethod = {
   type: string;
@@ -25,29 +23,14 @@ const OrderSummary = ({
 }: OrderSummaryProps) => {
   const {
     totalCents,
-    subtotalCents,
-    estimatedTaxCents,
-    hasFreeShipping,
-    actualShippingFee,
-  } = useCartTotals();
+    shippingTypePrice,
+    preTotalDisplay,
+    checkoutShippingDisplay,
+    estimatedTaxDisplay,
+    totalDisplay,
+  } = useCartTotals({ shipMethod });
 
-  const shippingTypePrice =
-    shipMethod?.type === "express" ? shipMethod.price : 0;
-
-  const actualTotalCents = shipMethod
-    ? totalCents + shippingTypePrice
-    : totalCents;
-  const shippingType = shipMethod?.price === 0 ? "Complimentary" : "Express";
-
-  const preTotalDisplay = `$${formattedPrice(subtotalCents)}`;
-  const estimatedTaxDisplay = `$${formattedPrice(estimatedTaxCents)}`;
-  const shippingDisplay = hasFreeShipping
-    ? "FREE"
-    : `$${formattedPrice(actualShippingFee)}`;
-  const checkoutShippingDisplay = shipMethod ? shippingType : shippingDisplay;
-  const totalDisplay = `$${formattedPrice(actualTotalCents)}`;
-
-  console.log(totalCents, shippingTypePrice);
+  console.log(totalCents, shippingTypePrice, preTotalDisplay);
 
   return (
     <div className="p-6 w-full bg-white h-fit rounded-2xl">
