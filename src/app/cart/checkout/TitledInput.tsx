@@ -13,7 +13,7 @@ type TitledInputProps = {
   title: string;
   name: string;
   value: string;
-  setInput: Dispatch<SetStateAction<Inputs>>;
+  setInput: (name: string, value: string) => void;
 };
 
 const TitledInput = ({ title, name, value, setInput }: TitledInputProps) => {
@@ -21,9 +21,7 @@ const TitledInput = ({ title, name, value, setInput }: TitledInputProps) => {
     const name = e.target.name;
     const value = e.target.value;
 
-    setInput((preVal) => {
-      return { ...preVal, [name]: value };
-    });
+    setInput(name, value);
   };
 
   return (

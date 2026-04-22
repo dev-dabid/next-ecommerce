@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 
 export default function Checkout() {
   const router = useRouter();
-  const { cart } = useCart();
+  const { cart, form, getInputValue } = useCart();
 
   const shipMethods = [
     {
@@ -29,14 +29,7 @@ export default function Checkout() {
       price: 3500,
     },
   ];
-  const [input, setInput] = useState({
-    firstName: "",
-    lastName: "",
-    address: "",
-    city: "",
-    state: "",
-    zipCode: "",
-  });
+
   const [selected, setSelected] = useState(shipMethods[0]);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -48,7 +41,7 @@ export default function Checkout() {
 
   const handlePlaceOrder = () => {
     const generatedId = `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
-    const destination = `/cart/checkout/success?orderId=${generatedId}&name=${input.firstName}`;
+    const destination = `/cart/checkout/success?orderId=${generatedId}&name=${form.firstName}`;
 
     router.push(destination);
   };
@@ -67,43 +60,43 @@ export default function Checkout() {
                   <TitledInput
                     title={"FIRST NAME"}
                     name={"firstName"}
-                    value={input.firstName}
-                    setInput={setInput}
+                    value={form.firstName}
+                    setInput={getInputValue}
                   />
                   <TitledInput
                     title={"LAST NAME"}
                     name={"lastName"}
-                    value={input.lastName}
-                    setInput={setInput}
+                    value={form.lastName}
+                    setInput={getInputValue}
                   />
                 </div>
                 <div className="mt-6">
                   <TitledInput
                     title={"ADDRESS"}
                     name={"address"}
-                    value={input.address}
-                    setInput={setInput}
+                    value={form.address}
+                    setInput={getInputValue}
                   />
                 </div>
                 <div className="flex flex-col lg:flex-row gap-4 mt-6">
                   <TitledInput
                     title={"CITY"}
                     name={"city"}
-                    value={input.city}
-                    setInput={setInput}
+                    value={form.city}
+                    setInput={getInputValue}
                   />
                   <div className="flex gap-4 w-full">
                     <TitledInput
                       title={"STATE"}
                       name={"state"}
-                      value={input.state}
-                      setInput={setInput}
+                      value={form.state}
+                      setInput={getInputValue}
                     />
                     <TitledInput
                       title={"ZIP CODE"}
                       name={"zipCode"}
-                      value={input.zipCode}
-                      setInput={setInput}
+                      value={form.zipCode}
+                      setInput={getInputValue}
                     />
                   </div>
                 </div>
