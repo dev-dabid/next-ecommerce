@@ -32,14 +32,25 @@ export type Id = string;
 
 export type UpdateType = "add" | "reduce";
 
+export type FormFields = {
+  firstName: string;
+  lastName: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+};
+
 export interface CartState {
   cart: Map<Id, CartProduct>;
+  form: FormFields;
   addToCart: (product: CartProduct) => void;
   updateQuantity: (itemKey: string, value: number, type?: UpdateType) => void;
   inputQuantity: (itemKey: string, value: number) => void;
   selectItem: (itemKey: string, value: boolean) => void;
   removeAllItem: () => void;
   removeItem: (itemKey: string) => void;
+  getInputValue: (name: string, value: string) => void;
 }
 
 export interface WishlistState {

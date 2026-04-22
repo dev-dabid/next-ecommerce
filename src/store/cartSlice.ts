@@ -4,6 +4,14 @@ import { generateCartKey } from "@/app/lib/utils/cart";
 
 export const createCartSlice: StateCreator<CartState> = (set, get) => ({
   cart: new Map(),
+  form: {
+    firstName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+  },
 
   addToCart: (product) => {
     const currentCart = new Map(get().cart);
@@ -76,4 +84,7 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
       set({ cart: newCart });
     }
   },
+
+  getInputValue: (name, inputValue) =>
+    set((prev) => ({ form: { ...prev.form, [name]: inputValue } })),
 });
