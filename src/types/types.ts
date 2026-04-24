@@ -44,6 +44,8 @@ export type FormFields = {
 export interface CartState {
   cart: Map<Id, CartProduct>;
   form: FormFields;
+  orderSummary: CartProduct[];
+
   addToCart: (product: CartProduct) => void;
   updateQuantity: (itemKey: string, value: number, type?: UpdateType) => void;
   inputQuantity: (itemKey: string, value: number) => void;
@@ -51,6 +53,7 @@ export interface CartState {
   removeAllItem: () => void;
   removeItem: (itemKey: string) => void;
   getInputValue: (name: string, value: string) => void;
+  updateOrderSummary: (cart: CartProduct[]) => void;
 }
 
 export interface WishlistState {

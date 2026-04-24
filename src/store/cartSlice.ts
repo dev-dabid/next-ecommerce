@@ -1,5 +1,5 @@
 import { StateCreator } from "zustand";
-import type { CartState } from "@/types/types";
+import type { CartProduct, CartState } from "@/types/types";
 import { generateCartKey } from "@/app/lib/utils/cart";
 
 export const createCartSlice: StateCreator<CartState> = (set, get) => ({
@@ -12,6 +12,8 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
     state: "",
     zipCode: "",
   },
+
+  orderSummary: [],
 
   addToCart: (product) => {
     const currentCart = new Map(get().cart);
@@ -87,4 +89,6 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
 
   getInputValue: (name, inputValue) =>
     set((prev) => ({ form: { ...prev.form, [name]: inputValue } })),
+
+  updateOrderSummary: (cart) => set((prev) => ({ orderSummary: cart })),
 });

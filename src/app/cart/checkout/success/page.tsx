@@ -6,7 +6,7 @@ export default function Success() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-6 grid-rows-3 gap-4 p-6 h-screen">
-        <div className="md:col-span-4 md:row-span-3 bg-blue-500 rounded-3xl p-6 text-white flex flex-col justify-end">
+        <div className="md:col-span-4 md:row-span-3 bg-white rounded-3xl p-6 text-white flex flex-col justify-end">
           <div>
             <div className="grid"></div>
           </div>
