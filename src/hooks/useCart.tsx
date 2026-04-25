@@ -12,6 +12,7 @@ const useCart = () => {
   const removeItem = useStore((state) => state.removeItem);
   const getInputValue = useStore((state) => state.getInputValue);
   const updateOrderSummary = useStore((state) => state.updateOrderSummary);
+  const resetForm = useStore((state) => state.resetForm);
   return {
     cart,
     form,
@@ -24,6 +25,7 @@ const useCart = () => {
     inputQuantity,
     getInputValue,
     updateOrderSummary,
+    resetForm,
   };
 };
 

@@ -14,8 +14,14 @@ import { useRouter } from "next/navigation";
 
 export default function Checkout() {
   const router = useRouter();
-  const { cart, form, getInputValue, removeAllItem, updateOrderSummary } =
-    useCart();
+  const {
+    cart,
+    form,
+    getInputValue,
+    removeAllItem,
+    updateOrderSummary,
+    resetForm,
+  } = useCart();
   const { preTotalDisplay, shippingDisplay, totalDisplay } = useCartTotals();
 
   const shipMethods = [
@@ -56,6 +62,7 @@ export default function Checkout() {
 
     updateOrderSummary(summary);
     removeAllItem();
+    resetForm();
 
     router.push(destination);
   };

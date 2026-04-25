@@ -100,6 +100,18 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
     }
   },
 
+  resetForm: () =>
+    set({
+      form: {
+        firstName: "",
+        lastName: "",
+        address: "",
+        city: "",
+        state: "",
+        zipCode: "",
+      },
+    }),
+
   getInputValue: (name, inputValue) =>
     set((prev) => ({ form: { ...prev.form, [name]: inputValue } })),
 

@@ -62,6 +62,7 @@ export interface CartState {
   removeItem: (itemKey: string) => void;
   getInputValue: (name: string, value: string) => void;
   updateOrderSummary: (cart: Summary) => void;
+  resetForm: () => void;
 }
 
 export interface WishlistState {
