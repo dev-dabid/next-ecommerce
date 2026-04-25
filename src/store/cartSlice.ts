@@ -13,7 +13,20 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
     zipCode: "",
   },
 
-  orderSummary: [],
+  orderSummary: {
+    recipient: {
+      firstName: "",
+      lastName: "",
+      address: "",
+      city: "",
+      state: "",
+      zipCode: "",
+    },
+    orders: [],
+    subtotal: "",
+    shipping: "",
+    total: "",
+  },
 
   addToCart: (product) => {
     const currentCart = new Map(get().cart);
@@ -90,5 +103,5 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
   getInputValue: (name, inputValue) =>
     set((prev) => ({ form: { ...prev.form, [name]: inputValue } })),
 
-  updateOrderSummary: (cart) => set((prev) => ({ orderSummary: cart })),
+  updateOrderSummary: (summary) => set({ orderSummary: summary }),
 });

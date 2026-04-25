@@ -59,6 +59,7 @@ const useCartTotals = ({ shipMethod }: CartTotalsProps = {}) => {
     checkoutShippingDisplay,
     totalDisplay,
     shippingTypePrice,
+    shippingDisplay,
   };
 };
 

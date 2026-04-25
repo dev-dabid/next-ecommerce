@@ -1,11 +1,12 @@
 "use client";
 
 import useCart from "@/hooks/useCart";
+import useCartTotals from "@/hooks/useCartTotals";
 import Breadcrumb from "@/components/Breadcrumb";
 import TitledInput from "./TitledInput";
 import OrderSummary from "../OrderSummary";
 import CircleTag from "./CircleTag";
-import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
+import { Radio, RadioGroup } from "@headlessui/react";
 import { useState, useEffect } from "react";
 import { formattedPrice } from "@/app/lib/utils/money";
 import Footer from "@/components/Footer";
@@ -13,7 +14,9 @@ import { useRouter } from "next/navigation";
 
 export default function Checkout() {
   const router = useRouter();
-  const { cart, form, getInputValue } = useCart();
+  const { cart, form, getInputValue, removeAllItem, updateOrderSummary } =
+    useCart();
+  const { preTotalDisplay, shippingDisplay, totalDisplay } = useCartTotals();
 
   const shipMethods = [
     {
@@ -42,6 +45,17 @@ export default function Checkout() {
   const handlePlaceOrder = () => {
     const generatedId = `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
     const destination = `/cart/checkout/success?orderId=${generatedId}&name=${form.firstName}`;
+
+    const summary = {
+      recipient: form,
+      orders: [...cartItems],
+      subtotal: preTotalDisplay,
+      shipping: shippingDisplay,
+      total: totalDisplay,
+    };
+
+    updateOrderSummary(summary);
+    removeAllItem();
 
     router.push(destination);
   };

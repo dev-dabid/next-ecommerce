@@ -41,10 +41,18 @@ export type FormFields = {
   zipCode: string;
 };
 
+export type Summary = {
+  recipient: FormFields;
+  orders: CartProduct[];
+  subtotal: string;
+  shipping: string;
+  total: string;
+};
+
 export interface CartState {
   cart: Map<Id, CartProduct>;
   form: FormFields;
-  orderSummary: CartProduct[];
+  orderSummary: Summary;
 
   addToCart: (product: CartProduct) => void;
   updateQuantity: (itemKey: string, value: number, type?: UpdateType) => void;
@@ -53,7 +61,7 @@ export interface CartState {
   removeAllItem: () => void;
   removeItem: (itemKey: string) => void;
   getInputValue: (name: string, value: string) => void;
-  updateOrderSummary: (cart: CartProduct[]) => void;
+  updateOrderSummary: (cart: Summary) => void;
 }
 
 export interface WishlistState {
