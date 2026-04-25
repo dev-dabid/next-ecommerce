@@ -1,4 +1,12 @@
+"use client";
+
+import useCart from "@/hooks/useCart";
+
 export default function Success() {
+  const { orderSummary } = useCart();
+
+  console.log(orderSummary);
+
   return (
     <div className="max-w-300 mx-auto">
       <div className="flex justify-center my-10">

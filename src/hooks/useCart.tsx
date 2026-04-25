@@ -1,9 +1,9 @@
 import useStore from "@/store/store";
-import { useState } from "react";
 
 const useCart = () => {
   const cart = useStore((state) => state.cart);
   const form = useStore((state) => state.form);
+  const orderSummary = useStore((state) => state.orderSummary);
   const addToCart = useStore((state) => state.addToCart);
   const updateQuantity = useStore((state) => state.updateQuantity);
   const inputQuantity = useStore((state) => state.inputQuantity);
@@ -15,6 +15,7 @@ const useCart = () => {
   return {
     cart,
     form,
+    orderSummary,
     addToCart,
     updateQuantity,
     selectItem,
