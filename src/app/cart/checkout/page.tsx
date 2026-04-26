@@ -41,6 +41,7 @@ export default function Checkout() {
 
   const [selected, setSelected] = useState(shipMethods[0]);
   const [isMounted, setIsMounted] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -48,7 +49,21 @@ export default function Checkout() {
 
   const cartItems = Array.from(cart.values());
 
-  const handlePlaceOrder = () => {
+  useEffect(() => {
+    setIsReady(true);
+
+    if (cartItems.length === 0) {
+      router.push("/cart");
+    }
+  }, [cartItems, router]);
+
+  if (!isReady || cartItems.length === 0) {
+    return null;
+  }
+
+  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
+  const handlePlaceOrder = async () => {
     const generatedId = `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
     const destination = `/cart/checkout/success?orderId=${generatedId}&name=${form.firstName}`;
 
@@ -59,12 +74,12 @@ export default function Checkout() {
       shipping: shippingDisplay,
       total: totalDisplay,
     };
-
     updateOrderSummary(summary);
+    await delay(1500);
+    router.push(destination);
+    await delay(1500);
     removeAllItem();
     resetForm();
-
-    router.push(destination);
   };
 
   return (
