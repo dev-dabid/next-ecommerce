@@ -1,5 +1,6 @@
 import type { CartProduct } from "@/types/types";
 import useCartTotals from "@/hooks/useCartTotals";
+import useCart from "@/hooks/useCart";
 
 type ShippingMethod = {
   type: string;
@@ -21,6 +22,7 @@ const OrderSummary = ({
   buttonTitle,
   onNavigate,
 }: OrderSummaryProps) => {
+  const { cart } = useCart();
   const {
     totalCents,
     shippingTypePrice,
@@ -30,7 +32,8 @@ const OrderSummary = ({
     totalDisplay,
   } = useCartTotals({ shipMethod });
 
-  console.log(totalCents, shippingTypePrice, preTotalDisplay);
+  const cartItems = Array.from(cart.values());
+  const isCartEmpty = cartItems.length === 0 ? true : false;
 
   return (
     <div className="p-6 w-full bg-white h-fit rounded-2xl">
@@ -73,8 +76,9 @@ const OrderSummary = ({
           </div>
 
           <button
-            className="text-white bg-sky-400 py-4 rounded-xl mt-2 w-full cursor-pointer"
+            className={`${isCartEmpty ? "bg-sky-800 cursor-not-allowed" : "bg-sky-400 cursor-pointer hover:bg-sky-500 active:bg-sky-700"} text-white  py-4 rounded-xl mt-2 w-full `}
             onClick={onNavigate}
+            disabled={isCartEmpty}
           >
             {buttonTitle}
           </button>
