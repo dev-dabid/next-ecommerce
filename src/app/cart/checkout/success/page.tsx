@@ -20,7 +20,7 @@ export default function Success() {
           <div className="my-10 max-h-75 lg:max-h-100 overflow-y-auto pr-2 py-2">
             <div className="grid grid-cols-1 gap-4 content-start">
               {orderSummary.orders.map((item) => {
-                return <SuccessCard key={item.name} cartItem={item} />;
+                return <SuccessCard key={item.id} cartItem={item} />;
               })}
             </div>
           </div>
