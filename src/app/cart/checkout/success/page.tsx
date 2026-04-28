@@ -25,7 +25,20 @@ export default function Success() {
             </div>
           </div>
           <div className="w-full border border-gray-300"></div>
-          <div></div>
+          <div className="flex flex-col">
+            <div className="flex justify-between">
+              <p>Subtotal</p>
+              <p>{orderSummary.subtotal}</p>
+            </div>
+            <div className="flex justify-between">
+              <p>Shipping</p>
+              <p>{orderSummary.shipping}</p>
+            </div>
+            <div className="flex justify-between">
+              <p>Total</p>
+              <p>{orderSummary.total}</p>
+            </div>
+          </div>
         </div>
 
         <div className="md:col-span-2  bg-orange-400 rounded-3xl p-6 text-white">
