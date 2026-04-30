@@ -14,29 +14,29 @@ export default function Success() {
         <h1 className="text-6xl font-semibold">THANK YOU FOR YOUR ORDER!</h1>
       </div>
 
-      <div className="flex justify-between gap-5">
-        <div className="p-3 flex-1 bg-white rounded-3xl flex flex-col">
+      <div className="flex justify-between gap-5 ">
+        <div className="flex-1 bg-white rounded-3xl flex flex-col p-10">
           <h1 className="text-xl font-semibold">ORDER SUMMARY</h1>
-          <div className="my-10 max-h-75 lg:max-h-100 overflow-y-auto pr-2 py-2">
-            <div className="grid grid-cols-1 gap-4 content-start">
-              {orderSummary.orders.map((item) => {
-                return <SuccessCard key={item.id} cartItem={item} />;
+          <div className="mt-10 max-h-75 lg:max-h-70 overflow-y-auto py-2">
+            <div className="grid grid-cols-1 gap-4 content-star">
+              {orderSummary.orders.map((item, index) => {
+                return <SuccessCard key={index} cartItem={item} />;
               })}
             </div>
           </div>
-          <div className="w-full border border-gray-300"></div>
+          <div className="w-full border border-gray-100 my-10"></div>
           <div className="flex flex-col">
-            <div className="flex justify-between">
-              <p>Subtotal</p>
-              <p>{orderSummary.subtotal}</p>
+            <div className="flex justify-between mb-3">
+              <p className="text-gray-400">Subtotal</p>
+              <p className="font-semibold">{orderSummary.subtotal}</p>
+            </div>
+            <div className="flex justify-between mb-8">
+              <p className="text-gray-400">Shipping</p>
+              <p className="font-semibold">{orderSummary.shipping}</p>
             </div>
             <div className="flex justify-between">
-              <p>Shipping</p>
-              <p>{orderSummary.shipping}</p>
-            </div>
-            <div className="flex justify-between">
-              <p>Total</p>
-              <p>{orderSummary.total}</p>
+              <p className="text-2xl font-semibold">TOTAL</p>
+              <p className="text-2xl font-semibold">{orderSummary.total}</p>
             </div>
           </div>
         </div>
