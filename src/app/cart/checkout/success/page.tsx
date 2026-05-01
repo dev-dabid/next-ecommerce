@@ -6,8 +6,7 @@ import Footer from "@/components/Footer";
 
 export default function Success() {
   const { orderSummary } = useCart();
-
-  console.log(orderSummary);
+  const recipient = orderSummary.recipient;
 
   return (
     <div>
@@ -43,19 +42,30 @@ export default function Success() {
             </div>
           </div>
 
-          <div className="flex flex-col max-w-100 w-full gap-5">
-            <div className="md:col-span-2  bg-orange-400 rounded-3xl p-6 text-white">
+          <div className="flex flex-col max-w-90 w-full gap-5">
+            <div className="md:col-span-2  bg-white rounded-3xl p-6 text-white">
               <h2 className="text-xl font-semibold">Wide Feature</h2>
               <p className="text-wrap wrap-break-word"></p>
             </div>
 
-            <div className="md:col-span-2  bg-zinc-800 rounded-3xl p-6 text-white h-full">
-              <h2 className="text-lg font-medium">Stats</h2>
-              <p>ddddddddddddddddd</p>
+            <div className="md:col-span-2  bg-white rounded-3xl p-6 h-full">
+              <h2 className="text-sm font-medium">SHIPPING DETAILS</h2>
+              <div>
+                <p>RECIPIENT</p>
+                <p>{`${recipient.firstName} ${recipient.lastName}`}</p>
+              </div>
+              <div>
+                <p>ADDRESS</p>
+                <p>{`${recipient.address}, ${recipient.city}, ${recipient.state}, ${recipient.zipCode}`}</p>
+              </div>
             </div>
-            <div className="flex flex-col">
-              <button>CONTINUE SHOPPING</button>
-              <button>TRACK ORDER</button>
+            <div className="flex flex-col gap-4">
+              <button className="text-white bg-gray-950 p-3 rounded-lg">
+                CONTINUE SHOPPING
+              </button>
+              <button className="bg-gray-200 p-3 rounded-lg">
+                TRACK ORDER
+              </button>
             </div>
           </div>
         </div>
