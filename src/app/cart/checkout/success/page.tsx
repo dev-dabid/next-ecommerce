@@ -3,6 +3,7 @@
 import useCart from "@/hooks/useCart";
 import SuccessCard from "./SuccessCard";
 import Footer from "@/components/Footer";
+import Link from "next/link";
 
 export default function Success() {
   const { orderSummary } = useCart();
@@ -60,9 +61,11 @@ export default function Success() {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <button className="text-white bg-gray-950 p-3 rounded-lg">
-                CONTINUE SHOPPING
-              </button>
+              <Link href={"/collections"}>
+                <button className="text-white bg-gray-950 p-3 rounded-lg w-full">
+                  CONTINUE SHOPPING
+                </button>
+              </Link>
               <button className="bg-gray-200 p-3 rounded-lg">
                 TRACK ORDER
               </button>
