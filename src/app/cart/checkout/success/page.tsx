@@ -49,15 +49,17 @@ export default function Success() {
               <p className="text-wrap wrap-break-word"></p>
             </div>
 
-            <div className="md:col-span-2  bg-white rounded-3xl p-6 h-full">
-              <h2 className="text-sm font-medium">SHIPPING DETAILS</h2>
-              <div>
-                <p>RECIPIENT</p>
-                <p>{`${recipient.firstName} ${recipient.lastName}`}</p>
+            <div className="md:col-span-2  bg-white rounded-3xl p-10 h-full">
+              <h2 className="text-sm font-medium text-gray-500 font-semibold mb-5">
+                SHIPPING DETAILS
+              </h2>
+              <div className="mb-5">
+                <p className="text-gray-600 font-semibold mb-1">RECIPIENT</p>
+                <p className="text-lg font-bold">{`${recipient.firstName} ${recipient.lastName}`}</p>
               </div>
               <div>
-                <p>ADDRESS</p>
-                <p>{`${recipient.address}, ${recipient.city}, ${recipient.state}, ${recipient.zipCode}`}</p>
+                <p className="text-gray-600 font-semibold">ADDRESS</p>
+                <p className="text-lg">{`${recipient.address}, ${recipient.city}, ${recipient.state}, ${recipient.zipCode}`}</p>
               </div>
             </div>
             <div className="flex flex-col gap-4">
