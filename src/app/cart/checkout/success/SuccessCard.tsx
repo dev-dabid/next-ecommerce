@@ -1,6 +1,6 @@
 import { CartProduct } from "@/types/types";
 import Image from "next/image";
-import { formattedPrice } from "@/app/lib/utils/money";
+import { formattedPrice } from "@/lib/utils/money";
 
 type CartItemProps = {
   cartItem: CartProduct;

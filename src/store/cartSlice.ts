@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
 import type { CartProduct, CartState } from "@/types/types";
-import { generateCartKey } from "@/app/lib/utils/cart";
+import { generateCartKey } from "@/lib/utils/cart";
 
 export const createCartSlice: StateCreator<CartState> = (set, get) => ({
   cart: new Map(),

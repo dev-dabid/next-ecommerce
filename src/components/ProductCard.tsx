@@ -3,7 +3,7 @@
 import { Product } from "@/types/types";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { formattedPrice } from "@/app/lib/utils/money";
+import { formattedPrice } from "@/lib/utils/money";
 
 type ProductCardProps = {
   product: Product;

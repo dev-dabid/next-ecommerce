@@ -1,5 +1,5 @@
 import useCart from "./useCart";
-import { formattedPrice } from "@/app/lib/utils/money";
+import { formattedPrice } from "@/lib/utils/money";
 
 type ShippingMethod = {
   type: string;

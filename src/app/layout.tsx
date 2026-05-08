@@ -1,7 +1,7 @@
 import "./globals.css";
 import Header from "@/components/Header";
 import { Inter } from "next/font/google";
-import { getProducts } from "./lib/api/get-products";
+import { getProducts } from "../lib/api/get-products";
 import StoreInitializer from "@/components/providers/StoreInitializer";
 
 const inter = Inter({

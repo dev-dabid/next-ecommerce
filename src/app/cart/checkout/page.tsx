@@ -8,7 +8,7 @@ import OrderSummary from "../OrderSummary";
 import CircleTag from "./CircleTag";
 import { Radio, RadioGroup } from "@headlessui/react";
 import { useState, useEffect } from "react";
-import { formattedPrice } from "@/app/lib/utils/money";
+import { formattedPrice } from "@/lib/utils/money";
 import Footer from "@/components/Footer";
 import { useRouter } from "next/navigation";
 

@@ -1,7 +1,7 @@
 import type { Product } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import { formattedPrice } from "@/app/lib/utils/money";
+import { formattedPrice } from "@/lib/utils/money";
 
 type RelatedProductsProps = {
   mainProductId: string;

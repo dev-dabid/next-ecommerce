@@ -5,7 +5,7 @@ import useCart from "@/hooks/useCart";
 import useWishList from "@/hooks/useWishlist";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { formattedPrice } from "@/app/lib/utils/money";
+import { formattedPrice } from "@/lib/utils/money";
 import Breadcrumb from "./Breadcrumb";
 import ProductRating from "./ProductRating";
 import SizeSelector from "./SizeSelector";

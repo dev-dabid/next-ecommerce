@@ -1,5 +1,5 @@
 import { Product } from "@/types/types";
-import { formattedPrice } from "../lib/utils/money";
+import { formattedPrice } from "../../lib/utils/money";
 import Image from "next/image";
 
 type TrendCardProps = {

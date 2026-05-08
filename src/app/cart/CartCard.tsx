@@ -1,7 +1,7 @@
 import type { CartProduct, UpdateType } from "@/types/types";
 import Image from "next/image";
-import { formattedPrice } from "../lib/utils/money";
-import { generateCartKey } from "../lib/utils/cart";
+import { formattedPrice } from "../../lib/utils/money";
+import { generateCartKey } from "../../lib/utils/cart";
 import { Minus } from "lucide-react";
 import { Plus } from "lucide-react";
 import { SyntheticEvent, useState } from "react";

@@ -1,8 +1,8 @@
 import useProducts from "@/hooks/useProducts";
 import useCart from "@/hooks/useCart";
 import { useMemo } from "react";
-import { generateCartKey } from "../lib/utils/cart";
-import { formattedPrice } from "../lib/utils/money";
+import { generateCartKey } from "../../lib/utils/cart";
+import { formattedPrice } from "../../lib/utils/money";
 import Image from "next/image";
 
 const CrossSellList = () => {
