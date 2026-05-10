@@ -1,5 +1,6 @@
 "use client";
 
+import { addToCartDB } from "@/actions/cart";
 import useProducts from "@/hooks/useProducts";
 import useCart from "@/hooks/useCart";
 import useWishList from "@/hooks/useWishlist";
@@ -132,7 +133,10 @@ const ProductView = ({ id }: ProductViewProps) => {
                 <div className="flex gap-3">
                   <button
                     className="hover:bg-sky-600 active:bg-sky-500 cursor-pointer text-center text-white font-semibold bg-sky-500 w-full max-w-[434.69px] py-4 rounded-xl"
-                    onClick={() => addToCart(product)}
+                    onClick={() => {
+                      addToCart(product);
+                      addToCartDB("user-1234", product);
+                    }}
                   >
                     <p className="flex justify-center items-center gap-3">
                       <ShoppingCart /> Add to Cart
