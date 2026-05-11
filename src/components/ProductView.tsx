@@ -1,6 +1,7 @@
 "use client";
 
-import { addToCartDB } from "@/actions/cart";
+import { addToCartDB, addToFavorite } from "@/actions/cart";
+import { createProducts } from "../../prisma/seed";
 import useProducts from "@/hooks/useProducts";
 import useCart from "@/hooks/useCart";
 import useWishList from "@/hooks/useWishlist";
@@ -144,7 +145,10 @@ const ProductView = ({ id }: ProductViewProps) => {
                   </button>
                   <button
                     className="group px-4 border border-sky-200 rounded-xl cursor-pointer"
-                    onClick={() => updateWishlist(id)}
+                    onClick={() => {
+                      updateWishlist(id);
+                      addToFavorite("user-1234", product.id);
+                    }}
                   >
                     <Heart
                       fill="currentColor"

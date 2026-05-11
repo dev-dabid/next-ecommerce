@@ -35,6 +35,8 @@ model Product {
   ratingCount Int
   priceCents Int
   keywords String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   cart CartItem[]
   favorites Favorite[]
 }

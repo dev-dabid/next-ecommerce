@@ -47,3 +47,23 @@ export async function addToCartDB(userId: string, product: CartProduct) {
     },
   });
 }
+
+export async function addToFavorite(userId: string, productId: string) {
+  try {
+    return await prisma.favorite.delete({
+      where: {
+        userId_productId: {
+          userId: userId,
+          productId: productId,
+        },
+      },
+    });
+  } catch (error) {
+    return await prisma.favorite.create({
+      data: {
+        userId: userId,
+        productId: productId,
+      },
+    });
+  }
+}
