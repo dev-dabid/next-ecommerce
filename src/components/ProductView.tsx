@@ -1,6 +1,6 @@
 "use client";
 
-import { addToCartDB, addToFavorite } from "@/actions/cart";
+import { addToCartDB, toggleFavorite } from "@/actions/cart";
 import { createProducts } from "../../prisma/seed";
 import useProducts from "@/hooks/useProducts";
 import useCart from "@/hooks/useCart";
@@ -147,7 +147,7 @@ const ProductView = ({ id }: ProductViewProps) => {
                     className="group px-4 border border-sky-200 rounded-xl cursor-pointer"
                     onClick={() => {
                       updateWishlist(id);
-                      addToFavorite("user-1234", product.id);
+                      toggleFavorite("user-1234", product.id);
                     }}
                   >
                     <Heart

@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { CartProduct } from "@/types/types";
+import { Product } from "@prisma/client";
 
 export async function addToCartDB(userId: string, product: CartProduct) {
   const color = product.color || "N/A";
@@ -48,7 +49,7 @@ export async function addToCartDB(userId: string, product: CartProduct) {
   });
 }
 
-export async function addToFavorite(userId: string, productId: string) {
+export async function toggleFavorite(userId: string, productId: string) {
   try {
     return await prisma.favorite.delete({
       where: {
@@ -66,4 +67,20 @@ export async function addToFavorite(userId: string, productId: string) {
       },
     });
   }
+}
+
+export async function isInFavorite(userId: string, productId: string) {
+  const favorite = await prisma.favorite.findUnique({
+    where: {
+      userId_productId: {
+        userId: userId,
+        productId: productId,
+      },
+    },
+    select: {
+      userId: true,
+    },
+  });
+
+  return !!favorite;
 }
