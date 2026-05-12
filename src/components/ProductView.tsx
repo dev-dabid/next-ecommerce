@@ -14,6 +14,7 @@ import SizeSelector from "./SizeSelector";
 import ColorSelector from "./ColorSelector";
 import QuantitySelector from "./QuantitySelector";
 import RelatedProducts from "./RelatedProducts";
+import FavoriteToggle from "./FavoriteToggle";
 import { Heart, ShoppingCart } from "lucide-react";
 
 type ProductViewProps = {
@@ -143,18 +144,7 @@ const ProductView = ({ id }: ProductViewProps) => {
                       <ShoppingCart /> Add to Cart
                     </p>
                   </button>
-                  <button
-                    className="group px-4 border border-sky-200 rounded-xl cursor-pointer"
-                    onClick={() => {
-                      updateWishlist(id);
-                      toggleFavorite("user-1234", product.id);
-                    }}
-                  >
-                    <Heart
-                      fill="currentColor"
-                      className={`${wishlist.has(id) ? "text-sky-500" : "text-gray-300"} ${wishlist.has(id) ? "group-hover:text-sky-500" : "group-hover:text-sky-200"}`}
-                    />
-                  </button>
+                  <FavoriteToggle userId="user-1234" productId={product.id} />
                 </div>
               </div>
             </div>
