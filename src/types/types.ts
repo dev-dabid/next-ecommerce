@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client";
+
 export interface Product {
   id: string;
   image: string;
@@ -9,6 +11,10 @@ export interface Product {
   priceCents: number;
   keywords: string[];
 }
+
+export type CartItemWithProduct = Prisma.CartItemGetPayload<{
+  include: { product: true };
+}>;
 
 export interface CartProduct extends Product {
   color?: string;

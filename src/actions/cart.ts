@@ -2,7 +2,6 @@
 
 import prisma from "@/lib/prisma";
 import { CartProduct } from "@/types/types";
-import { Product } from "@prisma/client";
 
 export async function addToCartDB(userId: string, product: CartProduct) {
   const color = product.color || "N/A";
@@ -83,4 +82,18 @@ export async function isInFavorite(userId: string, productId: string) {
   });
 
   return !!favorite;
+}
+
+export async function cartItems(userId: string) {
+  const result = await prisma.cartItem.aggregate({
+    where: {
+      userId: userId,
+    },
+
+    _sum: {
+      quantity: true,
+    },
+  });
+
+  return result._sum.quantity || 0;
 }

@@ -1,6 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { CartItemWithProduct } from "@/types/types";
+import { cartItems } from "@/actions/cart";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import useCart from "@/hooks/useCart";
 import Input from "@/components/Input";
@@ -13,10 +16,18 @@ type NavItem = {
 };
 
 const Header = () => {
-  const { cart } = useCart();
-  const pathname = usePathname();
+  const [cartCount, setCartCount] = useState<number>(0);
 
-  const cartDerive = Array.from(cart.values());
+  useEffect(() => {
+    const getCount = async () => {
+      const items = await cartItems("user-1234");
+      setCartCount(items);
+    };
+
+    getCount();
+  }, [cartCount]);
+
+  const pathname = usePathname();
 
   const navItems: NavItem[] = [
     {
@@ -36,13 +47,6 @@ const Header = () => {
       href: "/sale",
     },
   ];
-
-  const cartItemCount = cartDerive.reduce(
-    (acc, item) => acc + item.quantity,
-    0,
-  );
-
-  const cartItemCountDisplay = cartItemCount;
 
   return (
     <header className=" bg-gray-50 p-5 border-b border-b-sky-100 sticky top-0 z-50">
@@ -75,7 +79,7 @@ const Header = () => {
             <div className="relative">
               <ShoppingBag />
               <div className="absolute w-5 h-5 rounded-full bg-sky-400 -top-2 -right-2.5 flex justify-center items-center text-xs text-white">
-                {cartItemCountDisplay}
+                {cartCount}
               </div>
             </div>
           </Link>
