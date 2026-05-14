@@ -1,6 +1,7 @@
 import useStore from "@/store/store";
 
 const useCart = () => {
+  const count = useStore((state) => state.count);
   const cart = useStore((state) => state.cart);
   const form = useStore((state) => state.form);
   const orderSummary = useStore((state) => state.orderSummary);
@@ -13,7 +14,9 @@ const useCart = () => {
   const getInputValue = useStore((state) => state.getInputValue);
   const updateOrderSummary = useStore((state) => state.updateOrderSummary);
   const resetForm = useStore((state) => state.resetForm);
+  const updateCartCount = useStore((state) => state.updateCartCount);
   return {
+    count,
     cart,
     form,
     orderSummary,
@@ -26,6 +29,7 @@ const useCart = () => {
     getInputValue,
     updateOrderSummary,
     resetForm,
+    updateCartCount,
   };
 };
 

@@ -1,9 +1,11 @@
 import { StateCreator } from "zustand";
 import type { CartProduct, CartState } from "@/types/types";
 import { generateCartKey } from "@/lib/utils/cart";
+import { cartItemCount } from "@/actions/cart";
 
 export const createCartSlice: StateCreator<CartState> = (set, get) => ({
   cart: new Map(),
+  count: 0,
   form: {
     firstName: "",
     lastName: "",
@@ -26,6 +28,11 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
     subtotal: "",
     shipping: "",
     total: "",
+  },
+
+  updateCartCount: async () => {
+    const cartCount = await cartItemCount("user-1234");
+    set({ count: cartCount });
   },
 
   addToCart: (product) => {

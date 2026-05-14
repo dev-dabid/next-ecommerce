@@ -16,6 +16,7 @@ import QuantitySelector from "./QuantitySelector";
 import RelatedProducts from "./RelatedProducts";
 import FavoriteToggle from "./FavoriteToggle";
 import { Heart, ShoppingCart } from "lucide-react";
+import useStore from "@/store/store";
 
 type ProductViewProps = {
   id: string;
@@ -46,7 +47,7 @@ const ProductView = ({ id }: ProductViewProps) => {
 
   const { products } = useProducts();
   const { wishlist, updateWishlist } = useWishList();
-  const { cart, addToCart } = useCart();
+  const { cart, addToCart, updateCartCount } = useCart();
 
   useEffect(() => {
     setMounted(true);
@@ -138,6 +139,7 @@ const ProductView = ({ id }: ProductViewProps) => {
                     onClick={() => {
                       addToCart(product);
                       addToCartDB("user-1234", product);
+                      updateCartCount();
                     }}
                   >
                     <p className="flex justify-center items-center gap-3">

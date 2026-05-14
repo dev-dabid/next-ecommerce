@@ -56,10 +56,12 @@ export type Summary = {
 };
 
 export interface CartState {
+  count: number;
   cart: Map<Id, CartProduct>;
   form: FormFields;
   orderSummary: Summary;
 
+  updateCartCount: () => void;
   addToCart: (product: CartProduct) => void;
   updateQuantity: (itemKey: string, value: number, type?: UpdateType) => void;
   inputQuantity: (itemKey: string, value: number) => void;

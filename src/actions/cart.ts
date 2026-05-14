@@ -84,7 +84,7 @@ export async function isInFavorite(userId: string, productId: string) {
   return !!favorite;
 }
 
-export async function cartItems(userId: string) {
+export async function cartItemCount(userId: string) {
   const result = await prisma.cartItem.aggregate({
     where: {
       userId: userId,
