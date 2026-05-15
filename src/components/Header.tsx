@@ -1,9 +1,13 @@
 import Input from "@/components/Input";
 import { ShoppingBag, Gem, CircleUserRound } from "lucide-react";
 import NavigationLinks from "./NavigationLinks";
+import CartBadge from "./CartBadge";
+import { cartItemCount } from "@/actions/cart";
 import Link from "next/link";
 
 const Header = async () => {
+  const cartCount = await cartItemCount("user-1234");
+
   return (
     <header className=" bg-gray-50 p-5 border-b border-b-sky-100 sticky top-0 z-50">
       <div className="flex justify-between max-w-300 mx-auto ">
@@ -20,12 +24,7 @@ const Header = async () => {
           </div>
 
           <Link href={"/cart"}>
-            <div className="relative">
-              <ShoppingBag />
-              <div className="absolute w-5 h-5 rounded-full bg-sky-400 -top-2 -right-2.5 flex justify-center items-center text-xs text-white">
-                {0}
-              </div>
-            </div>
+            <CartBadge initialCount={cartCount} />
           </Link>
 
           <div className="hidden lg:block">

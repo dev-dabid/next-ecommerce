@@ -5,6 +5,10 @@ const useCart = () => {
   const cart = useStore((state) => state.cart);
   const form = useStore((state) => state.form);
   const orderSummary = useStore((state) => state.orderSummary);
+
+  const setCount = useStore((state) => state.setCount);
+  const optimisticAdd = useStore((state) => state.optimisticAdd);
+  const optimisticRollback = useStore((state) => state.optimisticRollback);
   const addToCart = useStore((state) => state.addToCart);
   const updateQuantity = useStore((state) => state.updateQuantity);
   const inputQuantity = useStore((state) => state.inputQuantity);
@@ -20,6 +24,9 @@ const useCart = () => {
     cart,
     form,
     orderSummary,
+    setCount,
+    optimisticAdd,
+    optimisticRollback,
     addToCart,
     updateQuantity,
     selectItem,

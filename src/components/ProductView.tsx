@@ -1,7 +1,6 @@
 "use client";
 
-import { addToCartDB, toggleFavorite } from "@/actions/cart";
-import { createProducts } from "../../prisma/seed";
+import { addToCartDB } from "@/actions/cart";
 import useProducts from "@/hooks/useProducts";
 import useCart from "@/hooks/useCart";
 import useWishList from "@/hooks/useWishlist";
@@ -15,7 +14,7 @@ import ColorSelector from "./ColorSelector";
 import QuantitySelector from "./QuantitySelector";
 import RelatedProducts from "./RelatedProducts";
 import FavoriteToggle from "./FavoriteToggle";
-import { Heart, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import useStore from "@/store/store";
 
 type ProductViewProps = {
@@ -47,7 +46,8 @@ const ProductView = ({ id }: ProductViewProps) => {
 
   const { products } = useProducts();
   const { wishlist, updateWishlist } = useWishList();
-  const { cart, addToCart, updateCartCount } = useCart();
+  const { optimisticAdd, optimisticRollback, addToCart, updateCartCount } =
+    useCart();
 
   useEffect(() => {
     setMounted(true);
@@ -73,6 +73,15 @@ const ProductView = ({ id }: ProductViewProps) => {
         isChecked: true,
       }
     : { ...getProduct, quantity: selected.count, isChecked: true };
+
+  const optimisticAddToCart = () => {
+    try {
+      optimisticAdd(selected.count);
+      addToCartDB("user-1234", product);
+    } catch (error) {
+      optimisticRollback(selected.count);
+    }
+  };
 
   return (
     <div className="pb-10">
@@ -137,9 +146,7 @@ const ProductView = ({ id }: ProductViewProps) => {
                   <button
                     className="hover:bg-sky-600 active:bg-sky-500 cursor-pointer text-center text-white font-semibold bg-sky-500 w-full max-w-[434.69px] py-4 rounded-xl"
                     onClick={() => {
-                      addToCart(product);
-                      addToCartDB("user-1234", product);
-                      updateCartCount();
+                      optimisticAddToCart();
                     }}
                   >
                     <p className="flex justify-center items-center gap-3">

@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { CartProduct } from "@/types/types";
+import { revalidatePath } from "next/cache";
 
 export async function addToCartDB(userId: string, product: CartProduct) {
   const color = product.color || "N/A";
@@ -21,6 +22,8 @@ export async function addToCartDB(userId: string, product: CartProduct) {
       keywords: product.keywords,
     },
   });
+
+  revalidatePath("/");
 
   return await prisma.cartItem.upsert({
     where: {

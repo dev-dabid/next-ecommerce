@@ -30,6 +30,14 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
     total: "",
   },
 
+  setCount: (count) => set({ count: count }),
+
+  optimisticAdd: (quantity) =>
+    set((state) => ({ count: state.count + quantity })),
+
+  optimisticRollback: (quantity) =>
+    set((state) => ({ count: state.count - quantity })),
+
   updateCartCount: async () => {
     const cartCount = await cartItemCount("user-1234");
     set({ count: cartCount });
