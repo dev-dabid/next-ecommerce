@@ -4,22 +4,11 @@ import Link from "next/link";
 import { formattedPrice } from "@/lib/utils/money";
 
 type RelatedProductsProps = {
-  mainProductId: string;
   products: Product[];
-  relatedKey: string;
 };
 
-const RelatedProducts = ({
-  mainProductId,
-  products,
-  relatedKey,
-}: RelatedProductsProps) => {
-  const filteredProducts = products
-    .filter(
-      (product) =>
-        product.keywords.includes(relatedKey) && product.id !== mainProductId,
-    )
-    .slice(0, 4);
+const RelatedProducts = ({ products }: RelatedProductsProps) => {
+  const filteredProducts = products;
 
   return (
     <>

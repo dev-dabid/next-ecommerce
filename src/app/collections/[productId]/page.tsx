@@ -1,5 +1,6 @@
-import { findUniqueProduct } from "@/actions/cart";
+import { findUniqueProduct, findRelatedProducts } from "@/actions/cart";
 import ProductView from "@/components/ProductView";
+import RelatedProducts from "@/components/RelatedProducts";
 import Footer from "@/components/Footer";
 
 type ProductPageProps = {
@@ -14,25 +15,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   if (!product.success || product.data === null) return;
 
-  const { id, image, name, ratingStars, ratingCount, priceCents, keywords } =
-    product.data;
+  const relatedProducts = await findRelatedProducts(
+    product.data.keywords,
+    product.data.id,
+  );
 
-  const productMap = {
-    id: id,
-    image: image,
-    name: name,
-    rating: {
-      stars: ratingStars,
-      count: ratingCount,
-    },
-    priceCents: priceCents,
-    keywords: keywords,
-  };
+  const relatedData =
+    relatedProducts.success && relatedProducts.data ? relatedProducts.data : [];
 
   return (
     <div>
       <div className="max-w-300 mx-auto">
-        <ProductView product={productMap} />
+        <ProductView product={product.data} />
+        <RelatedProducts products={relatedData} />
       </div>
       <Footer />
     </div>
