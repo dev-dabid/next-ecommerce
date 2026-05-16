@@ -41,8 +41,7 @@ const ProductView = ({ product }: ProductViewProps) => {
     size: sizes[1],
     count: 1,
   });
-  const { optimisticAdd, optimisticRollback, addToCart, updateCartCount } =
-    useCart();
+  const { optimisticAdd, optimisticRollback } = useCart();
 
   const { image, name, priceCents, rating } = product;
 
