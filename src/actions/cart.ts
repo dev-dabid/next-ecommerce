@@ -4,6 +4,26 @@ import prisma from "@/lib/prisma";
 import { CartProduct } from "@/types/types";
 import { revalidatePath } from "next/cache";
 
+export async function findUniqueProduct(productId: string) {
+  try {
+    const result = await prisma.product.findUnique({
+      where: {
+        id: productId,
+      },
+    });
+
+    return { success: true, data: result, error: null };
+  } catch (error: any) {
+    console.error("Prisma FindUnique Error:", error.message);
+
+    return {
+      Success: false,
+      data: null,
+      error: "Cannot find specific product.",
+    };
+  }
+}
+
 export async function addToCartDB(userId: string, product: CartProduct) {
   const color = product.color || "N/A";
   const size = product.size || "N/A";

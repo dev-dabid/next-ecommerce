@@ -3,8 +3,8 @@
 import { addToCartDB } from "@/actions/cart";
 import useProducts from "@/hooks/useProducts";
 import useCart from "@/hooks/useCart";
-import useWishList from "@/hooks/useWishlist";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Product } from "@/types/types";
 import Image from "next/image";
 import { formattedPrice } from "@/lib/utils/money";
 import Breadcrumb from "./Breadcrumb";
@@ -15,13 +15,12 @@ import QuantitySelector from "./QuantitySelector";
 import RelatedProducts from "./RelatedProducts";
 import FavoriteToggle from "./FavoriteToggle";
 import { ShoppingCart } from "lucide-react";
-import useStore from "@/store/store";
 
 type ProductViewProps = {
-  id: string;
+  product: Product;
 };
 
-const ProductView = ({ id }: ProductViewProps) => {
+const ProductView = ({ product }: ProductViewProps) => {
   const colors = [
     { name: "white", color: "bg-gray-200" },
     { name: "black", color: "bg-gray-950" },
@@ -37,47 +36,30 @@ const ProductView = ({ id }: ProductViewProps) => {
     { id: 5, name: "XL" },
   ];
 
-  const [mounted, setMounted] = useState(false);
   const [selected, setSelected] = useState({
     color: colors[0],
     size: sizes[1],
     count: 1,
   });
-
-  const { products } = useProducts();
-  const { wishlist, updateWishlist } = useWishList();
   const { optimisticAdd, optimisticRollback, addToCart, updateCartCount } =
     useCart();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const { image, name, priceCents, rating } = product;
 
-  const getProduct = products.find((product) =>
-    String(product.id).includes(String(id)),
-  );
-
-  if (!mounted)
-    return <div className="animate-pulse bg-gray-200 h-96 rounded-xl" />;
-
-  if (!getProduct) return <p>Product not found, bro.</p>;
-
-  const { image, name, priceCents, rating } = getProduct;
-
-  const product = getProduct.keywords.includes("apparel")
+  const productItem = product.keywords.includes("apparel")
     ? {
-        ...getProduct,
+        ...product,
         color: selected.color.name,
         size: selected.size.name,
         quantity: selected.count,
         isChecked: true,
       }
-    : { ...getProduct, quantity: selected.count, isChecked: true };
+    : { ...product, quantity: selected.count, isChecked: true };
 
   const optimisticAddToCart = () => {
     try {
       optimisticAdd(selected.count);
-      addToCartDB("user-1234", product);
+      addToCartDB("user-1234", productItem);
     } catch (error) {
       optimisticRollback(selected.count);
     }
@@ -123,7 +105,7 @@ const ProductView = ({ id }: ProductViewProps) => {
             </p>
             <div>
               <div className="mt-5 flex flex-col gap-5">
-                {getProduct.keywords.includes("apparel") && (
+                {productItem.keywords.includes("apparel") && (
                   <>
                     <ColorSelector
                       selected={selected}
@@ -160,13 +142,7 @@ const ProductView = ({ id }: ProductViewProps) => {
           </div>
         </div>
       </div>
-      <div className="py-10">
-        <RelatedProducts
-          mainProductId={id}
-          products={products}
-          relatedKey={getProduct.keywords[0]}
-        />
-      </div>
+      <div className="py-10"></div>
     </div>
   );
 };
