@@ -17,8 +17,8 @@ export type CartItemWithProduct = Prisma.CartItemGetPayload<{
 }>;
 
 export interface CartProduct extends Product {
-  color?: string;
-  size?: string;
+  color?: string | null;
+  size?: string | null;
   quantity: number;
   isChecked: boolean;
 }

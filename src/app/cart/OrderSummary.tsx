@@ -18,11 +18,13 @@ type OrderSummaryProps = {
 };
 
 const OrderSummary = ({
+  cartItems,
   shipMethod,
   buttonTitle,
   onNavigate,
 }: OrderSummaryProps) => {
   const { cart } = useCart();
+
   const {
     totalCents,
     shippingTypePrice,
@@ -30,9 +32,8 @@ const OrderSummary = ({
     checkoutShippingDisplay,
     estimatedTaxDisplay,
     totalDisplay,
-  } = useCartTotals({ shipMethod });
+  } = useCartTotals({ shipMethod, cartItems });
 
-  const cartItems = Array.from(cart.values());
   const isCartEmpty = cartItems.length === 0 ? true : false;
 
   return (

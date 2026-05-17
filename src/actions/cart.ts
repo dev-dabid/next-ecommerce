@@ -2,7 +2,9 @@
 
 import prisma from "@/lib/prisma";
 import { CartProduct } from "@/types/types";
+import { mapProductData, mapCartItemData } from "./helper";
 import { revalidatePath } from "next/cache";
+import Success from "@/app/cart/checkout/success/page";
 
 export async function findRelatedProducts(
   keywords: string[],
@@ -25,17 +27,7 @@ export async function findRelatedProducts(
     if (!result) throw new Error("Related products not found");
 
     const productsMap = result.map((item) => {
-      return {
-        id: item.id,
-        image: item.image,
-        name: item.name,
-        rating: {
-          stars: item.ratingStars,
-          count: item.ratingCount,
-        },
-        priceCents: item.priceCents,
-        keywords: item.keywords,
-      };
+      return mapProductData(item);
     });
 
     return { success: true, data: productsMap, error: null };
@@ -43,6 +35,33 @@ export async function findRelatedProducts(
     console.error("Prisma FindMany Error:", error.message);
 
     return { success: false, data: [], error: null };
+  }
+}
+
+export async function findUserCartProducts(userId: string) {
+  try {
+    const result = await prisma.cartItem.findMany({
+      where: {
+        userId: userId,
+        isChecked: true,
+      },
+
+      include: {
+        product: true,
+      },
+    });
+
+    if (!result) throw new Error("Cannot find cart items");
+
+    const cartItemMap = result.map((item) => {
+      return mapCartItemData(item);
+    });
+
+    return { success: true, data: cartItemMap, error: null };
+  } catch (error: any) {
+    console.error("Prisma find many error:", error.message);
+
+    return { success: false, data: [], error: "cannot find specific product" };
   }
 }
 
@@ -56,17 +75,7 @@ export async function findUniqueProduct(productId: string) {
 
     if (!result) throw new Error("Product not found");
 
-    const productMap = {
-      id: result.id,
-      image: result.image,
-      name: result.name,
-      rating: {
-        stars: result.ratingStars,
-        count: result.ratingCount,
-      },
-      priceCents: result.priceCents,
-      keywords: result.keywords,
-    };
+    const productMap = mapProductData(result);
 
     return { success: true, data: productMap, error: null };
   } catch (error: any) {

@@ -1,4 +1,5 @@
 import useCart from "./useCart";
+import { CartProduct } from "@/types/types";
 import { formattedPrice } from "@/lib/utils/money";
 
 type ShippingMethod = {
@@ -10,13 +11,10 @@ type ShippingMethod = {
 
 type CartTotalsProps = {
   shipMethod?: ShippingMethod;
+  cartItems: CartProduct[];
 };
 
-const useCartTotals = ({ shipMethod }: CartTotalsProps = {}) => {
-  const { cart } = useCart();
-
-  const cartItems = Array.from(cart.values());
-
+const useCartTotals = ({ shipMethod, cartItems }: CartTotalsProps) => {
   const subtotalCents = cartItems.reduce(
     (acc, item) =>
       item.isChecked && item.quantity > 0
