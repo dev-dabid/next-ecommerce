@@ -1,7 +1,6 @@
 "use client";
 
 import { addToCartDB } from "@/actions/cart";
-import useProducts from "@/hooks/useProducts";
 import useCart from "@/hooks/useCart";
 import { useState } from "react";
 import { Product } from "@/types/types";
@@ -12,7 +11,6 @@ import ProductRating from "./ProductRating";
 import SizeSelector from "./SizeSelector";
 import ColorSelector from "./ColorSelector";
 import QuantitySelector from "./QuantitySelector";
-import RelatedProducts from "./RelatedProducts";
 import FavoriteToggle from "./FavoriteToggle";
 import { ShoppingCart } from "lucide-react";
 
@@ -141,7 +139,6 @@ const ProductView = ({ product }: ProductViewProps) => {
           </div>
         </div>
       </div>
-      <div className="py-10"></div>
     </div>
   );
 };

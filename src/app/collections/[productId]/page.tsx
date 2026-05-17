@@ -27,7 +27,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
     <div>
       <div className="max-w-300 mx-auto">
         <ProductView product={product.data} />
-        <RelatedProducts products={relatedData} />
+        <div className="pb-20">
+          <RelatedProducts products={relatedData} />
+        </div>
       </div>
       <Footer />
     </div>
