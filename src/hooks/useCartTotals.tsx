@@ -14,7 +14,9 @@ type CartTotalsProps = {
   cartItems: CartProduct[];
 };
 
-const useCartTotals = ({ shipMethod, cartItems }: CartTotalsProps) => {
+const useCartTotals = (
+  { shipMethod, cartItems }: CartTotalsProps = { cartItems: [] },
+) => {
   const subtotalCents = cartItems.reduce(
     (acc, item) =>
       item.isChecked && item.quantity > 0

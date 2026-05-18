@@ -1,7 +1,7 @@
 "use client";
 
 import useCart from "@/hooks/useCart";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useOptimistic } from "react";
 import { useRouter } from "next/navigation";
 import { CartProduct } from "@/types/types";
 import Link from "next/link";
@@ -26,6 +26,11 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
   } = useCart();
 
   const [isConfirmingClear, setIsConfirmingClear] = useState(false);
+
+  // const [optimisticState, setOptimisticState] = useOptimistic(
+  //   cartProducts,
+  //   (currentState, actionValue) => {},
+  // );
 
   const router = useRouter();
   const cartItems = cartProducts;
