@@ -1,7 +1,8 @@
 "use client";
 
 import useCart from "@/hooks/useCart";
-import { useMemo, useState, useOptimistic } from "react";
+import { deleteCartItem } from "@/actions/cart";
+import { useMemo, useState, useOptimistic, use, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { CartProduct } from "@/types/types";
 import Link from "next/link";
@@ -15,6 +16,8 @@ type CartPageProps = {
   cartProducts: CartProduct[];
 };
 
+type CartAction = { type: "DELETE"; payload: string };
+
 const CartPage = ({ cartProducts }: CartPageProps) => {
   const {
     cart,
@@ -25,21 +28,41 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
     selectItem,
   } = useCart();
 
+  const [optimisticCartState, addOptimisticCartState] = useOptimistic<
+    CartProduct[],
+    CartAction
+  >(cartProducts, (currentCartState, action) => {
+    switch (action.type) {
+      case "DELETE": {
+        return currentCartState.filter((item) => item.id !== action.payload);
+      }
+
+      default: {
+        return currentCartState;
+      }
+    }
+  });
+  const [isPending, startTransition] = useTransition();
   const [isConfirmingClear, setIsConfirmingClear] = useState(false);
-
-  // const [optimisticState, setOptimisticState] = useOptimistic(
-  //   cartProducts,
-  //   (currentState, actionValue) => {},
-  // );
-
   const router = useRouter();
-  const cartItems = cartProducts;
+  const cartItems = optimisticCartState;
+
   const cartTotalItems = cartItems.reduce(
     (acc, item) => acc + item.quantity,
     0,
   );
-
   const displayCartTotalItems = `(${cartTotalItems} items)`;
+
+  const removeCartItem = (id: string) => {
+    const result = optimisticCartState.find((item) => item.id === id);
+
+    if (!result) return;
+
+    startTransition(async () => {
+      addOptimisticCartState({ type: "DELETE", payload: id });
+      await deleteCartItem(id);
+    });
+  };
 
   const handleCancel = () => {
     setIsConfirmingClear(false);
@@ -106,10 +129,7 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
                     <div key={index} className="h-fit w-full">
                       <CartCard
                         product={item}
-                        updateQuantity={updateQuantity}
-                        inputQuantity={inputQuantity}
-                        removeItem={removeItem}
-                        selectItem={selectItem}
+                        removeCartItem={removeCartItem}
                       />
                     </div>
                   ))}

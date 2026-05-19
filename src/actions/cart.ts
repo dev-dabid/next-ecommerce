@@ -4,7 +4,20 @@ import prisma from "@/lib/prisma";
 import { CartProduct } from "@/types/types";
 import { mapProductData, mapCartItemData } from "./helper";
 import { revalidatePath } from "next/cache";
-import Success from "@/app/cart/checkout/success/page";
+
+export async function deleteCartItem(id: string) {
+  try {
+    await prisma.cartItem.delete({
+      where: {
+        id,
+      },
+    });
+
+    revalidatePath("/cart");
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export async function findRelatedProducts(
   keywords: string[],

@@ -1,45 +1,21 @@
-import type { CartProduct, UpdateType } from "@/types/types";
+import type { CartProduct } from "@/types/types";
 import Image from "next/image";
 import { formattedPrice } from "../../lib/utils/money";
-import { generateCartKey } from "../../lib/utils/cart";
 import { Minus } from "lucide-react";
 import { Plus } from "lucide-react";
-import { SyntheticEvent, useState } from "react";
 
 type CartCardProps = {
   product: CartProduct;
-  updateQuantity: (itemKey: string, value: number, type: UpdateType) => void;
-  inputQuantity: (itemKey: string, value: number) => void;
-  selectItem: (itemKey: string, value: boolean) => void;
-  removeItem: (itemKey: string) => void;
+  removeCartItem: (id: string) => void;
 };
 
-const CartCard = ({
-  product,
-  updateQuantity,
-  inputQuantity,
-  selectItem,
-  removeItem,
-}: CartCardProps) => {
+const CartCard = ({ product, removeCartItem }: CartCardProps) => {
   const { id, image, name, quantity, priceCents, color, size, isChecked } =
     product;
 
-  const keyItem = generateCartKey(id, color, size);
   const totalPrice = priceCents * quantity;
 
   const displayTotalPrice = `$${formattedPrice(totalPrice)}`;
-
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    inputQuantity(keyItem, value);
-  };
-
-  const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.checked;
-    selectItem(keyItem, value);
-  };
-
-  console.log(isChecked);
 
   return (
     <div className="flex gap-3 p-3 bg-white rounded-xl border border-sky-50 shadow-sm w-full overflow-hidden group hover:border-sky-200 transition-colors">
@@ -75,22 +51,16 @@ const CartCard = ({
 
         <div className="flex items-end">
           <div className="flex items-center mt-3 border w-fit rounded-lg border-sky-200">
-            <button
-              className="py-3 px-2 font-bold"
-              onClick={() => updateQuantity(keyItem, 1, "reduce")}
-            >
+            <button className="py-3 px-2 font-bold">
               <Minus size={15} />
             </button>
             <input
               className="text-center w-full max-w-20"
               type="text"
               value={quantity}
-              onChange={(e) => handleInput(e)}
+              readOnly
             />
-            <button
-              className="py-3 px-2 text-sky-500 font-bold"
-              onClick={() => updateQuantity(keyItem, 1, "add")}
-            >
+            <button className="py-3 px-2 text-sky-500 font-bold">
               <Plus size={15} />
             </button>
           </div>
@@ -102,13 +72,13 @@ const CartCard = ({
           <p className="text-sm font-bold text-sky-600">{displayTotalPrice}</p>
           <button
             className="text-[10px] text-gray-300 hover:text-red-500 transition-colors mt-1"
-            onClick={() => removeItem(keyItem)}
+            onClick={() => removeCartItem(id)}
           >
             Remove
           </button>
         </div>
         <div className="flex justify-end">
-          <input type="checkbox" checked={isChecked} onChange={handleToggle} />
+          <input type="checkbox" checked={isChecked} readOnly />
         </div>
       </div>
     </div>
