@@ -7,9 +7,14 @@ import { Plus } from "lucide-react";
 type CartCardProps = {
   product: CartProduct;
   removeCartItem: (id: string) => void;
+  selectCartItem: (id: string, selectValue: boolean) => void;
 };
 
-const CartCard = ({ product, removeCartItem }: CartCardProps) => {
+const CartCard = ({
+  product,
+  removeCartItem,
+  selectCartItem,
+}: CartCardProps) => {
   const { id, image, name, quantity, priceCents, color, size, isChecked } =
     product;
 
@@ -78,7 +83,14 @@ const CartCard = ({ product, removeCartItem }: CartCardProps) => {
           </button>
         </div>
         <div className="flex justify-end">
-          <input type="checkbox" checked={isChecked} readOnly />
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              selectCartItem(id, e.target.checked);
+              console.log(e.target.checked, isChecked);
+            }}
+          />
         </div>
       </div>
     </div>

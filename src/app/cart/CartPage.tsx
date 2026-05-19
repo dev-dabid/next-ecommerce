@@ -1,7 +1,7 @@
 "use client";
 
 import useCart from "@/hooks/useCart";
-import { deleteCartItem } from "@/actions/cart";
+import { deleteCartItem, updateCheckCartItem } from "@/actions/cart";
 import { useMemo, useState, useOptimistic, use, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { CartProduct } from "@/types/types";
@@ -16,7 +16,9 @@ type CartPageProps = {
   cartProducts: CartProduct[];
 };
 
-type CartAction = { type: "DELETE"; payload: string };
+type CartAction =
+  | { type: "DELETE"; payload: string }
+  | { type: "SELECT"; payload: { id: string; value: boolean } };
 
 const CartPage = ({ cartProducts }: CartPageProps) => {
   const {
@@ -37,6 +39,14 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
         return currentCartState.filter((item) => item.id !== action.payload);
       }
 
+      case "SELECT": {
+        return currentCartState.map((item) =>
+          item.id === action.payload.id
+            ? { ...item, isChecked: action.payload.value }
+            : item,
+        );
+      }
+
       default: {
         return currentCartState;
       }
@@ -53,11 +63,18 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
   );
   const displayCartTotalItems = `(${cartTotalItems} items)`;
 
+  const selectCartItem = (id: string, selectValue: boolean) => {
+    startTransition(async () => {
+      addOptimisticCartState({
+        type: "SELECT",
+        payload: { id: id, value: selectValue },
+      });
+
+      await updateCheckCartItem(id, selectValue);
+    });
+  };
+
   const removeCartItem = (id: string) => {
-    const result = optimisticCartState.find((item) => item.id === id);
-
-    if (!result) return;
-
     startTransition(async () => {
       addOptimisticCartState({ type: "DELETE", payload: id });
       await deleteCartItem(id);
@@ -130,6 +147,7 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
                       <CartCard
                         product={item}
                         removeCartItem={removeCartItem}
+                        selectCartItem={selectCartItem}
                       />
                     </div>
                   ))}

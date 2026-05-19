@@ -5,6 +5,23 @@ import { CartProduct } from "@/types/types";
 import { mapProductData, mapCartItemData } from "./helper";
 import { revalidatePath } from "next/cache";
 
+export async function updateCheckCartItem(id: string, selectValue: boolean) {
+  try {
+    await prisma.cartItem.update({
+      where: {
+        id,
+      },
+      data: {
+        isChecked: selectValue,
+      },
+    });
+
+    revalidatePath("/cart");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function deleteCartItem(id: string) {
   try {
     await prisma.cartItem.delete({
@@ -56,7 +73,6 @@ export async function findUserCartProducts(userId: string) {
     const result = await prisma.cartItem.findMany({
       where: {
         userId: userId,
-        isChecked: true,
       },
 
       include: {
