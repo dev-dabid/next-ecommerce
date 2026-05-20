@@ -5,11 +5,35 @@ import { CartProduct } from "@/types/types";
 import { mapProductData, mapCartItemData } from "./helper";
 import { revalidatePath } from "next/cache";
 
-export async function updateCheckCartItem(id: string, selectValue: boolean) {
+export async function increaseCartItemCount(id: string, userId: string) {
+  try {
+    const result = await prisma.cartItem.update({
+      where: {
+        id,
+        userId,
+      },
+
+      data: {
+        quantity: { increment: 1 },
+      },
+    });
+
+    revalidatePath("/cart");
+
+    return result;
+  } catch (error) {}
+}
+
+export async function updateCheckCartItem(
+  id: string,
+  userId: string,
+  selectValue: boolean,
+) {
   try {
     await prisma.cartItem.update({
       where: {
         id,
+        userId,
       },
       data: {
         isChecked: selectValue,
@@ -123,46 +147,50 @@ export async function addToCartDB(userId: string, product: CartProduct) {
   const size = product.size || "N/A";
   const quantity = product.quantity || 1;
 
-  await prisma.product.upsert({
-    where: { id: product.id },
-    update: {},
-    create: {
-      id: product.id,
-      image: product.image,
-      name: product.name,
-      ratingStars: product.rating.stars,
-      ratingCount: product.rating.count,
-      priceCents: product.priceCents,
-      keywords: product.keywords,
-    },
-  });
+  const result = await prisma.$transaction(async (tx) => {
+    await tx.product.upsert({
+      where: { id: product.id },
+      update: {},
+      create: {
+        id: product.id,
+        image: product.image,
+        name: product.name,
+        ratingStars: product.rating.stars,
+        ratingCount: product.rating.count,
+        priceCents: product.priceCents,
+        keywords: product.keywords,
+      },
+    });
 
-  revalidatePath("/");
+    return await tx.cartItem.upsert({
+      where: {
+        userId_productId_color_size: {
+          userId: userId,
+          productId: product.id,
+          color: color,
+          size: size,
+        },
+      },
 
-  return await prisma.cartItem.upsert({
-    where: {
-      userId_productId_color_size: {
+      update: {
+        quantity: {
+          increment: quantity,
+        },
+      },
+
+      create: {
         userId: userId,
         productId: product.id,
         color: color,
         size: size,
+        quantity: quantity,
       },
-    },
-
-    update: {
-      quantity: {
-        increment: quantity,
-      },
-    },
-
-    create: {
-      userId: userId,
-      productId: product.id,
-      color: color,
-      size: size,
-      quantity: quantity,
-    },
+    });
   });
+
+  revalidatePath("/");
+
+  return result;
 }
 
 export async function toggleFavorite(userId: string, productId: string) {

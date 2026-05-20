@@ -1,7 +1,11 @@
 "use client";
 
 import useCart from "@/hooks/useCart";
-import { deleteCartItem, updateCheckCartItem } from "@/actions/cart";
+import {
+  deleteCartItem,
+  updateCheckCartItem,
+  increaseCartItemCount,
+} from "@/actions/cart";
 import { useMemo, useState, useOptimistic, use, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { CartProduct } from "@/types/types";
@@ -18,7 +22,8 @@ type CartPageProps = {
 
 type CartAction =
   | { type: "DELETE"; payload: string }
-  | { type: "SELECT"; payload: { id: string; value: boolean } };
+  | { type: "SELECT"; payload: { id: string; value: boolean } }
+  | { type: "INCREMENT"; payload: String };
 
 const CartPage = ({ cartProducts }: CartPageProps) => {
   const {
@@ -47,6 +52,14 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
         );
       }
 
+      case "INCREMENT": {
+        return currentCartState.map((item) =>
+          item.id === action.payload
+            ? { ...item, quantity: item.quantity + 1 }
+            : item,
+        );
+      }
+
       default: {
         return currentCartState;
       }
@@ -63,6 +76,16 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
   );
   const displayCartTotalItems = `(${cartTotalItems} items)`;
 
+  const incrementCartItemCount = (id: string, userId: string) => {
+    startTransition(async () => {
+      addOptimisticCartState({
+        type: "INCREMENT",
+        payload: id,
+      });
+      await increaseCartItemCount(id, userId);
+    });
+  };
+
   const selectCartItem = (id: string, selectValue: boolean) => {
     startTransition(async () => {
       addOptimisticCartState({
@@ -70,7 +93,7 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
         payload: { id: id, value: selectValue },
       });
 
-      await updateCheckCartItem(id, selectValue);
+      await updateCheckCartItem(id, "user-1234", selectValue);
     });
   };
 
@@ -142,12 +165,13 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
               </div>
               <div className="max-h-75 lg:max-h-100 overflow-y-auto pr-2 py-2">
                 <div className="grid grid-cols-1 gap-5 content-start">
-                  {cartItems.map((item, index) => (
+                  {optimisticCartState.map((item, index) => (
                     <div key={index} className="h-fit w-full">
                       <CartCard
                         product={item}
                         removeCartItem={removeCartItem}
                         selectCartItem={selectCartItem}
+                        incrementCartItemCount={incrementCartItemCount}
                       />
                     </div>
                   ))}
@@ -157,7 +181,7 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
             <div className="flex w-full lg:max-w-100 items-start">
               <div className="flex flex-col justify-center text-center w-full">
                 <OrderSummary
-                  cartItems={cartItems}
+                  cartItems={optimisticCartState}
                   onNavigate={onNavigate}
                   buttonTitle={"PROCEED TO CHECKOUT"}
                 />

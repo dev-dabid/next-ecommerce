@@ -3,17 +3,20 @@ import Image from "next/image";
 import { formattedPrice } from "../../lib/utils/money";
 import { Minus } from "lucide-react";
 import { Plus } from "lucide-react";
+import { increaseCartItemCount } from "@/actions/cart";
 
 type CartCardProps = {
   product: CartProduct;
   removeCartItem: (id: string) => void;
   selectCartItem: (id: string, selectValue: boolean) => void;
+  incrementCartItemCount: (id: string, userId: string) => void;
 };
 
 const CartCard = ({
   product,
   removeCartItem,
   selectCartItem,
+  incrementCartItemCount,
 }: CartCardProps) => {
   const { id, image, name, quantity, priceCents, color, size, isChecked } =
     product;
@@ -65,7 +68,10 @@ const CartCard = ({
               value={quantity}
               readOnly
             />
-            <button className="py-3 px-2 text-sky-500 font-bold">
+            <button
+              className="py-3 px-2 text-sky-500 font-bold"
+              onClick={() => incrementCartItemCount(id, "user-1234")}
+            >
               <Plus size={15} />
             </button>
           </div>
