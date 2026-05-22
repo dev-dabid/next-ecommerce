@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 import { CartProduct } from "@/types/types";
 import { mapProductData, mapCartItemData } from "./helper";
 import { revalidatePath } from "next/cache";
+import Success from "@/app/cart/checkout/success/page";
 
 export async function decreaseCartItemCount(id: string, userId: string) {
   try {
@@ -46,7 +47,19 @@ export async function decreaseCartItemCount(id: string, userId: string) {
 
 export async function increaseCartItemCount(id: string, userId: string) {
   try {
-    const result = await prisma.cartItem.update({
+    const result = await prisma.cartItem.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!result) return { success: false, message: "Product not found" };
+
+    if (result.quantity >= 10) {
+      return { Success: false, message: "Maximum quantity reached" };
+    }
+
+    await prisma.cartItem.update({
       where: {
         id,
         userId,
@@ -60,7 +73,9 @@ export async function increaseCartItemCount(id: string, userId: string) {
     revalidatePath("/cart");
 
     return result;
-  } catch (error) {}
+  } catch (error) {
+    return { success: false, message: "Database error" };
+  }
 }
 
 export async function updateCheckCartItem(

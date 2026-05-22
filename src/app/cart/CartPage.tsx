@@ -56,7 +56,7 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
 
       case "INCREMENT": {
         return currentCartState.map((item) =>
-          item.id === action.payload
+          item.id === action.payload && item.quantity < 10
             ? { ...item, quantity: item.quantity + 1 }
             : item,
         );
