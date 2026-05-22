@@ -3,13 +3,14 @@ import Image from "next/image";
 import { formattedPrice } from "../../lib/utils/money";
 import { Minus } from "lucide-react";
 import { Plus } from "lucide-react";
-import { increaseCartItemCount } from "@/actions/cart";
+import { decreaseCartItemCount, increaseCartItemCount } from "@/actions/cart";
 
 type CartCardProps = {
   product: CartProduct;
   removeCartItem: (id: string) => void;
   selectCartItem: (id: string, selectValue: boolean) => void;
   incrementCartItemCount: (id: string, userId: string) => void;
+  decrementCartItemCount: (id: string, userId: string) => void;
 };
 
 const CartCard = ({
@@ -17,6 +18,7 @@ const CartCard = ({
   removeCartItem,
   selectCartItem,
   incrementCartItemCount,
+  decrementCartItemCount,
 }: CartCardProps) => {
   const { id, image, name, quantity, priceCents, color, size, isChecked } =
     product;
@@ -59,7 +61,12 @@ const CartCard = ({
 
         <div className="flex items-end">
           <div className="flex items-center mt-3 border w-fit rounded-lg border-sky-200">
-            <button className="py-3 px-2 font-bold">
+            <button
+              className="py-3 px-2 font-bold"
+              onClick={() => {
+                decrementCartItemCount(id, "user-1234");
+              }}
+            >
               <Minus size={15} />
             </button>
             <input
@@ -94,7 +101,6 @@ const CartCard = ({
             checked={isChecked}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               selectCartItem(id, e.target.checked);
-              console.log(e.target.checked, isChecked);
             }}
           />
         </div>

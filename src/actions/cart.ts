@@ -5,6 +5,45 @@ import { CartProduct } from "@/types/types";
 import { mapProductData, mapCartItemData } from "./helper";
 import { revalidatePath } from "next/cache";
 
+export async function decreaseCartItemCount(id: string, userId: string) {
+  try {
+    const result = await prisma.cartItem.findFirst({
+      where: {
+        id,
+        userId,
+      },
+
+      select: {
+        quantity: true,
+      },
+    });
+
+    if (!result) return { success: false, message: "Item not found" };
+
+    if (result.quantity <= 1) {
+      return { success: false, message: "Minimum quantity reached" };
+    }
+
+    await prisma.cartItem.update({
+      where: {
+        id,
+      },
+
+      data: {
+        quantity: {
+          decrement: 1,
+        },
+      },
+    });
+
+    revalidatePath("/cart");
+
+    return { success: true };
+  } catch (error) {
+    return { success: false, message: "Database error" };
+  }
+}
+
 export async function increaseCartItemCount(id: string, userId: string) {
   try {
     const result = await prisma.cartItem.update({

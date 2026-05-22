@@ -5,6 +5,7 @@ import {
   deleteCartItem,
   updateCheckCartItem,
   increaseCartItemCount,
+  decreaseCartItemCount,
 } from "@/actions/cart";
 import { useMemo, useState, useOptimistic, use, useTransition } from "react";
 import { useRouter } from "next/navigation";
@@ -23,7 +24,8 @@ type CartPageProps = {
 type CartAction =
   | { type: "DELETE"; payload: string }
   | { type: "SELECT"; payload: { id: string; value: boolean } }
-  | { type: "INCREMENT"; payload: String };
+  | { type: "INCREMENT"; payload: String }
+  | { type: "DECREMENT"; payload: string };
 
 const CartPage = ({ cartProducts }: CartPageProps) => {
   const {
@@ -60,6 +62,14 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
         );
       }
 
+      case "DECREMENT": {
+        return currentCartState.map((item) =>
+          item.id === action.payload && item.quantity > 1
+            ? { ...item, quantity: item.quantity - 1 }
+            : item,
+        );
+      }
+
       default: {
         return currentCartState;
       }
@@ -75,6 +85,16 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
     0,
   );
   const displayCartTotalItems = `(${cartTotalItems} items)`;
+
+  const decrementCartItemCount = (id: string, userId: string) => {
+    startTransition(async () => {
+      addOptimisticCartState({
+        type: "DECREMENT",
+        payload: id,
+      });
+      await decreaseCartItemCount(id, userId);
+    });
+  };
 
   const incrementCartItemCount = (id: string, userId: string) => {
     startTransition(async () => {
@@ -172,6 +192,7 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
                         removeCartItem={removeCartItem}
                         selectCartItem={selectCartItem}
                         incrementCartItemCount={incrementCartItemCount}
+                        decrementCartItemCount={decrementCartItemCount}
                       />
                     </div>
                   ))}
