@@ -46,7 +46,7 @@ const CartCard = ({
             {name}
           </h1>
           <div className="flex gap-2">
-            {product.color && product.size ? (
+            {product.color === "N/A" && product.size === "N/A" ? null : (
               <>
                 <p className="text-[10px] uppercase tracking-wider text-gray-400 mt-0.5">
                   color: {product.color}
@@ -55,7 +55,7 @@ const CartCard = ({
                   size: {product.size}
                 </p>
               </>
-            ) : null}
+            )}
           </div>
         </div>
 
