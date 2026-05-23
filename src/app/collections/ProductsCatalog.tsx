@@ -20,7 +20,6 @@ const ProductCatalog = () => {
   }, [products]);
 
   const progressPercentage = (visible / total) * 100;
-  const slicedProducts = products.slice(0, visible);
 
   useEffect(() => {
     setMounted(true);
@@ -48,34 +47,50 @@ const ProductCatalog = () => {
           </div>
         </div>
 
-        <div>
-          <div className="hidden md:flex gap-5">
-            <FilterDropdown title={"Category"} menuItem={uniqueKeywords} />
-            <FilterDropdown title={"Price Range"} />
-          </div>
-
-          <div className="flex flex-col gap-15">
-            <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 gap-y-5">
-              {products.slice(0, visible).map((product) => {
-                return <ProductCard key={product.id} product={product} />;
-              })}
-            </div>
-            <div className="flex justify-center items-center flex-col">
-              <p className="mb-4">
-                Showing {visible} of {products.length} products
-              </p>
-              <div className={`w-[clamp(17.5rem,80vw,25rem)] bg-gray-200 mb-7`}>
-                <div
-                  className="h-2 bg-sky-400 transition-all duration-500 ease-out"
-                  style={{ width: `${progressPercentage}%` }}
-                ></div>
+        <div className="flex justify-between gap-5">
+          <div className="flex flex-col max-w-65 w-full">
+            <div>
+              <h2>CATEGORY</h2>
+              <div>
+                <div className="my-5 max-h-48 overflow-y-auto pr-2">
+                  {uniqueKeywords.map((item) => {
+                    return (
+                      <div className="flex items-center gap-3">
+                        <input type="checkbox" value={item} checked />
+                        <p>{item}</p>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              <button
-                onClick={handleExploreMore}
-                className={`${visible >= total ? "hidden" : "flex"} py-3 px-8 font-semibold border-2 border-gray-300 rounded-xl hover:bg-sky-300 active:bg-sky-400`}
-              >
-                Explore More
-              </button>
+            </div>
+          </div>
+          <div>
+            <div className="flex flex-col gap-15">
+              <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6 gap-y-5">
+                {products.slice(0, visible).map((product) => {
+                  return <ProductCard key={product.id} product={product} />;
+                })}
+              </div>
+              <div className="flex justify-center items-center flex-col">
+                <p className="mb-4">
+                  Showing {visible} of {products.length} products
+                </p>
+                <div
+                  className={`w-[clamp(17.5rem,80vw,25rem)] bg-gray-200 mb-7`}
+                >
+                  <div
+                    className="h-2 bg-sky-400 transition-all duration-500 ease-out"
+                    style={{ width: `${progressPercentage}%` }}
+                  ></div>
+                </div>
+                <button
+                  onClick={handleExploreMore}
+                  className={`${visible >= total ? "hidden" : "flex"} py-3 px-8 font-semibold border-2 border-gray-300 rounded-xl hover:bg-sky-300 active:bg-sky-400`}
+                >
+                  Explore More
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -9,7 +9,7 @@ type TrendCardProps = {
 const TrendCard = ({ product }: TrendCardProps) => {
   const { image, name, priceCents } = product;
   return (
-    <div className="h-full">
+    <div className="h-full max-h-80">
       <div className="overflow-hidden rounded-2xl h-full">
         <div className="relative after:content-[''] after:absolute after:bottom-0 after:h-4 after:w-[90%] after:rounded-t-xl after:bg-white flex justify-center h-full">
           <div className="inset-0 bg-linear-to-b from-white/15 to-black/10 w-full h-full absolute"></div>
