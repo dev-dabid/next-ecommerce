@@ -1,4 +1,5 @@
 import "./globals.css";
+import prisma from "@/lib/prisma";
 import Header from "@/components/Header";
 import { Inter } from "next/font/google";
 import { getProducts } from "../lib/api/get-products";
@@ -13,6 +14,24 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const getProducts = async () => {
+    const result = (await prisma.product.findMany()).map((item) => {
+      return {
+        id: item.id,
+        image: item.image,
+        keywords: item.keywords,
+        name: item.name,
+        priceCents: item.priceCents,
+        rating: {
+          stars: item.ratingStars,
+          count: item.ratingCount,
+        },
+      };
+    });
+
+    return result;
+  };
+
   const data = await getProducts();
 
   return (

@@ -8,11 +8,8 @@ import ProductCard from "../../components/ProductCard";
 import Footer from "@/components/Footer";
 import { Product } from "@/types/types";
 
-type ProductCatalogProps = {
-  products: Product[];
-};
-
-const ProductCatalog = ({ products }: ProductCatalogProps) => {
+const ProductCatalog = () => {
+  const { products } = useProducts();
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(8);
 
