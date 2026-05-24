@@ -1,6 +1,5 @@
 import { StateCreator } from "zustand";
-import type { CartProduct, CartState } from "@/types/types";
-import { generateCartKey } from "@/lib/utils/cart";
+import type { CartState } from "@/types/types";
 import { cartItemCount } from "@/actions/cart";
 
 export const createCartSlice: StateCreator<CartState> = (set, get) => ({
@@ -41,23 +40,6 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
   updateCartCount: async () => {
     const cartCount = await cartItemCount("user-1234");
     set({ count: cartCount });
-  },
-
-  addToCart: (product) => {
-    const currentCart = new Map(get().cart);
-    const itemKey = generateCartKey(product.id, product.color, product.size);
-    const existingItem = currentCart.get(itemKey);
-
-    if (existingItem) {
-      currentCart.set(itemKey, {
-        ...existingItem,
-        quantity: existingItem.quantity + product.quantity,
-      });
-      set({ cart: currentCart });
-    } else {
-      currentCart.set(itemKey, { ...product, isChecked: true });
-      set({ cart: currentCart });
-    }
   },
 
   updateQuantity: (itemKey, value, type) => {

@@ -65,7 +65,7 @@ export interface CartState {
   optimisticAdd: (quantity: number) => void;
   optimisticRollback: (quantity: number) => void;
   updateCartCount: () => void;
-  addToCart: (product: CartProduct) => void;
+
   updateQuantity: (itemKey: string, value: number, type?: UpdateType) => void;
   inputQuantity: (itemKey: string, value: number) => void;
   selectItem: (itemKey: string, value: boolean) => void;
