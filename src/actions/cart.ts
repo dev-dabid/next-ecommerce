@@ -51,7 +51,7 @@ export async function decreaseCartItemCount(id: string, userId: string) {
 
     revalidatePath("/cart");
 
-    return { success: true };
+    return { success: true, data: result };
   } catch (error) {
     return { success: false, message: "Database error" };
   }
@@ -84,7 +84,7 @@ export async function increaseCartItemCount(id: string, userId: string) {
 
     revalidatePath("/cart");
 
-    return result;
+    return { success: true, data: result };
   } catch (error) {
     return { success: false, message: "Database error" };
   }
