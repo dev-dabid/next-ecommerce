@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import { CartItemWithProduct, CartProduct } from "@/types/types";
 import { mapProductData, mapCartItemData } from "./helper";
 import { revalidatePath } from "next/cache";
@@ -213,46 +214,48 @@ export async function addToCartDB(userId: string, product: CartProduct) {
   const size = product.size || "N/A";
   const quantity = product.quantity || 1;
 
-  const result = await prisma.$transaction(async (tx) => {
-    await tx.product.upsert({
-      where: { id: product.id },
-      update: {},
-      create: {
-        id: product.id,
-        image: product.image,
-        name: product.name,
-        ratingStars: product.rating.stars,
-        ratingCount: product.rating.count,
-        priceCents: product.priceCents,
-        keywords: product.keywords,
-      },
-    });
+  const result = await prisma.$transaction(
+    async (tx: Prisma.TransactionClient) => {
+      await tx.product.upsert({
+        where: { id: product.id },
+        update: {},
+        create: {
+          id: product.id,
+          image: product.image,
+          name: product.name,
+          ratingStars: product.rating.stars,
+          ratingCount: product.rating.count,
+          priceCents: product.priceCents,
+          keywords: product.keywords,
+        },
+      });
 
-    return await tx.cartItem.upsert({
-      where: {
-        userId_productId_color_size: {
+      return await tx.cartItem.upsert({
+        where: {
+          userId_productId_color_size: {
+            userId: userId,
+            productId: product.id,
+            color: color,
+            size: size,
+          },
+        },
+
+        update: {
+          quantity: {
+            increment: quantity,
+          },
+        },
+
+        create: {
           userId: userId,
           productId: product.id,
           color: color,
           size: size,
+          quantity: quantity,
         },
-      },
-
-      update: {
-        quantity: {
-          increment: quantity,
-        },
-      },
-
-      create: {
-        userId: userId,
-        productId: product.id,
-        color: color,
-        size: size,
-        quantity: quantity,
-      },
-    });
-  });
+      });
+    },
+  );
 
   revalidatePath("/");
 
