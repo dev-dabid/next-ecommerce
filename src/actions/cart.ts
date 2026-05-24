@@ -1,11 +1,10 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 import { CartItemWithProduct, CartProduct } from "@/types/types";
 import { mapProductData, mapCartItemData } from "./helper";
 import { revalidatePath } from "next/cache";
-import Success from "@/app/cart/checkout/success/page";
 
 interface ProductData {
   id: string;
