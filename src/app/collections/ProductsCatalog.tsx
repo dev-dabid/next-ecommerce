@@ -12,6 +12,7 @@ const ProductCatalog = () => {
   const { products } = useProducts();
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(8);
+  const [isChecked, setIsChecked] = useState(false);
 
   const total = products.length;
 
@@ -55,8 +56,13 @@ const ProductCatalog = () => {
                 <div className="my-5 max-h-48 overflow-y-auto pr-2">
                   {uniqueKeywords.map((item) => {
                     return (
-                      <div className="flex items-center gap-3">
-                        <input type="checkbox" value={item} checked />
+                      <div className="flex items-center gap-3" key={item}>
+                        <input
+                          type="checkbox"
+                          value={item}
+                          checked={isChecked}
+                          onChange={() => setIsChecked}
+                        />
                         <p>{item}</p>
                       </div>
                     );
