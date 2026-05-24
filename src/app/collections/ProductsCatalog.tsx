@@ -21,6 +21,13 @@ const ProductCatalog = () => {
 
   const [isChecked, setIsChecked] = useState<Set<string>>(new Set());
 
+  const filteredProducts = products.filter((item) => {
+    if (isChecked.size === 0) return true;
+    return item.keywords.some((key) => isChecked.has(key));
+  });
+
+  console.log(filteredProducts);
+
   const progressPercentage = (visible / total) * 100;
 
   useEffect(() => {
@@ -67,18 +74,20 @@ const ProductCatalog = () => {
                   })}
                 </div>
               </div>
+              <button onClick={() => setIsChecked(new Set())}>Clear all</button>
             </div>
           </div>
           <div>
+            <div></div>
             <div className="flex flex-col gap-15">
               <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6 gap-y-5">
-                {products.slice(0, visible).map((product) => {
+                {filteredProducts.slice(0, visible).map((product) => {
                   return <ProductCard key={product.id} product={product} />;
                 })}
               </div>
               <div className="flex justify-center items-center flex-col">
                 <p className="mb-4">
-                  Showing {visible} of {products.length} products
+                  Showing {visible} of {filteredProducts.length} products
                 </p>
                 <div
                   className={`w-[clamp(17.5rem,80vw,25rem)] bg-gray-200 mb-7`}
