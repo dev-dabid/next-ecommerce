@@ -6,6 +6,18 @@ import { mapProductData, mapCartItemData } from "./helper";
 import { revalidatePath } from "next/cache";
 import Success from "@/app/cart/checkout/success/page";
 
+interface ProductData {
+  id: string;
+  image: string;
+  name: string;
+  ratingStars: number;
+  ratingCount: number;
+  priceCents: number;
+  keywords: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export async function decreaseCartItemCount(id: string, userId: string) {
   try {
     const result = await prisma.cartItem.findFirst({
@@ -134,7 +146,7 @@ export async function findRelatedProducts(
 
     if (!result) throw new Error("Related products not found");
 
-    const productsMap = result.map((item) => {
+    const productsMap = result.map((item: ProductData) => {
       return mapProductData(item);
     });
 
