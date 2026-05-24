@@ -5,6 +5,7 @@ import { useState, useEffect, useMemo } from "react";
 import Breadcrumb from "@/components/Breadcrumb";
 import FilterDropdown from "./FilterDropdown";
 import ProductCard from "../../components/ProductCard";
+import Category from "./Category";
 import Footer from "@/components/Footer";
 import { Product } from "@/types/types";
 
@@ -12,13 +13,13 @@ const ProductCatalog = () => {
   const { products } = useProducts();
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(8);
-  const [isChecked, setIsChecked] = useState(false);
 
   const total = products.length;
-
   const uniqueKeywords = useMemo(() => {
     return Array.from(new Set(products.flatMap((p) => p.keywords)));
   }, [products]);
+
+  const [isChecked, setIsChecked] = useState<Set<string>>(new Set());
 
   const progressPercentage = (visible / total) * 100;
 
@@ -56,15 +57,12 @@ const ProductCatalog = () => {
                 <div className="my-5 max-h-48 overflow-y-auto pr-2">
                   {uniqueKeywords.map((item) => {
                     return (
-                      <div className="flex items-center gap-3" key={item}>
-                        <input
-                          type="checkbox"
-                          value={item}
-                          checked={isChecked}
-                          onChange={() => setIsChecked}
-                        />
-                        <p>{item}</p>
-                      </div>
+                      <Category
+                        key={item}
+                        category={item}
+                        isChecked={isChecked}
+                        setIsChecked={setIsChecked}
+                      />
                     );
                   })}
                 </div>
