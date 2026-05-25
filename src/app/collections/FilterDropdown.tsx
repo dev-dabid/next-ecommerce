@@ -18,7 +18,7 @@ const FilterDropdown = ({ title, menuItem }: FilterDropdownProps) => {
     <Menu>
       {({ open }) => (
         <>
-          <MenuButton className="data-active:bg-blue-300 data-hover:bg-sky-100 data-hover:text-sky-400 data-hover:border-sky-400 flex items-center gap-2 border border-gray-300 py-2 px-5 rounded-3xl font-semibold focus:outline-none text-sm">
+          <MenuButton className="data-active:bg-blue-300 data-hover:bg-sky-100 data-hover:text-sky-400 data-hover:border-sky-400 flex items-center gap-2 border border-gray-300 py-2 px-5 rounded-3xl font-semibold focus:outline-none text-sm w-fit">
             {title}
             <ChevronDown
               size={15}

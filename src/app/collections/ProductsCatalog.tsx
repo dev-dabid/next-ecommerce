@@ -1,7 +1,7 @@
 "use client";
 
 import useProducts from "@/hooks/useProducts";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import Breadcrumb from "@/components/Breadcrumb";
 import FilterDropdown from "./FilterDropdown";
 import ProductCard from "../../components/ProductCard";
@@ -13,6 +13,9 @@ const ProductCatalog = () => {
   const { products } = useProducts();
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(8);
+  const [isDragging, setIsDragging] = useState(false);
+  const [positionX, setPositionX] = useState(0);
+  const dragOffsetX = useRef(0);
 
   const total = products.length;
   const uniqueKeywords = useMemo(() => {
@@ -34,6 +37,10 @@ const ProductCatalog = () => {
     setMounted(true);
   }, []);
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    console.log(e.clientX);
+  };
+
   const handleExploreMore = () => {
     setVisible((prev) => Math.min(prev + 8, total));
   };
@@ -44,6 +51,7 @@ const ProductCatalog = () => {
     <div className="">
       <div className="max-w-300 mx-auto mb-30">
         <Breadcrumb />
+
         <div className="mb-10">
           <div>
             <h1 className="text-[clamp(1.9rem,5vw,3rem)] font-bold mb-2">
@@ -56,8 +64,11 @@ const ProductCatalog = () => {
           </div>
         </div>
 
-        <div className="flex justify-between gap-5">
-          <div className="flex flex-col max-w-65 w-full">
+        <div className="flex flex-col lg:flex-row lg:justify-between gap-5">
+          <div className="flex lg:hidden">
+            <FilterDropdown title="Categories" />
+          </div>
+          <div className="hidden lg:flex flex-col max-w-65 w-full">
             <div>
               <h2>CATEGORY</h2>
               <div>
@@ -73,8 +84,22 @@ const ProductCatalog = () => {
                     );
                   })}
                 </div>
+                <button onClick={() => setIsChecked(new Set())}>
+                  Clear all
+                </button>
               </div>
-              <button onClick={() => setIsChecked(new Set())}>Clear all</button>
+              {/* <div className="w-fit">
+                <div
+                  className="w-fit"
+                  onMouseDown={(e) => handleMouseDown(e)}
+                  style={{
+                    transform: `translateX(${positionX}px)`,
+                    cursor: isDragging ? "grabbing" : "grab",
+                  }}
+                >
+                  bilog
+                </div>
+              </div> */}
             </div>
           </div>
           <div>
