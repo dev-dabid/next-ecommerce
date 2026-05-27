@@ -41,9 +41,12 @@ export type UpdateType = "add" | "reduce";
 export type FormFields = {
   firstName: string;
   lastName: string;
-  address: string;
+  phone: string;
+  email: string;
+  streetAddress: string;
+  barangay: string;
   city: string;
-  state: string;
+  province: string;
   zipCode: string;
 };
 

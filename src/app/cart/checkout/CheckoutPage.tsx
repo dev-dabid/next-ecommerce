@@ -4,6 +4,7 @@ import useCart from "@/hooks/useCart";
 import useCartTotals from "@/hooks/useCartTotals";
 import Breadcrumb from "@/components/Breadcrumb";
 import TitledInput from "./TitledInput";
+import prisma from "@/lib/prisma";
 import OrderSummary from "../OrderSummary";
 import CircleTag from "./CircleTag";
 import { Radio, RadioGroup } from "@headlessui/react";
@@ -19,15 +20,9 @@ type CheckoutPageProps = {
 
 const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
   const router = useRouter();
-  const {
-    cart,
-    form,
-    getInputValue,
-    removeAllItem,
-    updateOrderSummary,
-    resetForm,
-  } = useCart();
-  const { preTotalDisplay, shippingDisplay, totalDisplay } = useCartTotals();
+  const { form, getInputValue, resetForm } = useCart();
+  const { preTotalDisplay, shippingDisplay, totalDisplay, totalCents } =
+    useCartTotals();
 
   const shipMethods = [
     {
@@ -64,25 +59,24 @@ const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
     return null;
   }
 
-  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-
   const handlePlaceOrder = async () => {
-    const generatedId = `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
-    const destination = `/cart/checkout/success?orderId=${generatedId}&name=${form.firstName}`;
-
     const summary = {
       recipient: form,
       orders: [...cartItems],
       subtotal: preTotalDisplay,
       shipping: shippingDisplay,
       total: totalDisplay,
+      totalCents: totalCents,
     };
-    updateOrderSummary(summary);
-    await delay(1500);
-    router.push(destination);
-    await delay(1500);
-    removeAllItem();
-    resetForm();
+
+    const result = await prisma.$transaction(async (tx) => {
+      await tx.order.create({
+        data: {
+          userId: "user-1234",
+          totalPrice: summary.totalCents,
+        },
+      });
+    });
   };
 
   return (
@@ -113,7 +107,7 @@ const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
                   <TitledInput
                     title={"ADDRESS"}
                     name={"address"}
-                    value={form.address}
+                    value={form.streetAddress}
                     setInput={getInputValue}
                   />
                 </div>
@@ -128,7 +122,7 @@ const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
                     <TitledInput
                       title={"STATE"}
                       name={"state"}
-                      value={form.state}
+                      value={form.province}
                       setInput={getInputValue}
                     />
                     <TitledInput
