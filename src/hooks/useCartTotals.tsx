@@ -31,7 +31,7 @@ const useCartTotals = (
   const actualShippingFee = hasFreeShipping ? 0 : 1000;
 
   const shippingTypePrice =
-    shipMethod?.type === "express" ? shipMethod.price : 0;
+    shipMethod?.type === "EXPRESS" ? shipMethod.price : 0;
 
   const estimatedTaxCents = Math.round(subtotalCents * 0.07);
   const totalCents = subtotalCents + estimatedTaxCents + actualShippingFee;
@@ -60,6 +60,7 @@ const useCartTotals = (
     totalDisplay,
     shippingTypePrice,
     shippingDisplay,
+    actualTotalCents,
   };
 };
 

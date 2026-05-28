@@ -4,7 +4,6 @@ import useCart from "@/hooks/useCart";
 import useCartTotals from "@/hooks/useCartTotals";
 import Breadcrumb from "@/components/Breadcrumb";
 import TitledInput from "./TitledInput";
-import prisma from "@/lib/prisma";
 import OrderSummary from "../OrderSummary";
 import CircleTag from "./CircleTag";
 import { Radio, RadioGroup } from "@headlessui/react";
@@ -21,18 +20,16 @@ type CheckoutPageProps = {
 const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
   const router = useRouter();
   const { form, getInputValue, resetForm } = useCart();
-  const { preTotalDisplay, shippingDisplay, totalDisplay, totalCents } =
-    useCartTotals();
 
   const shipMethods = [
     {
-      type: "standard",
+      type: "STANDARD",
       title: "Standard Delivery",
       days: "4-7 business days",
       price: 0,
     },
     {
-      type: "express",
+      type: "EXPRESS",
       title: "Express Courier",
       days: "1-2 business days",
       price: 3500,
@@ -40,6 +37,15 @@ const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
   ];
 
   const [selected, setSelected] = useState(shipMethods[0]);
+
+  const {
+    preTotalDisplay,
+    shippingDisplay,
+    totalDisplay,
+    totalCents,
+    actualTotalCents,
+  } = useCartTotals({ cartItems });
+
   const [isMounted, setIsMounted] = useState(false);
   const [isReady, setIsReady] = useState(false);
 
@@ -63,20 +69,12 @@ const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
     const summary = {
       recipient: form,
       orders: [...cartItems],
-      subtotal: preTotalDisplay,
-      shipping: shippingDisplay,
-      total: totalDisplay,
-      totalCents: totalCents,
+      actualTotalCents: actualTotalCents + selected.price,
+      shippingMethod: selected.type,
+      shippingFee: selected.price,
     };
 
-    const result = await prisma.$transaction(async (tx) => {
-      await tx.order.create({
-        data: {
-          userId: "user-1234",
-          totalPrice: summary.totalCents,
-        },
-      });
-    });
+    console.log(summary);
   };
 
   return (
@@ -105,8 +103,8 @@ const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
                 </div>
                 <div className="mt-6">
                   <TitledInput
-                    title={"ADDRESS"}
-                    name={"address"}
+                    title={"STREET ADDRESS"}
+                    name={"streetAddress"}
                     value={form.streetAddress}
                     setInput={getInputValue}
                   />
@@ -120,8 +118,8 @@ const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
                   />
                   <div className="flex gap-4 w-full">
                     <TitledInput
-                      title={"STATE"}
-                      name={"state"}
+                      title={"PROVINCE"}
+                      name={"province"}
                       value={form.province}
                       setInput={getInputValue}
                     />

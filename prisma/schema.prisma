@@ -80,7 +80,7 @@ model OrderItem {
   color String?
   size String?
   quantity Int
-  priceCent Int
+  priceCents Int
 
   product Product @relation(fields: [productId], references: [id])
   productId String
@@ -92,22 +92,28 @@ model OrderItem {
 }
 
 model Order {
-  id           String      @id @default(cuid())
-  user         User        @relation(fields: [userId], references: [id])
-  userId       String
-  totalPrice   Int
-  firstName    String
-  lastName     String
-  phone        String
-  email        String
-  street       String 
-  barangay     String
-  city         String
-  province     String
-  zipCode      String
-  status       String      @default("PENDING")
-  paymentMethod String     @default("CASH_ON_DELIVERY")
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  orderItem    OrderItem[]
+  id String @id @default(cuid())
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  totalPrice Int
+  shippingFee Int @default(0)
+
+  firstName String
+  lastName String
+  phone String
+  email String
+  streetAddress String 
+  barangay String
+  city String
+  province String
+  zipCode String
+  
+  status String @default("PENDING")
+  paymentMethod String @default("CASH_ON_DELIVERY")
+  shippingType String @default("STANDARD")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orderItem OrderItem[]
 }

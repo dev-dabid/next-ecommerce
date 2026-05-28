@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import type { Prisma } from "@prisma/client";
-import { CartItemWithProduct, CartProduct } from "@/types/types";
+import { CartItemWithProduct, CartProduct, FormFields } from "@/types/types";
 import { mapProductData, mapCartItemData } from "./helper";
 import { revalidatePath } from "next/cache";
 
@@ -16,6 +16,62 @@ interface ProductData {
   keywords: string[];
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+interface SummaryData {
+  recipient: FormFields;
+  orders: CartItemWithProduct[];
+  actualTotalCents: number;
+  shippingMethod: string;
+  shippingFee: number;
+}
+
+export async function submitOrderData(userId: string, summary: SummaryData) {
+  const result = await prisma.$transaction(async (tx) => {
+    const firstOrder = await tx.order.create({
+      data: {
+        userId,
+        totalPrice: summary.actualTotalCents,
+        shippingFee: summary.shippingFee,
+        firstName: summary.recipient.firstName,
+        lastName: summary.recipient.lastName,
+        phone: summary.recipient.phone,
+        email: summary.recipient.email,
+        streetAddress: summary.recipient.streetAddress,
+        barangay: summary.recipient.barangay,
+        city: summary.recipient.city,
+        province: summary.recipient.province,
+        zipCode: summary.recipient.zipCode,
+        shippingType: summary.shippingMethod,
+      },
+    });
+
+    const ordersMap = summary.orders.map((item) => {
+      return {
+        orderId: firstOrder.id,
+        productId: item.productId,
+        color: item.color,
+        size: item.size,
+        quantity: item.quantity,
+        priceCents: item.product.priceCents,
+      };
+    });
+
+    await tx.orderItem.createMany({
+      data: ordersMap,
+    });
+
+    await tx.cartItem.deleteMany({
+      where: {
+        userId,
+      },
+    });
+
+    return firstOrder;
+  });
+
+  revalidatePath("/");
+  return result;
 }
 
 export async function decreaseCartItemCount(id: string, userId: string) {

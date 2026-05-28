@@ -33,6 +33,7 @@ export const mapProductData = (item: ProductData) => {
 export const mapCartItemData = (item: CartItemWithProduct) => {
   return {
     id: item.id,
+    productId: item.productId,
     image: item.product.image,
     name: item.product.name,
     color: item.color,
