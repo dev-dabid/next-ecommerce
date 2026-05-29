@@ -15,6 +15,7 @@ type OrderSummaryProps = {
 
   buttonTitle: string;
   onNavigate?: () => void;
+  isPending?: boolean;
 };
 
 const OrderSummary = ({
@@ -22,6 +23,7 @@ const OrderSummary = ({
   shipMethod,
   buttonTitle,
   onNavigate,
+  isPending,
 }: OrderSummaryProps) => {
   const { cart } = useCart();
 
@@ -76,13 +78,23 @@ const OrderSummary = ({
             </div>
           </div>
 
-          <button
-            className={`${isCartEmpty ? "bg-sky-800 cursor-not-allowed" : "bg-sky-400 cursor-pointer hover:bg-sky-500 active:bg-sky-700"} text-white  py-4 rounded-xl mt-2 w-full `}
-            onClick={onNavigate}
-            disabled={isCartEmpty}
-          >
-            {buttonTitle}
-          </button>
+          {isPending ? (
+            <button
+              className={`${isCartEmpty ? "bg-sky-800 cursor-not-allowed" : "bg-sky-400 cursor-pointer hover:bg-sky-500 active:bg-sky-700"} text-white  py-4 rounded-xl mt-2 w-full `}
+              onClick={onNavigate}
+              disabled={isPending}
+            >
+              {buttonTitle}
+            </button>
+          ) : (
+            <button
+              className={`${isCartEmpty ? "bg-sky-800 cursor-not-allowed" : "bg-sky-400 cursor-pointer hover:bg-sky-500 active:bg-sky-700"} text-white  py-4 rounded-xl mt-2 w-full `}
+              onClick={onNavigate}
+              disabled={isCartEmpty}
+            >
+              {buttonTitle}
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -68,7 +68,6 @@ export default function Success() {
                 </div>
                 <div>
                   <p className="text-gray-600 font-semibold">ADDRESS</p>
-                  <p className="text-lg">{`${recipient.address}, ${recipient.city}, ${recipient.state}, ${recipient.zipCode}`}</p>
                 </div>
               </div>
             </div>

@@ -21,6 +21,7 @@ export interface CartProduct extends Product {
   size?: string | null;
   quantity: number;
   isChecked: boolean;
+  productId: string;
 }
 
 export interface ProductsState {

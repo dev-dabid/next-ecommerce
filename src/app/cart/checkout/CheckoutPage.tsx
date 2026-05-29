@@ -5,6 +5,7 @@ import useCartTotals from "@/hooks/useCartTotals";
 import Breadcrumb from "@/components/Breadcrumb";
 import TitledInput from "./TitledInput";
 import OrderSummary from "../OrderSummary";
+import { submitOrderData } from "@/actions/cart";
 import CircleTag from "./CircleTag";
 import { Radio, RadioGroup } from "@headlessui/react";
 import { useState, useEffect } from "react";
@@ -12,6 +13,7 @@ import { formattedPrice } from "@/lib/utils/money";
 import Footer from "@/components/Footer";
 import { useRouter } from "next/navigation";
 import { CartProduct } from "@/types/types";
+import { useTransition } from "react";
 
 type CheckoutPageProps = {
   cartItems: CartProduct[];
@@ -44,10 +46,13 @@ const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
     totalDisplay,
     totalCents,
     actualTotalCents,
+    actualShippingFee,
+    hasFreeShipping,
   } = useCartTotals({ cartItems });
 
   const [isMounted, setIsMounted] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     setIsMounted(true);
@@ -65,14 +70,32 @@ const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
     return null;
   }
 
-  const handlePlaceOrder = async () => {
+  const handlePlaceOrder = () => {
     const summary = {
       recipient: form,
       orders: [...cartItems],
       actualTotalCents: actualTotalCents + selected.price,
       shippingMethod: selected.type,
       shippingFee: selected.price,
+      actualShippingFee: actualShippingFee,
+      hasFreeShipping: hasFreeShipping,
     };
+
+    startTransition(async () => {
+      const response = (await submitOrderData("user-1234", summary)) as
+        | { success: true; orderId: string }
+        | { success: false; message: string };
+
+      if (!response) return;
+
+      console.log(response);
+
+      if (response.success) {
+        router.push(`/checkout/success?id=${response.orderId}`);
+      } else {
+        alert(response.message);
+      }
+    });
 
     console.log(summary);
   };
@@ -101,11 +124,31 @@ const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
                     setInput={getInputValue}
                   />
                 </div>
-                <div className="mt-6">
+                <div className="flex flex-col lg:flex-row gap-4 mt-6">
+                  <TitledInput
+                    title={"MOBILE NUMBER"}
+                    name={"phone"}
+                    value={form.phone}
+                    setInput={getInputValue}
+                  />
+                  <TitledInput
+                    title={"EMAIL ADDRESS"}
+                    name={"email"}
+                    value={form.email}
+                    setInput={getInputValue}
+                  />
+                </div>
+                <div className="flex flex-col lg:flex-row gap-4 mt-6">
                   <TitledInput
                     title={"STREET ADDRESS"}
                     name={"streetAddress"}
                     value={form.streetAddress}
+                    setInput={getInputValue}
+                  />
+                  <TitledInput
+                    title={"BARANGAY"}
+                    name={"barangay"}
+                    value={form.barangay}
                     setInput={getInputValue}
                   />
                 </div>
@@ -172,6 +215,7 @@ const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
               shipMethod={selected}
               buttonTitle={"PLACE ORDER"}
               onNavigate={handlePlaceOrder}
+              isPending={isPending}
             />
           </div>
         </div>
