@@ -91,13 +91,11 @@ const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
       console.log(response);
 
       if (response.success) {
-        router.push(`/checkout/success?id=${response.orderId}`);
+        router.push(`/cart/checkout/success?id=${response.orderId}`);
       } else {
         alert(response.message);
       }
     });
-
-    console.log(summary);
   };
 
   return (
