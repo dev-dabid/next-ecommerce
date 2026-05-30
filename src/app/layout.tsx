@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import { Inter } from "next/font/google";
 import { getProducts } from "../lib/api/get-products";
 import StoreInitializer from "@/components/providers/StoreInitializer";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,14 +36,16 @@ export default async function RootLayout({
   const data = await getProducts();
 
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Header />
-        <main className="p-2 bg-gray-50 h-full">
-          <StoreInitializer data={data} />
-          {children}
-        </main>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <Header />
+          <main className="p-2 bg-gray-50 h-full">
+            <StoreInitializer data={data} />
+            {children}
+          </main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
