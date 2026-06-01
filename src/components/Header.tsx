@@ -5,6 +5,7 @@ import NavigationLinks from "./NavigationLinks";
 import CartBadge from "./CartBadge";
 import { cartItemCount } from "@/actions/cart";
 import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
 
 const Header = async () => {
   const cartCount = await cartItemCount("user-1234");

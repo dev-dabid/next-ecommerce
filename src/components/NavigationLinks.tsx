@@ -20,14 +20,14 @@ const NavigationLinks = () => {
       label: "Collections",
       href: "/collections",
     },
-    {
-      label: "New Arrivals",
-      href: "/newarrivals",
-    },
-    {
-      label: "Sale",
-      href: "/sale",
-    },
+    // {
+    //   label: "New Arrivals",
+    //   href: "/newarrivals",
+    // },
+    // {
+    //   label: "Sale",
+    //   href: "/sale",
+    // },
   ];
 
   return (
