@@ -1,3 +1,20 @@
+import { headers } from "next/headers";
+
+export async function POST(req: Request) {
+  const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
+
+  if (!WEBHOOK_SECRET) {
+    return new Response("Error: Missing WEBHOOK_SECRET from Clerk", {
+      status: 500,
+    });
+  }
+
+  const headerList = await headers();
+  const svix_id = headerList.get("svix-id");
+
+  return new Response("hatdog");
+}
+
 // import { Webhook } from "svix";
 // import { headers } from "next/headers";
 // import { WebhookEvent } from "@clerk/nextjs/server";
