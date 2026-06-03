@@ -1,4 +1,7 @@
+import { Webhook } from "svix";
 import { headers } from "next/headers";
+import { WebhookEvent } from "@clerk/nextjs/server";
+import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
@@ -10,9 +13,32 @@ export async function POST(req: Request) {
   }
 
   const headerList = await headers();
-  const svix_id = headerList.get("svix-id");
 
-  return new Response("hatdog");
+  const svix_id = headerList.get("svix-id");
+  const svix_timestamp = headerList.get("svix-timestamp");
+  const svix_signature = headerList.get("svix-signature");
+
+  if (!svix_id || !svix_timestamp || !svix_signature) {
+    return new Response("Error: Missing svix headers", { status: 400 });
+  }
+
+  const body = await req.text();
+
+  const wh = new Webhook(WEBHOOK_SECRET);
+  let evt: WebhookEvent;
+
+  try {
+    evt = wh.verify(body, {
+      "svix-id": svix_id,
+      "svix-timestamp": svix_timestamp,
+      "svix-signature": svix_signature,
+    }) as WebhookEvent;
+  } catch (err) {
+    console.error("Error: Fake signature, or it could be hacking!", err);
+    return new Response("Error: Verification failed", { status: 400 });
+  }
+
+  return new Response(body);
 }
 
 // import { Webhook } from "svix";
