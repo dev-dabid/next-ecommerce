@@ -23,22 +23,19 @@ export async function POST(req: Request) {
   }
 
   const body = await req.text();
-
   const wh = new Webhook(WEBHOOK_SECRET);
   let evt: WebhookEvent;
 
   try {
     evt = wh.verify(body, {
       "svix-id": svix_id,
-      "svix-timestamp": svix_timestamp,
       "svix-signature": svix_signature,
+      "svix-timestamp": svix_timestamp,
     }) as WebhookEvent;
-  } catch (err) {
-    console.error("Error: Fake signature, or it could be hacking!", err);
+  } catch (error) {
+    console.error("Svix headers failed: ", error);
     return new Response("Error: Verification failed", { status: 400 });
   }
-
-  return new Response(body);
 }
 
 // import { Webhook } from "svix";
@@ -56,6 +53,7 @@ export async function POST(req: Request) {
 //   }
 
 //   const headerList = await headers();
+
 //   const svix_id = headerList.get("svix-id");
 //   const svix_timestamp = headerList.get("svix-timestamp");
 //   const svix_signature = headerList.get("svix-signature");
@@ -64,8 +62,7 @@ export async function POST(req: Request) {
 //     return new Response("Error: Missing svix headers", { status: 400 });
 //   }
 
-//   const payload = await req.json();
-//   const body = JSON.stringify(payload);
+//   const body = await req.text();
 
 //   const wh = new Webhook(WEBHOOK_SECRET);
 //   let evt: WebhookEvent;
@@ -77,7 +74,7 @@ export async function POST(req: Request) {
 //       "svix-signature": svix_signature,
 //     }) as WebhookEvent;
 //   } catch (err) {
-//     console.error("Error verifying webhook:", err);
+//     console.error("Error: Fake signature, or it could be hacking!", err);
 //     return new Response("Error: Verification failed", { status: 400 });
 //   }
 
