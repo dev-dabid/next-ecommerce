@@ -36,6 +36,17 @@ export async function POST(req: Request) {
     console.error("Svix headers failed: ", error);
     return new Response("Error: Verification failed", { status: 400 });
   }
+
+  const eventType = evt.type;
+
+  if (eventType === "user.created") {
+    const { two_factor_enabled } = evt.data;
+    return new Response(
+      JSON.stringify({
+        two_factor_enabled,
+      }),
+    );
+  }
 }
 
 // import { Webhook } from "svix";
