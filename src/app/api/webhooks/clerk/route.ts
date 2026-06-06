@@ -40,12 +40,7 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === "user.created") {
-    const { two_factor_enabled } = evt.data;
-    return new Response(
-      JSON.stringify({
-        two_factor_enabled,
-      }),
-    );
+    return new Response(JSON.stringify(evt.data));
   }
 }
 

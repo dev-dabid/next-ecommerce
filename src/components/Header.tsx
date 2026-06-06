@@ -1,6 +1,6 @@
 import Input from "@/components/Input";
 import { ShoppingBag, Gem, CircleUserRound } from "lucide-react";
-import { SignOutButton, SignInButton } from "@clerk/nextjs";
+import { SignOutButton, SignInButton, UserButton } from "@clerk/nextjs";
 import NavigationLinks from "./NavigationLinks";
 import CartBadge from "./CartBadge";
 import { cartItemCount } from "@/actions/cart";
@@ -38,11 +38,7 @@ const Header = async () => {
               </SignInButton>
             </SignOutButton>
 
-            <SignInButton>
-              <div className="hidden lg:block">
-                <CircleUserRound />
-              </div>
-            </SignInButton>
+            <UserButton />
           </div>
         </div>
       </div>
