@@ -8,6 +8,8 @@ import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 
 const Header = async () => {
+  const { userId } = await auth();
+
   const cartCount = await cartItemCount("user-1234");
 
   return (
@@ -29,15 +31,19 @@ const Header = async () => {
             <CartBadge initialCount={cartCount} />
           </Link>
 
-          <div>
-            <SignOutButton>
-              <SignInButton mode="modal">
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
-                  Sign In
-                </button>
-              </SignInButton>
-            </SignOutButton>
+          {userId ? null : (
+            <div>
+              <SignOutButton>
+                <SignInButton mode="modal">
+                  <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
+                    Sign In
+                  </button>
+                </SignInButton>
+              </SignOutButton>
+            </div>
+          )}
 
+          <div className="flex items-center">
             <UserButton />
           </div>
         </div>
