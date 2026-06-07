@@ -48,11 +48,13 @@ export async function submitOrderData(userId: string, summary: SummaryData) {
       });
 
       const ordersMap = summary.orders.map((item) => {
+        const finalProductId = item.productId || item.id;
+
         return {
           orderId: firstOrder.id,
-          productId: item.productId,
-          color: item.color,
-          size: item.size,
+          productId: finalProductId as string,
+          color: item.color ?? null,
+          size: item.size ?? null,
           quantity: item.quantity,
           priceCents: item.priceCents,
         };
