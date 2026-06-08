@@ -208,7 +208,7 @@ const CheckoutPage = ({ userId, cartItems }: CheckoutPageProps) => {
               </div>
             </div>
           </div>
-          <div className="">
+          <div className="flex w-full lg:max-w-100 items-start">
             <OrderSummary
               cartItems={cartItems}
               shipMethod={selected}

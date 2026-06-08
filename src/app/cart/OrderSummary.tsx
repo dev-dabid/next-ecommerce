@@ -65,7 +65,7 @@ const OrderSummary = ({
             </div>
           </div>
 
-          <div>
+          {/* <div>
             <div className="flex border border-sky-200 rounded-lg p-2">
               <input
                 className="px-2 w-full outline-none"
@@ -76,7 +76,7 @@ const OrderSummary = ({
                 Apply
               </button>
             </div>
-          </div>
+          </div> */}
 
           {isPending ? (
             <button
