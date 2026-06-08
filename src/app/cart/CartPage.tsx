@@ -91,14 +91,16 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
   );
   const displayCartTotalItems = `(${cartTotalItems} items)`;
 
-  const decrementCartItemCount = (id: string, userId: string) => {
-    startTransition(async () => {
-      addOptimisticCartState({
-        type: "DECREMENT",
-        payload: id,
-      });
-      await decreaseCartItemCount(id, userId);
-    });
+  const decrementCartItemCount = (id: string, localKey: string) => {
+    userId
+      ? startTransition(async () => {
+          addOptimisticCartState({
+            type: "DECREMENT",
+            payload: id,
+          });
+          await decreaseCartItemCount(id, userId);
+        })
+      : updateQuantity(localKey, 1, "reduce");
   };
 
   const incrementCartItemCount = (id: string, localKey: string) => {
@@ -109,7 +111,6 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
             payload: id,
           });
           await increaseCartItemCount(id, userId);
-          console.log("LOG:", typeof userId, `[${userId}]`, Boolean(userId));
         })
       : updateQuantity(localKey, 1, "add");
   };

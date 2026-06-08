@@ -10,12 +10,8 @@ type CartCardProps = {
   product: CartProduct;
   removeCartItem: (id: string) => void;
   selectCartItem: (id: string, selectValue: boolean) => void;
-  incrementCartItemCount: (
-    id: string,
-    localKey: string,
-    userId: string,
-  ) => void;
-  decrementCartItemCount: (id: string, userId: string) => void;
+  incrementCartItemCount: (id: string, localKey: string) => void;
+  decrementCartItemCount: (id: string, localKey: string) => void;
 };
 
 const CartCard = ({
@@ -70,7 +66,7 @@ const CartCard = ({
             <button
               className="py-3 px-2 font-bold"
               onClick={() => {
-                decrementCartItemCount(id, "user-1234");
+                decrementCartItemCount(id, localKey);
               }}
             >
               <Minus size={15} />
@@ -83,7 +79,7 @@ const CartCard = ({
             />
             <button
               className="py-3 px-2 text-sky-500 font-bold"
-              onClick={() => incrementCartItemCount(id, localKey, "user-1234")}
+              onClick={() => incrementCartItemCount(id, localKey)}
             >
               <Plus size={15} />
             </button>
