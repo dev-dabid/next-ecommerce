@@ -11,7 +11,7 @@ import { auth } from "@clerk/nextjs/server";
 const Header = async () => {
   const { userId } = await auth();
 
-  const cartCount = await cartItemCount("user-1234");
+  const cartCount = await cartItemCount(userId || "");
 
   return (
     <header className=" bg-gray-50 p-5 border-b border-b-sky-100 sticky top-0 z-50">
