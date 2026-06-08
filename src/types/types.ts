@@ -65,6 +65,7 @@ export interface CartState {
   form: FormFields;
   orderSummary: Summary;
 
+  addToCart: (productItem: CartProduct) => void;
   setCount: (count: number) => void;
   optimisticAdd: (quantity: number) => void;
   optimisticRollback: (quantity: number) => void;

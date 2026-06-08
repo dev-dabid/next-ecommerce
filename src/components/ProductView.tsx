@@ -16,9 +16,10 @@ import { ShoppingCart } from "lucide-react";
 
 type ProductViewProps = {
   product: Product;
+  userId: string | null;
 };
 
-const ProductView = ({ product }: ProductViewProps) => {
+const ProductView = ({ product, userId }: ProductViewProps) => {
   const colors = [
     { name: "white", color: "bg-gray-200" },
     { name: "black", color: "bg-gray-950" },
@@ -39,7 +40,7 @@ const ProductView = ({ product }: ProductViewProps) => {
     size: sizes[1],
     count: 1,
   });
-  const { optimisticAdd, optimisticRollback } = useCart();
+  const { optimisticAdd, optimisticRollback, addToCart } = useCart();
 
   const { image, name, priceCents, rating } = product;
 
@@ -49,16 +50,26 @@ const ProductView = ({ product }: ProductViewProps) => {
         color: selected.color.name,
         size: selected.size.name,
         quantity: selected.count,
+        productId: product.id,
         isChecked: true,
       }
-    : { ...product, quantity: selected.count, isChecked: true };
+    : {
+        ...product,
+        quantity: selected.count,
+        productId: product.id,
+        isChecked: true,
+      };
 
   const optimisticAddToCart = () => {
-    try {
-      optimisticAdd(selected.count);
-      addToCartDB("user-1234", productItem);
-    } catch (error) {
-      optimisticRollback(selected.count);
+    if (userId) {
+      try {
+        optimisticAdd(selected.count);
+        addToCartDB(userId, productItem);
+      } catch (error) {
+        optimisticRollback(selected.count);
+      }
+    } else {
+      addToCart(productItem);
     }
   };
 
@@ -66,8 +77,8 @@ const ProductView = ({ product }: ProductViewProps) => {
     <div className="pb-10">
       <Breadcrumb />
       <div className="flex flex-col sm:items-center lg:flex-row lg:items-start gap-5 lg:gap-10">
-        <div className="flex-shrink-0 w-full max-w-[500px]">
-          <div className="relative overflow-hidden w-full aspect-[500/613] rounded-2xl bg-white flex items-center justify-center">
+        <div className="shrink-0 w-full max-w-125">
+          <div className="relative overflow-hidden w-full aspect-500/613 rounded-2xl bg-white flex items-center justify-center">
             <Image
               src={`/${image}`}
               alt="description"
@@ -78,7 +89,7 @@ const ProductView = ({ product }: ProductViewProps) => {
             />
           </div>
         </div>
-        <div className="max-w-[500px]">
+        <div className="max-w-125">
           <div className="mt-1 border-b border-b-sky-100 pb-8">
             <h1 className="text-[clamp(1.5rem,5vw,2.25rem)] font-bold line-clamp-2 leading-tight">
               {name}

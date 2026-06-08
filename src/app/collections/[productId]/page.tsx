@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs/server";
 import { findUniqueProduct, findRelatedProducts } from "@/actions/cart";
 import ProductView from "@/components/ProductView";
 import RelatedProducts from "@/components/RelatedProducts";
@@ -10,6 +11,7 @@ type ProductPageProps = {
 };
 
 export default async function ProductPage({ params }: ProductPageProps) {
+  const { userId } = await auth();
   const { productId } = await params;
   const product = await findUniqueProduct(productId);
 
@@ -26,7 +28,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   return (
     <div>
       <div className="max-w-300 mx-auto">
-        <ProductView product={product.data} />
+        <ProductView product={product.data} userId={userId} />
         <div className="pb-20">
           <RelatedProducts products={relatedData} />
         </div>

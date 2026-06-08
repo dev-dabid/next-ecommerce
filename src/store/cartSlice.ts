@@ -1,6 +1,8 @@
 import { StateCreator } from "zustand";
 import type { CartState } from "@/types/types";
 import { cartItemCount } from "@/actions/cart";
+import { generateCartKey } from "@/lib/utils/cart";
+import { NewspaperIcon } from "lucide-react";
 
 export const createCartSlice: StateCreator<CartState> = (set, get) => ({
   cart: new Map(),
@@ -36,6 +38,29 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
   },
 
   setCount: (count) => set({ count: count }),
+
+  addToCart: (productItem) => {
+    const newCart = new Map(get().cart);
+    const newId = generateCartKey(
+      productItem.id,
+      productItem.color,
+      productItem.size,
+    );
+    const newItem = newCart.get(newId);
+
+    if (newItem) {
+      newCart.set(newId, {
+        ...newItem,
+        quantity: newItem.quantity + productItem.quantity,
+      });
+    } else {
+      newCart.set(newId, productItem);
+    }
+
+    set({ cart: newCart });
+
+    console.log("Product Successfully Added!");
+  },
 
   optimisticAdd: (quantity) =>
     set((state) => ({ count: state.count + quantity })),
