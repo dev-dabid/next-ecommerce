@@ -30,8 +30,10 @@ export interface ProductsState {
     category: string;
     priceRange: number;
   };
+  favorites: Set<string>;
   isFetched: boolean;
   fetchProducts: (data: Product[]) => void;
+  setFavorite: (productId: string) => void;
   setFilter: (key: string, value: string) => void;
 }
 

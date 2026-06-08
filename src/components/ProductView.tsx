@@ -143,7 +143,10 @@ const ProductView = ({ product, userId }: ProductViewProps) => {
                       <ShoppingCart /> Add to Cart
                     </p>
                   </button>
-                  <FavoriteToggle userId="user-1234" productId={product.id} />
+                  <FavoriteToggle
+                    userId={userId || ""}
+                    productId={product.id}
+                  />
                 </div>
               </div>
             </div>
