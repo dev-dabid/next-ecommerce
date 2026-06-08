@@ -9,7 +9,7 @@ import { decreaseCartItemCount, increaseCartItemCount } from "@/actions/cart";
 type CartCardProps = {
   product: CartProduct;
   removeCartItem: (id: string) => void;
-  selectCartItem: (id: string, selectValue: boolean) => void;
+  selectCartItem: (id: string, localKey: string, selectValue: boolean) => void;
   incrementCartItemCount: (id: string, localKey: string) => void;
   decrementCartItemCount: (id: string, localKey: string) => void;
 };
@@ -102,7 +102,7 @@ const CartCard = ({
             type="checkbox"
             checked={isChecked}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              selectCartItem(id, e.target.checked);
+              selectCartItem(id, localKey, e.target.checked);
             }}
           />
         </div>

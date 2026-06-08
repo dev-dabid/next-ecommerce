@@ -115,15 +115,21 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
       : updateQuantity(localKey, 1, "add");
   };
 
-  const selectCartItem = (id: string, selectValue: boolean) => {
-    startTransition(async () => {
-      addOptimisticCartState({
-        type: "SELECT",
-        payload: { id: id, value: selectValue },
-      });
+  const selectCartItem = (
+    id: string,
+    localKey: string,
+    selectValue: boolean,
+  ) => {
+    userId
+      ? startTransition(async () => {
+          addOptimisticCartState({
+            type: "SELECT",
+            payload: { id: id, value: selectValue },
+          });
 
-      await updateCheckCartItem(id, "user-1234", selectValue);
-    });
+          await updateCheckCartItem(id, userId, selectValue);
+        })
+      : selectItem(localKey, selectValue);
   };
 
   const removeCartItem = (id: string) => {
