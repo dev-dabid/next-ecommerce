@@ -17,9 +17,10 @@ import { useTransition } from "react";
 
 type CheckoutPageProps = {
   cartItems: CartProduct[];
+  userId: string;
 };
 
-const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
+const CheckoutPage = ({ userId, cartItems }: CheckoutPageProps) => {
   const router = useRouter();
   const { form, getInputValue, resetForm } = useCart();
 
@@ -82,7 +83,7 @@ const CheckoutPage = ({ cartItems }: CheckoutPageProps) => {
     };
 
     startTransition(async () => {
-      const response = (await submitOrderData("user-1234", summary)) as
+      const response = (await submitOrderData(userId, summary)) as
         | { success: true; orderId: string }
         | { success: false; message: string };
 

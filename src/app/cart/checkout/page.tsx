@@ -1,11 +1,13 @@
+import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 import CheckoutPage from "./CheckoutPage";
 import { mapCartItemData } from "@/actions/helper";
 
 export default async function Checkout() {
+  const { userId } = await auth();
   const cartProducts = await prisma.cartItem.findMany({
     where: {
-      userId: "user-1234",
+      userId: userId || "",
       isChecked: true,
     },
 
@@ -20,5 +22,5 @@ export default async function Checkout() {
     return mapCartItemData(item);
   });
 
-  return <CheckoutPage cartItems={cartProductsMap} />;
+  return <CheckoutPage userId={userId || ""} cartItems={cartProductsMap} />;
 }

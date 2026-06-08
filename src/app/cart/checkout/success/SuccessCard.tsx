@@ -1,13 +1,16 @@
 import { CartProduct } from "@/types/types";
 import Image from "next/image";
 import { formattedPrice } from "@/lib/utils/money";
+import { OrderWithItems } from "./page";
 
-type CartItemProps = {
-  cartItem: CartProduct;
+type OrderItemWithProduct = OrderWithItems["orderItem"][number];
+
+type SuccessCardProps = {
+  cartItem: OrderItemWithProduct;
 };
-
-const SuccessCard = ({ cartItem }: CartItemProps) => {
-  const { image, priceCents, name, quantity } = cartItem;
+const SuccessCard = ({ cartItem }: SuccessCardProps) => {
+  const { image, priceCents, name } = cartItem.product;
+  const quantity = cartItem.quantity;
 
   const displayImage = `/${image}`;
   const displayPrice = `$${formattedPrice(priceCents)}`;
