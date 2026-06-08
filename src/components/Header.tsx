@@ -4,6 +4,7 @@ import { SignOutButton, SignInButton, UserButton } from "@clerk/nextjs";
 import NavigationLinks from "./NavigationLinks";
 import CartBadge from "./CartBadge";
 import { cartItemCount } from "@/actions/cart";
+import useCart from "@/hooks/useCart";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 
@@ -28,7 +29,7 @@ const Header = async () => {
           </div>
 
           <Link href={"/cart"}>
-            <CartBadge initialCount={cartCount} />
+            <CartBadge userId={userId} initialCount={cartCount} />
           </Link>
 
           {userId ? null : (

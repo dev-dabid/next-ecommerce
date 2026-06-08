@@ -4,8 +4,18 @@ import useCart from "@/hooks/useCart";
 import { useEffect } from "react";
 import { ShoppingBag } from "lucide-react";
 
-const CartBadge = ({ initialCount }: { initialCount: number }) => {
-  const { count, setCount } = useCart();
+type CartBadgeProps = {
+  userId: string | null;
+  initialCount: number;
+};
+
+const CartBadge = ({ userId, initialCount }: CartBadgeProps) => {
+  const { count, setCount, cart } = useCart();
+
+  const cartItemTotal = Array.from(cart.values()).reduce(
+    (total, item) => total + item.quantity,
+    0,
+  );
 
   useEffect(() => {
     setCount(initialCount);
@@ -15,7 +25,7 @@ const CartBadge = ({ initialCount }: { initialCount: number }) => {
     <div className="relative">
       <ShoppingBag />
       <div className="absolute w-5 h-5 rounded-full bg-sky-400 -top-2 -right-2.5 flex justify-center items-center text-xs text-white">
-        {count}
+        {userId ? count : cartItemTotal}
       </div>
     </div>
   );
