@@ -15,9 +15,11 @@ import CartCard from "./CartCard";
 import OrderSummary from "./OrderSummary";
 import CrossSellList from "./CrossSellList";
 import Footer from "@/components/Footer";
-import { Shield, MoveLeft, Truck } from "lucide-react";
+import { Shield, MoveLeft, Truck, CarIcon } from "lucide-react";
+import { generateCartKey } from "@/lib/utils/cart";
 
 type CartPageProps = {
+  userId: string | null | undefined;
   cartProducts: CartProduct[];
 };
 
@@ -27,9 +29,8 @@ type CartAction =
   | { type: "INCREMENT"; payload: String }
   | { type: "DECREMENT"; payload: string };
 
-const CartPage = ({ cartProducts }: CartPageProps) => {
+const CartPage = ({ userId, cartProducts }: CartPageProps) => {
   const {
-    cart,
     updateQuantity,
     inputQuantity,
     removeAllItem,
@@ -78,7 +79,11 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
   const [isPending, startTransition] = useTransition();
   const [isConfirmingClear, setIsConfirmingClear] = useState(false);
   const router = useRouter();
-  const cartItems = optimisticCartState;
+  const { cart } = useCart();
+
+  const cartLocal = Array.from(cart.values());
+
+  const cartItems = userId ? optimisticCartState : cartLocal;
 
   const cartTotalItems = cartItems.reduce(
     (acc, item) => acc + item.quantity,
@@ -96,14 +101,17 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
     });
   };
 
-  const incrementCartItemCount = (id: string, userId: string) => {
-    startTransition(async () => {
-      addOptimisticCartState({
-        type: "INCREMENT",
-        payload: id,
-      });
-      await increaseCartItemCount(id, userId);
-    });
+  const incrementCartItemCount = (id: string, localKey: string) => {
+    userId
+      ? startTransition(async () => {
+          addOptimisticCartState({
+            type: "INCREMENT",
+            payload: id,
+          });
+          await increaseCartItemCount(id, userId);
+          console.log("LOG:", typeof userId, `[${userId}]`, Boolean(userId));
+        })
+      : updateQuantity(localKey, 1, "add");
   };
 
   const selectCartItem = (id: string, selectValue: boolean) => {
@@ -185,7 +193,7 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
               </div>
               <div className="max-h-75 lg:max-h-100 overflow-y-auto pr-2 py-2">
                 <div className="grid grid-cols-1 gap-5 content-start">
-                  {optimisticCartState.map((item, index) => (
+                  {cartItems.map((item, index) => (
                     <div key={index} className="h-fit w-full">
                       <CartCard
                         product={item}
@@ -202,7 +210,7 @@ const CartPage = ({ cartProducts }: CartPageProps) => {
             <div className="flex w-full lg:max-w-100 items-start">
               <div className="flex flex-col justify-center text-center w-full">
                 <OrderSummary
-                  cartItems={optimisticCartState}
+                  cartItems={cartItems}
                   onNavigate={onNavigate}
                   buttonTitle={"PROCEED TO CHECKOUT"}
                 />
