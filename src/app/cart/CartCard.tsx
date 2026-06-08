@@ -8,7 +8,7 @@ import { decreaseCartItemCount, increaseCartItemCount } from "@/actions/cart";
 
 type CartCardProps = {
   product: CartProduct;
-  removeCartItem: (id: string) => void;
+  removeCartItem: (id: string, localKey: string) => void;
   selectCartItem: (id: string, localKey: string, selectValue: boolean) => void;
   incrementCartItemCount: (id: string, localKey: string) => void;
   decrementCartItemCount: (id: string, localKey: string) => void;
@@ -92,7 +92,7 @@ const CartCard = ({
           <p className="text-sm font-bold text-sky-600">{displayTotalPrice}</p>
           <button
             className="text-[10px] text-gray-300 hover:text-red-500 transition-colors mt-1"
-            onClick={() => removeCartItem(id)}
+            onClick={() => removeCartItem(id, localKey)}
           >
             Remove
           </button>

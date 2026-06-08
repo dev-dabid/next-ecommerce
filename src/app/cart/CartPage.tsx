@@ -132,11 +132,13 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
       : selectItem(localKey, selectValue);
   };
 
-  const removeCartItem = (id: string) => {
-    startTransition(async () => {
-      addOptimisticCartState({ type: "DELETE", payload: id });
-      await deleteCartItem(id);
-    });
+  const removeCartItem = (id: string, localKey: string) => {
+    userId
+      ? startTransition(async () => {
+          addOptimisticCartState({ type: "DELETE", payload: id });
+          await deleteCartItem(id);
+        })
+      : removeItem(localKey);
   };
 
   const handleCancel = () => {
