@@ -34,6 +34,7 @@ const TitledInput = ({ title, name, value, setInput }: TitledInputProps) => {
           className="w-full outline-none"
           type="text"
           onChange={handleInput}
+          required
         />
       </div>
     </div>

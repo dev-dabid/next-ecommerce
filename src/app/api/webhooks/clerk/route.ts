@@ -59,6 +59,8 @@ export async function POST(req: Request) {
       return new Response("Profile successfully created!", {
         status: 200,
       });
-    } catch (error) {}
+    } catch (error) {
+      return new Response("Profile creation unsuccessful");
+    }
   }
 }

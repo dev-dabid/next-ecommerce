@@ -16,6 +16,7 @@ type OrderSummaryProps = {
   buttonTitle: string;
   onNavigate?: () => void;
   isPending?: boolean;
+  userId?: string;
 };
 
 const OrderSummary = ({
@@ -24,6 +25,7 @@ const OrderSummary = ({
   buttonTitle,
   onNavigate,
   isPending,
+  userId,
 }: OrderSummaryProps) => {
   const { cart } = useCart();
 
