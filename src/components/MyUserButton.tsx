@@ -7,23 +7,30 @@ const MyUserButton = () => {
   const links = [
     {
       label: "Track orders",
-      href: "trackorders",
-    },
-    {
-      label: "Track orders",
-      href: "trackorders",
+      href: "orders",
     },
   ];
 
   return (
-    <UserButton>
+    <UserButton
+      appearance={{
+        elements: {
+          userButtonPopoverActionButton:
+            "hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-primary transition-colors",
+
+          userButtonPopoverActionButtonIcon:
+            "text-neutral-500 group-hover:text-primary transition-colors",
+        },
+      }}
+    >
       <UserButton.MenuItems>
-        {links.map((item) => {
+        {links.map((item, index) => {
           return (
             <UserButton.Link
+              key={index}
               label={item.label}
               href={item.href}
-              labelIcon={<Package className="text-gray-500" size={15} />}
+              labelIcon={<Package size={15} />}
             />
           );
         })}
