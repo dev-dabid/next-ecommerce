@@ -106,11 +106,11 @@ const ProductCatalog = () => {
             <div></div>
             <div className="flex flex-col gap-15">
               <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6 gap-y-5">
-                {filteredProducts.slice(0, visible).map((product) => {
+                {filteredProducts.map((product) => {
                   return <ProductCard key={product.id} product={product} />;
                 })}
               </div>
-              <div className="flex justify-center items-center flex-col">
+              {/* <div className="flex justify-center items-center flex-col">
                 <p className="mb-4">
                   Showing {visible} of {filteredProducts.length} products
                 </p>
@@ -128,7 +128,7 @@ const ProductCatalog = () => {
                 >
                   Explore More
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
