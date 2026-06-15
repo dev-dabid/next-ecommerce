@@ -7,6 +7,11 @@ type CategoryProps = {
 };
 
 const Category = ({ category, isChecked, setIsChecked }: CategoryProps) => {
+  const categoryText = category
+    .split(" ")
+    .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
+    .join(" ");
+
   return (
     <div className="flex items-center gap-3">
       <input
@@ -21,7 +26,7 @@ const Category = ({ category, isChecked, setIsChecked }: CategoryProps) => {
           })
         }
       />
-      <p>{category}</p>
+      <p>{categoryText}</p>
     </div>
   );
 };
