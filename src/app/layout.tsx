@@ -40,7 +40,7 @@ export default async function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <Header />
-          <main className="p-2 bg-gray-50 h-full">
+          <main className="p-2 bg-[#f5f8f8] h-full">
             <StoreInitializer data={data} />
             {children}
           </main>
