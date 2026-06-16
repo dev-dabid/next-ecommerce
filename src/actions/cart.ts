@@ -282,19 +282,18 @@ export async function addToCartDB(userId: string, product: CartProduct) {
 
   const result = await prisma.$transaction(
     async (tx: Prisma.TransactionClient) => {
-      await tx.product.upsert({
-        where: { id: product.id },
-        update: {},
-        create: {
-          id: product.id,
-          image: product.image,
-          name: product.name,
-          ratingStars: product.rating.stars,
-          ratingCount: product.rating.count,
-          priceCents: product.priceCents,
-          keywords: product.keywords,
+      const productItem = await tx.cartItem.findUnique({
+        where: {
+          userId_productId_color_size: {
+            userId: userId,
+            productId: product.id,
+            color,
+            size,
+          },
         },
       });
+
+      if (productItem && productItem.quantity === 10) return;
 
       return await tx.cartItem.upsert({
         where: {
