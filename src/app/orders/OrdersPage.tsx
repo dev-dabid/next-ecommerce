@@ -1,8 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import OrderHistoryCard from "./OrderHistoryCard";
+import Footer from "@/components/Footer";
+import { OrderWithRelations } from "./page";
 
-const OrdersPage = () => {
+type OrdersPageProps = {
+  orderList: OrderWithRelations[];
+};
+
+const OrdersPage = ({ orderList }: OrdersPageProps) => {
   const [selectedFilter, setSelectedFilter] = useState("all");
 
   const filters = [
@@ -51,8 +58,17 @@ const OrdersPage = () => {
             </div>
             <p>Showing 4 recent orders</p>
           </div>
+
+          <div className="border-t border-t-sky-100 mt-5">
+            <div className="flex flex-col">
+              {orderList.map((item) => {
+                return <OrderHistoryCard order={item} />;
+              })}
+            </div>
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
