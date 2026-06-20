@@ -56,13 +56,13 @@ const OrdersPage = ({ orderList }: OrdersPageProps) => {
                 );
               })}
             </div>
-            <p>Showing 4 recent orders</p>
+            <p>Showing {orderList.length} recent orders</p>
           </div>
 
           <div className="border-t border-t-sky-100 mt-5">
-            <div className="flex flex-col">
-              {orderList.map((item) => {
-                return <OrderHistoryCard order={item} />;
+            <div className="flex flex-col my-10 gap-5 overflow-y-auto max-h-105 px-5">
+              {orderList.map((item, index) => {
+                return <OrderHistoryCard key={index} order={item} />;
               })}
             </div>
           </div>
