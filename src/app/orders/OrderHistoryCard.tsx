@@ -1,11 +1,36 @@
 import { OrderWithRelations } from "./page";
 import Image from "next/image";
+import { formattedPrice } from "@/lib/utils/money";
 
 type OrderHistoryCardProps = {
   order: OrderWithRelations;
 };
 
 const OrderHistoryCard = ({ order }: OrderHistoryCardProps) => {
+  const months: { [key: number]: string } = {
+    1: "Jan",
+    2: "Feb",
+    3: "Mar",
+    4: "Apr",
+    5: "May",
+    6: "Jun",
+    7: "Jul",
+    8: "Aug",
+    9: "Sep",
+    10: "Oct",
+    11: "Nov",
+    12: "Dec",
+  };
+  const date = order.createdAt.toLocaleDateString();
+  const totalPrice = order.totalPrice;
+
+  const dateString = date.split("/");
+  const year = dateString[2];
+  const month = dateString[0];
+  const day = dateString[1];
+
+  const displayTotalPrice = `$${formattedPrice(totalPrice)}`;
+
   return (
     <div className="h-full max-h-100 bg-white group p-5 rounded-xl">
       <div className="flex justify-between items-center">
@@ -20,7 +45,16 @@ const OrderHistoryCard = ({ order }: OrderHistoryCardProps) => {
               sizes="80px"
             />
           </div>
-          <div>{order.updatedAt.getDate()}</div>
+          <div className="flex gap-5">
+            <div className="flex flex-col text-sm">
+              <p>DATE PLACED</p>
+              <p>{`${months[Number(month)]} ${day}, ${year}`}</p>
+            </div>
+            <div className="flex flex-col text-sm">
+              <p>TOTAL</p>
+              <p>{displayTotalPrice}</p>
+            </div>
+          </div>
         </div>
 
         <div>hatdog</div>
