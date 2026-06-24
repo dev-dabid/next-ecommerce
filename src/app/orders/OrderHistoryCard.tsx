@@ -34,7 +34,7 @@ const OrderHistoryCard = ({ order }: OrderHistoryCardProps) => {
   return (
     <div className="h-full max-h-100 bg-white group p-5 rounded-xl">
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 w-full">
           <div className="relative aspect-square w-20 shrink-0 bg-gray-50 rounded-lg overflow-hidden border border-gray-100">
             <div className="absolute inset-0 bg-linear-to-b from-gray-200/10 to-black/5 z-10 pointer-events-none" />
             <Image
@@ -45,19 +45,37 @@ const OrderHistoryCard = ({ order }: OrderHistoryCardProps) => {
               sizes="80px"
             />
           </div>
-          <div className="flex gap-5">
+          <div className="flex gap-25">
             <div className="flex flex-col text-sm">
-              <p>DATE PLACED</p>
+              <p className="text-gray-500 font-semibold">DATE PLACED</p>
               <p>{`${months[Number(month)]} ${day}, ${year}`}</p>
             </div>
             <div className="flex flex-col text-sm">
-              <p>TOTAL</p>
-              <p>{displayTotalPrice}</p>
+              <p className="text-gray-500 font-semibold">TOTAL</p>
+              <p className="font-semibold">{displayTotalPrice}</p>
+            </div>
+            <div className="flex flex-col text-sm">
+              <p className="text-gray-500 font-semibold">STATUS</p>
+              <p
+                className={`${order.status === "PENDING" ? "text-gray-600 bg-gray-100" : order.status === "SHIPPED" ? "text-blue-600 bg-blue-100" : "text-green-600 bg-green-100"} font-semibold py-1 px-4 rounded-full`}
+              >
+                {order.status === "PENDING"
+                  ? "PROCESSING"
+                  : order.status === "DELIVERED"
+                    ? "DELIVERED"
+                    : "SHIPPED"}
+              </p>
             </div>
           </div>
         </div>
 
-        <div>hatdog</div>
+        <div className="ml-20 mr-10 max-w-30 w-full">
+          <button
+            className={`${order.status === "SHIPPED" ? "bg-sky-400 text-white border-transparent hover:bg-sky-300 active:bg-sky-600" : "bg-white border-gray-300 hover:bg-gray-200 active:bg-gray-100"} cursor-pointer px-3 py-3 border rounded-lg w-full`}
+          >
+            {order.status === "SHIPPED" ? "Track" : "Details"}
+          </button>
+        </div>
       </div>
     </div>
   );
