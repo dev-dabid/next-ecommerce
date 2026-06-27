@@ -19,17 +19,21 @@ const OrdersPage = ({ orderList }: OrdersPageProps) => {
     },
     {
       title: "In Progress",
-      filter: "pending",
+      filter: "PENDING",
     },
     {
       title: "Delivered",
-      filter: "delivered",
+      filter: "DELIVERED",
     },
     {
       title: "Returns",
-      filter: "returned",
+      filter: "RETURNED",
     },
   ];
+
+  const filteredOrder = orderList.filter((item) => {
+    return item.status === selectedFilter || selectedFilter === "all";
+  });
 
   return (
     <div className="">
@@ -61,7 +65,7 @@ const OrdersPage = ({ orderList }: OrdersPageProps) => {
 
           <div className="border-t border-t-sky-100 mt-5">
             <div className="flex flex-col my-10 gap-5 overflow-y-auto max-h-105 px-5">
-              {orderList.map((item, index) => {
+              {filteredOrder.map((item, index) => {
                 return <OrderHistoryCard key={index} order={item} />;
               })}
             </div>

@@ -1,4 +1,4 @@
-import { OrderWithRelations } from "./page";
+import Orders, { OrderWithRelations } from "./page";
 import Image from "next/image";
 import { formattedPrice } from "@/lib/utils/money";
 
@@ -57,13 +57,15 @@ const OrderHistoryCard = ({ order }: OrderHistoryCardProps) => {
             <div className="flex flex-col text-sm">
               <p className="text-gray-500 font-semibold">STATUS</p>
               <p
-                className={`${order.status === "PENDING" ? "text-gray-600 bg-gray-100" : order.status === "SHIPPED" ? "text-blue-600 bg-blue-100" : "text-green-600 bg-green-100"} font-semibold py-1 px-4 rounded-full`}
+                className={`${order.status === "PENDING" ? "text-gray-600 bg-gray-100" : order.status === "SHIPPED" ? "text-blue-600 bg-blue-100" : order.status === "RETURNED" ? "text-red-600 bg-red-100" : "text-green-600 bg-green-100"} font-semibold py-1 px-4 rounded-full`}
               >
                 {order.status === "PENDING"
                   ? "PROCESSING"
                   : order.status === "DELIVERED"
                     ? "DELIVERED"
-                    : "SHIPPED"}
+                    : order.status === "RETURNED"
+                      ? "RETURNED"
+                      : "SHIPPED"}
               </p>
             </div>
           </div>
