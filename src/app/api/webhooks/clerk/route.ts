@@ -66,9 +66,11 @@ export async function POST(req: Request) {
 
   if (eventType === "user.updated") {
     try {
-      return new Response(JSON.stringify(evt.data));
+      return new Response("Profile successfully updated!", {
+        status: 200,
+      });
     } catch (error) {
-      return evt.data;
+      return new Response("Profile update unsuccessful!");
     }
   }
 }
