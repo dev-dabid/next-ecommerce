@@ -63,4 +63,12 @@ export async function POST(req: Request) {
       return new Response("Profile creation unsuccessful");
     }
   }
+
+  if (eventType === "user.updated") {
+    try {
+      return new Response(JSON.stringify(evt.data));
+    } catch (error) {
+      return evt.data;
+    }
+  }
 }
