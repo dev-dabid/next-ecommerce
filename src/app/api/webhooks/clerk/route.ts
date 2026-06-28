@@ -64,13 +64,13 @@ export async function POST(req: Request) {
     }
   }
 
-  if (eventType === "user.updated") {
-    try {
-      return new Response("Profile successfully updated!", {
-        status: 200,
-      });
-    } catch (error) {
-      return new Response("Profile update unsuccessful!");
-    }
-  }
+  // if (eventType === "user.updated") {
+  //   try {
+  //     return new Response("Profile successfully updated!", {
+  //       status: 200,
+  //     });
+  //   } catch (error) {
+  //     return new Response("Profile update unsuccessful!");
+  //   }
+  // }
 }
