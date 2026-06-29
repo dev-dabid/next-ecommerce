@@ -26,6 +26,22 @@ interface SummaryData {
   shippingFee: number;
 }
 
+export async function deleteCartItems(userId: string) {
+  try {
+    await prisma.cartItem.deleteMany({
+      where: {
+        userId,
+      },
+    });
+
+    revalidatePath("/");
+
+    return { success: true, message: "Cart items successfully removed." };
+  } catch (error) {
+    return { success: false, message: "Removing cart items unsuccessful." };
+  }
+}
+
 export async function submitOrderData(userId: string, summary: SummaryData) {
   try {
     const result = await prisma.$transaction(async (tx) => {

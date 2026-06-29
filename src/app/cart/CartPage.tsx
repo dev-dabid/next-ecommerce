@@ -6,6 +6,7 @@ import {
   updateCheckCartItem,
   increaseCartItemCount,
   decreaseCartItemCount,
+  deleteCartItems,
 } from "@/actions/cart";
 import { useMemo, useState, useOptimistic, use, useTransition } from "react";
 import { useRouter } from "next/navigation";
@@ -25,6 +26,7 @@ type CartPageProps = {
 
 type CartAction =
   | { type: "DELETE"; payload: string }
+  | { type: "DELETEALL" }
   | { type: "SELECT"; payload: { id: string; value: boolean } }
   | { type: "INCREMENT"; payload: String }
   | { type: "DECREMENT"; payload: string };
@@ -45,6 +47,10 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
     switch (action.type) {
       case "DELETE": {
         return currentCartState.filter((item) => item.id !== action.payload);
+      }
+
+      case "DELETEALL": {
+        return [];
       }
 
       case "SELECT": {
@@ -90,6 +96,18 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
     0,
   );
   const displayCartTotalItems = `(${cartTotalItems} items)`;
+
+  const removeCartItems = () => {
+    userId
+      ? startTransition(async () => {
+          addOptimisticCartState({
+            type: "DELETEALL",
+          });
+
+          await deleteCartItems(userId);
+        })
+      : "";
+  };
 
   const decrementCartItemCount = (id: string, localKey: string) => {
     userId
@@ -151,7 +169,7 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
 
   const handleConfirm = () => {
     handleCancel();
-    removeAllItem();
+    removeCartItems();
   };
 
   const onNavigate = () => {
