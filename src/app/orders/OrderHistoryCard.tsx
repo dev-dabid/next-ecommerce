@@ -1,12 +1,15 @@
 import Orders, { OrderWithRelations } from "./page";
 import Image from "next/image";
 import { formattedPrice } from "@/lib/utils/money";
+import { useRouter } from "next/navigation";
 
 type OrderHistoryCardProps = {
   order: OrderWithRelations;
 };
 
 const OrderHistoryCard = ({ order }: OrderHistoryCardProps) => {
+  const router = useRouter();
+
   const months: { [key: number]: string } = {
     1: "Jan",
     2: "Feb",
@@ -30,6 +33,10 @@ const OrderHistoryCard = ({ order }: OrderHistoryCardProps) => {
   const day = dateString[1];
 
   const displayTotalPrice = `$${formattedPrice(totalPrice)}`;
+
+  const handleNavigate = () => {
+    router.push(`/orders/${order.id}`);
+  };
 
   return (
     <div className="h-full max-h-100 bg-white group p-5 rounded-xl">
@@ -74,6 +81,7 @@ const OrderHistoryCard = ({ order }: OrderHistoryCardProps) => {
         <div className="ml-20 mr-10 max-w-30 w-full">
           <button
             className={`${order.status === "SHIPPED" ? "bg-sky-400 text-white border-transparent hover:bg-sky-300 active:bg-sky-600" : "bg-white border-gray-300 hover:bg-gray-200 active:bg-gray-100"} cursor-pointer px-3 py-3 border rounded-lg w-full`}
+            onClick={handleNavigate}
           >
             {order.status === "SHIPPED" ? "Track" : "Details"}
           </button>
