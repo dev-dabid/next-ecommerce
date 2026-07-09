@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import useProducts from "@/hooks/useProducts";
 import { toggleFavorite, isInFavorite } from "@/actions/cart";
 import { Heart } from "lucide-react";
+import { toast } from "sonner";
 
 type FavoriteToggleProps = {
   userId: string;
@@ -31,6 +32,7 @@ const FavoriteToggle = ({ userId, productId }: FavoriteToggleProps) => {
 
     try {
       toggleFavorite(userId, productId);
+      toast.success("Added to favorites!", { position: "top-center" });
     } catch (error) {
       setIsFave(isFav);
     }
@@ -52,7 +54,9 @@ const FavoriteToggle = ({ userId, productId }: FavoriteToggleProps) => {
     <>
       <button
         className="group px-4 border border-sky-200 rounded-xl cursor-pointer"
-        onClick={() => setFavorite(productId)}
+        onClick={() => {
+          setFavorite(productId);
+        }}
       >
         <Heart
           fill="currentColor"

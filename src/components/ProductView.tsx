@@ -13,6 +13,7 @@ import ColorSelector from "./ColorSelector";
 import QuantitySelector from "./QuantitySelector";
 import FavoriteToggle from "./FavoriteToggle";
 import { ShoppingCart } from "lucide-react";
+import { toast } from "sonner";
 
 type ProductViewProps = {
   product: Product;
@@ -137,6 +138,9 @@ const ProductView = ({ product, userId }: ProductViewProps) => {
                     className="hover:bg-sky-600 active:bg-sky-500 cursor-pointer text-center text-white font-semibold bg-sky-500 w-full max-w-[434.69px] py-4 rounded-xl"
                     onClick={() => {
                       optimisticAddToCart();
+                      toast.success("Added to cart", {
+                        position: "top-center",
+                      });
                     }}
                   >
                     <p className="flex justify-center items-center gap-3">
