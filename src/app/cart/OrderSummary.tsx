@@ -90,6 +90,8 @@ const OrderSummary = ({
             </button>
           ) : (
             <button
+              type="submit"
+              form="checkout-form"
               className={`${isCartEmpty ? "bg-sky-800 cursor-not-allowed" : "bg-sky-400 cursor-pointer hover:bg-sky-500 active:bg-sky-700"} text-white  py-4 rounded-xl mt-2 w-full `}
               onClick={onNavigate}
               disabled={isCartEmpty}

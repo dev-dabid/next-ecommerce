@@ -106,7 +106,11 @@ const CheckoutPage = ({ userId, cartItems }: CheckoutPageProps) => {
         <h1 className="text-4xl font-bold mb-10">Finalize Order</h1>
         <div className="flex gap-15 flex-col lg:flex-row justify-between">
           <div className="flex flex-col flex-1">
-            <div className="flex flex-col">
+            <form
+              id="checkout-form"
+              action={handlePlaceOrder}
+              className="flex flex-col"
+            >
               <CircleTag count={1} title={"Shipping Information"} />
               <div className="mt-5">
                 <div className="flex flex-col lg:flex-row gap-4">
@@ -174,7 +178,7 @@ const CheckoutPage = ({ userId, cartItems }: CheckoutPageProps) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
             <div className="flex flex-col mt-15">
               <CircleTag count={2} title={"Shipping Method"} />
               <div className="flex  flex-1">
@@ -213,7 +217,7 @@ const CheckoutPage = ({ userId, cartItems }: CheckoutPageProps) => {
               cartItems={cartItems}
               shipMethod={selected}
               buttonTitle={"PLACE ORDER"}
-              onNavigate={handlePlaceOrder}
+              onNavigate={() => {}}
               isPending={isPending}
             />
           </div>
