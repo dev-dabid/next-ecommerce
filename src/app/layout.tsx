@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { getProducts } from "../lib/api/get-products";
 import StoreInitializer from "@/components/providers/StoreInitializer";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,6 +45,7 @@ export default async function RootLayout({
             <StoreInitializer data={data} />
             {children}
           </main>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
