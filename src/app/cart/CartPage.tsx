@@ -18,6 +18,7 @@ import CrossSellList from "./CrossSellList";
 import Footer from "@/components/Footer";
 import { Shield, MoveLeft, Truck, CarIcon } from "lucide-react";
 import { generateCartKey } from "@/lib/utils/cart";
+import { toast } from "sonner";
 
 type CartPageProps = {
   userId: string | null | undefined;
@@ -154,9 +155,17 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
     userId
       ? startTransition(async () => {
           addOptimisticCartState({ type: "DELETE", payload: id });
+          toast.success("Item removed from cart!", {
+            position: "top-center",
+          });
           await deleteCartItem(id);
         })
-      : removeItem(localKey);
+      : () => {
+          removeItem(localKey);
+          toast.success("Item removed from cart!", {
+            position: "top-center",
+          });
+        };
   };
 
   const handleCancel = () => {

@@ -1,6 +1,7 @@
 "use client";
 
-import { addToCartDB } from "@/actions/cart";
+import { addToCartDB, isExceeded } from "@/actions/cart";
+import { useOptimistic, useTransition } from "react";
 import useCart from "@/hooks/useCart";
 import { useState } from "react";
 import { Product } from "@/types/types";
@@ -41,7 +42,7 @@ const ProductView = ({ product, userId }: ProductViewProps) => {
     size: sizes[1],
     count: 1,
   });
-  const { optimisticAdd, optimisticRollback, addToCart } = useCart();
+  const { optimisticAdd, optimisticRollback, addToCart, count } = useCart();
 
   const { image, name, priceCents, rating } = product;
 
@@ -61,11 +62,29 @@ const ProductView = ({ product, userId }: ProductViewProps) => {
         isChecked: true,
       };
 
-  const optimisticAddToCart = () => {
+  const optimisticAddToCart = async () => {
     if (userId) {
       try {
+        const color = product.keywords.includes("apparel")
+          ? selected.color.name
+          : "N/A";
+        const size = product.keywords.includes("apparel")
+          ? selected.size.name
+          : "N/A";
+
+        const data = await isExceeded(userId, product.id, color, size);
+
+        if (data.data?.quantity === 10)
+          return toast.error("Max product quantity exceeded!", {
+            position: "top-center",
+          });
+
         optimisticAdd(selected.count);
+
         addToCartDB(userId, productItem);
+        toast.success("Added to cart!", {
+          position: "top-center",
+        });
       } catch (error) {
         optimisticRollback(selected.count);
       }
@@ -138,9 +157,6 @@ const ProductView = ({ product, userId }: ProductViewProps) => {
                     className="hover:bg-sky-600 active:bg-sky-500 cursor-pointer text-center text-white font-semibold bg-sky-500 w-full max-w-[434.69px] py-4 rounded-xl"
                     onClick={() => {
                       optimisticAddToCart();
-                      toast.success("Added to cart", {
-                        position: "top-center",
-                      });
                     }}
                   >
                     <p className="flex justify-center items-center gap-3">

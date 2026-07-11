@@ -32,7 +32,10 @@ const FavoriteToggle = ({ userId, productId }: FavoriteToggleProps) => {
 
     try {
       toggleFavorite(userId, productId);
-      toast.success("Added to favorites!", { position: "top-center" });
+      toast.success(
+        `${isFav ? "Removed from favorites!" : "Added to favorites!"}`,
+        { position: "top-center" },
+      );
     } catch (error) {
       setIsFave(isFav);
     }

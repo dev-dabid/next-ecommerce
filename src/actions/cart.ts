@@ -5,6 +5,7 @@ import type { Prisma } from "@prisma/client";
 import { CartItemWithProduct, CartProduct, FormFields } from "@/types/types";
 import { mapProductData, mapCartItemData } from "./helper";
 import { revalidatePath } from "next/cache";
+import { error } from "console";
 
 interface ProductData {
   id: string;
@@ -24,6 +25,38 @@ interface SummaryData {
   actualTotalCents: number;
   shippingMethod: string;
   shippingFee: number;
+}
+
+export async function isExceeded(
+  userId: string,
+  productId: string,
+  color: string,
+  size: string,
+) {
+  try {
+    const data = await prisma.cartItem.findUnique({
+      where: {
+        userId_productId_color_size: {
+          userId,
+          productId,
+          color,
+          size,
+        },
+      },
+
+      select: {
+        quantity: true,
+      },
+    });
+
+    console.log(data);
+
+    return { success: true, data: data };
+  } catch (error) {
+    console.error("product not found");
+  }
+
+  return { success: false, message: "error" };
 }
 
 export async function deleteCartItems(userId: string) {
