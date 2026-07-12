@@ -15,6 +15,7 @@ import QuantitySelector from "./QuantitySelector";
 import FavoriteToggle from "./FavoriteToggle";
 import { ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
+import { generateCartKey } from "@/lib/utils/cart";
 
 type ProductViewProps = {
   product: Product;
@@ -42,9 +43,10 @@ const ProductView = ({ product, userId }: ProductViewProps) => {
     size: sizes[1],
     count: 1,
   });
-  const { optimisticAdd, optimisticRollback, addToCart, count } = useCart();
+  const { optimisticAdd, optimisticRollback, addToCart, count, cart } =
+    useCart();
 
-  const { image, name, priceCents, rating } = product;
+  const { image, name, priceCents, rating, id, keywords } = product;
 
   const productItem = product.keywords.includes("apparel")
     ? {
@@ -75,7 +77,7 @@ const ProductView = ({ product, userId }: ProductViewProps) => {
         const data = await isExceeded(userId, product.id, color, size);
 
         if (data.data?.quantity === 10)
-          return toast.error("Max product quantity exceeded!", {
+          return toast.warning("Max product quantity exceeded!", {
             position: "top-center",
           });
 
@@ -89,7 +91,22 @@ const ProductView = ({ product, userId }: ProductViewProps) => {
         optimisticRollback(selected.count);
       }
     } else {
+      const color = keywords.includes("apparel") ? selected.color.name : null;
+      const size = keywords.includes("apparel") ? selected.size.name : null;
+
+      const cartKey = generateCartKey(id, color, size);
+
+      const product = cart.get(cartKey);
+
+      if (product?.quantity === 10)
+        return toast.warning("Max product quantity exceeded!", {
+          position: "top-center",
+        });
+
       addToCart(productItem);
+      toast.success("Added to cart!", {
+        position: "top-center",
+      });
     }
   };
 

@@ -105,9 +105,18 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
             type: "DELETEALL",
           });
 
+          toast.success("Cart items have been removed!", {
+            position: "top-center",
+          });
+
           await deleteCartItems(userId);
         })
-      : "";
+      : () => {
+          removeAllItem();
+          toast.success("Cart items have been removed!", {
+            position: "top-center",
+          });
+        };
   };
 
   const decrementCartItemCount = (id: string, localKey: string) => {
