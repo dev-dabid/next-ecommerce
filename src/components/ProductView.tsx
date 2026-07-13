@@ -1,7 +1,7 @@
 "use client";
 
 import { addToCartDB, isExceeded } from "@/actions/cart";
-import { useOptimistic, useTransition } from "react";
+import { useOptimistic, useTransition, useEffect } from "react";
 import useCart from "@/hooks/useCart";
 import { useState } from "react";
 import { Product } from "@/types/types";
@@ -23,6 +23,13 @@ type ProductViewProps = {
 };
 
 const ProductView = ({ product, userId }: ProductViewProps) => {
+  const [optimisticProduct, addOptimisticProduct] = useOptimistic(
+    product,
+    (state, newProduct) => {
+      return state;
+    },
+  );
+
   const colors = [
     { name: "white", color: "bg-gray-200" },
     { name: "black", color: "bg-gray-950" },
