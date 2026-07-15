@@ -23,6 +23,10 @@ type ProductViewProps = {
 };
 
 const ProductView = ({ product, userId }: ProductViewProps) => {
+  const [isInCart, setIsInCart] = useState(null);
+
+  useEffect(() => {}, []);
+
   const [optimisticProduct, addOptimisticProduct] = useOptimistic(
     product,
     (state, newProduct) => {
