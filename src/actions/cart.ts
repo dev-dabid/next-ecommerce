@@ -43,13 +43,7 @@ export async function isExceeded(
           size,
         },
       },
-
-      select: {
-        quantity: true,
-      },
     });
-
-    console.log(data);
 
     return { success: true, data: data };
   } catch (error) {

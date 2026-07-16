@@ -23,12 +23,10 @@ type ProductViewProps = {
 };
 
 const ProductView = ({ product, userId }: ProductViewProps) => {
-  const [isInCart, setIsInCart] = useState(null);
-
-  useEffect(() => {}, []);
+  const [isInCart, setIsInCart] = useState({});
 
   const [optimisticProduct, addOptimisticProduct] = useOptimistic(
-    product,
+    isInCart,
     (state, newProduct) => {
       return state;
     },
@@ -54,6 +52,24 @@ const ProductView = ({ product, userId }: ProductViewProps) => {
     size: sizes[1],
     count: 1,
   });
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const color = product.keywords.includes("apparel")
+      ? selected.color.name
+      : "N/A";
+    const size = product.keywords.includes("apparel")
+      ? selected.size.name
+      : "N/A";
+
+    const fetchProduct = async () => {
+      const cartItem = await isExceeded(userId, product.id, color, size);
+      setIsInCart(cartItem.data || {});
+    };
+    fetchProduct();
+  }, []);
+
   const { optimisticAdd, optimisticRollback, addToCart, count, cart } =
     useCart();
 
@@ -120,6 +136,8 @@ const ProductView = ({ product, userId }: ProductViewProps) => {
       });
     }
   };
+
+  console.log(isInCart, "hatdog");
 
   return (
     <div className="pb-10">
