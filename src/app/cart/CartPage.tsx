@@ -86,7 +86,7 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
   const [isPending, startTransition] = useTransition();
   const [isConfirmingClear, setIsConfirmingClear] = useState(false);
   const router = useRouter();
-  const { cart } = useCart();
+  const { cart, setCount } = useCart();
 
   const cartLocal = Array.from(cart.values());
 
@@ -132,12 +132,17 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
   };
 
   const incrementCartItemCount = (id: string, localKey: string) => {
+    const cartItemCount = optimisticCartState.reduce((total, item) => {
+      return (total = total + item.quantity);
+    }, 0);
+
     userId
       ? startTransition(async () => {
           addOptimisticCartState({
             type: "INCREMENT",
             payload: id,
           });
+          setCount(cartItemCount);
           await increaseCartItemCount(id, userId);
         })
       : updateQuantity(localKey, 1, "add");
