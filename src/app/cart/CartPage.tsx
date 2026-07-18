@@ -120,12 +120,16 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
   };
 
   const decrementCartItemCount = (id: string, localKey: string) => {
+    const cartItemCount = optimisticCartState.reduce((total, item) => {
+      return (total = total + item.quantity);
+    }, 0);
     userId
       ? startTransition(async () => {
           addOptimisticCartState({
             type: "DECREMENT",
             payload: id,
           });
+          setCount(cartItemCount);
           await decreaseCartItemCount(id, userId);
         })
       : updateQuantity(localKey, 1, "reduce");
@@ -172,6 +176,7 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
           toast.success("Item removed from cart!", {
             position: "top-center",
           });
+
           await deleteCartItem(id);
         })
       : () => {
