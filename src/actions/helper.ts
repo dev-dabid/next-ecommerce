@@ -33,6 +33,7 @@ export const mapProductData = (item: ProductData) => {
 export const mapCartItemData = (item: CartItemWithProduct) => {
   return {
     id: item.id,
+    userId: item.userId,
     productId: item.productId,
     image: item.product.image,
     name: item.product.name,
@@ -45,6 +46,7 @@ export const mapCartItemData = (item: CartItemWithProduct) => {
     quantity: item.quantity,
     priceCents: item.product.priceCents,
     isChecked: item.isChecked,
+    createdAt: item.createdAt,
     keywords: item.product.keywords,
   };
 };

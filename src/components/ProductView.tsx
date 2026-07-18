@@ -1,7 +1,12 @@
 "use client";
 
 import { addToCartDB, isExceeded } from "@/actions/cart";
-import { useOptimistic, useTransition, useEffect } from "react";
+import {
+  useOptimistic,
+  useTransition,
+  useEffect,
+  startTransition,
+} from "react";
 import useCart from "@/hooks/useCart";
 import { useState } from "react";
 import { Product } from "@/types/types";
@@ -16,19 +21,19 @@ import FavoriteToggle from "./FavoriteToggle";
 import { ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
 import { generateCartKey } from "@/lib/utils/cart";
+import { CartItem } from "@prisma/client";
 
 type ProductViewProps = {
-  product: Product;
   userId: string | null;
+  product: Product;
+  cartItems: CartItem[];
 };
 
-const ProductView = ({ product, userId }: ProductViewProps) => {
-  const [isInCart, setIsInCart] = useState({});
-
+const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
   const [optimisticProduct, addOptimisticProduct] = useOptimistic(
-    isInCart,
-    (state, newProduct) => {
-      return state;
+    cartItems,
+    (currentCartstate, newProduct) => {
+      return [];
     },
   );
 
@@ -65,7 +70,6 @@ const ProductView = ({ product, userId }: ProductViewProps) => {
 
     const fetchProduct = async () => {
       const cartItem = await isExceeded(userId, product.id, color, size);
-      setIsInCart(cartItem.data || {});
     };
     fetchProduct();
   }, []);
@@ -90,6 +94,10 @@ const ProductView = ({ product, userId }: ProductViewProps) => {
         productId: product.id,
         isChecked: true,
       };
+
+  const optimisticAddToCart2 = () => {
+    startTransition(async () => {});
+  };
 
   const optimisticAddToCart = async () => {
     if (userId) {
@@ -137,7 +145,7 @@ const ProductView = ({ product, userId }: ProductViewProps) => {
     }
   };
 
-  console.log(isInCart, "hatdog");
+  console.log(optimisticProduct);
 
   return (
     <div className="pb-10">
