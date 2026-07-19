@@ -1,6 +1,6 @@
 "use client";
 
-import { addToCartDB, isExceeded } from "@/actions/cart";
+import { addToCartDB, isExisting } from "@/actions/cart";
 import {
   useOptimistic,
   useTransition,
@@ -9,7 +9,7 @@ import {
 } from "react";
 import useCart from "@/hooks/useCart";
 import { useState } from "react";
-import { Product } from "@/types/types";
+import { CartItemWithProduct, Product } from "@/types/types";
 import Image from "next/image";
 import { formattedPrice } from "@/lib/utils/money";
 import Breadcrumb from "./Breadcrumb";
@@ -30,13 +30,6 @@ type ProductViewProps = {
 };
 
 const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
-  const [optimisticProduct, addOptimisticProduct] = useOptimistic(
-    cartItems,
-    (currentCartstate, newProduct) => {
-      return [];
-    },
-  );
-
   const colors = [
     { name: "white", color: "bg-gray-200" },
     { name: "black", color: "bg-gray-950" },
@@ -58,6 +51,8 @@ const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
     count: 1,
   });
 
+  const [isCartItemExist, setIsCartItemExist] = useState<string>();
+
   useEffect(() => {
     if (!userId) return;
 
@@ -69,8 +64,12 @@ const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
       : "N/A";
 
     const fetchProduct = async () => {
-      const cartItem = await isExceeded(userId, product.id, color, size);
+      const cartItem = await isExisting(userId, product.id, color, size);
+      if (cartItem.success) {
+        setIsCartItemExist(cartItem.data?.id);
+      }
     };
+
     fetchProduct();
   }, []);
 
@@ -82,46 +81,78 @@ const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
   const productItem = product.keywords.includes("apparel")
     ? {
         ...product,
+        userId: userId || "",
         color: selected.color.name,
         size: selected.size.name,
         quantity: selected.count,
         productId: product.id,
         isChecked: true,
+        createdAt: new Date(),
       }
     : {
         ...product,
+        userId: userId || "",
+        color: null,
+        size: null,
         quantity: selected.count,
         productId: product.id,
         isChecked: true,
+        createdAt: new Date(),
       };
 
-  const optimisticAddToCart2 = () => {
-    startTransition(async () => {});
-  };
+  const [optimisticProduct, addOptimisticProduct] = useOptimistic(
+    cartItems,
+    (currentCartstate, payload: string) => {
+      const newCart = new Map(currentCartstate.map((item) => [item.id, item]));
+
+      const newProduct = newCart.get(payload);
+
+      if (newProduct) {
+        newCart.set(payload, {
+          ...newProduct,
+          quantity: selected.count,
+        });
+      } else {
+        newCart.set(payload, productItem);
+      }
+
+      return Array.from(newCart.values());
+    },
+  );
 
   const optimisticAddToCart = async () => {
+    const color = keywords.includes("apparel") ? selected.color.name : null;
+    const size = keywords.includes("apparel") ? selected.size.name : null;
+
+    const itemId = generateCartKey(product.id, color, size);
+
+    const cartItem = optimisticProduct.filter((item) => itemId === item.id);
+
     if (userId) {
       try {
-        const color = product.keywords.includes("apparel")
-          ? selected.color.name
-          : "N/A";
-        const size = product.keywords.includes("apparel")
-          ? selected.size.name
-          : "N/A";
+        startTransition(async () => {
+          const itemFound = optimisticProduct.filter(
+            (item) => "cmrrrs8wb002cjkvs0vssxu6s" === item.id,
+          );
 
-        const data = await isExceeded(userId, product.id, color, size);
+          console.log(itemFound);
 
-        if (data.data?.quantity === 10)
-          return toast.warning("Max product quantity exceeded!", {
+          addOptimisticProduct(itemId);
+          toast.success("Added to cart!", {
             position: "top-center",
           });
 
-        optimisticAdd(selected.count);
-
-        addToCartDB(userId, productItem);
-        toast.success("Added to cart!", {
-          position: "top-center",
+          await addToCartDB(userId, productItem);
         });
+
+        // const data = await isExisting(userId, product.id, color, size);
+
+        // if (data.data?.quantity === 10)
+        //   return toast.warning("Max product quantity exceeded!", {
+        //     position: "top-center",
+        //   });
+
+        optimisticAdd(selected.count);
       } catch (error) {
         optimisticRollback(selected.count);
       }
@@ -145,11 +176,14 @@ const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
     }
   };
 
-  console.log(optimisticProduct);
+  console.log(optimisticProduct, "cart items");
 
   return (
     <div className="pb-10">
       <Breadcrumb />
+      {optimisticProduct.map((item) => {
+        return item.id;
+      })}
       <div className="flex flex-col sm:items-center lg:flex-row lg:items-start gap-5 lg:gap-10">
         <div className="shrink-0 w-full max-w-125">
           <div className="relative overflow-hidden w-full aspect-500/613 rounded-2xl bg-white flex items-center justify-center">

@@ -27,7 +27,7 @@ interface SummaryData {
   shippingFee: number;
 }
 
-export async function isExceeded(
+export async function isExisting(
   userId: string,
   productId: string,
   color: string,
@@ -336,7 +336,7 @@ export async function addToCartDB(userId: string, product: CartProduct) {
         },
       });
 
-      if (productItem && productItem.quantity === 10) return;
+      if (productItem && productItem.quantity >= 10) return;
 
       return await tx.cartItem.upsert({
         where: {
