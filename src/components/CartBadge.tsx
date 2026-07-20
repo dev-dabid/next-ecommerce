@@ -19,7 +19,7 @@ const CartBadge = ({ userId, initialCount }: CartBadgeProps) => {
 
   useEffect(() => {
     setCount(initialCount);
-  }, []);
+  }, [count]);
 
   return (
     <div className="relative">

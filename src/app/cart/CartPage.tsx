@@ -163,20 +163,23 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
             type: "SELECT",
             payload: { id: id, value: selectValue },
           });
-
           await updateCheckCartItem(id, userId, selectValue);
         })
       : selectItem(localKey, selectValue);
   };
 
   const removeCartItem = (id: string, localKey: string) => {
+    const cartItemCount = optimisticCartState.reduce((total, item) => {
+      return (total = total + item.quantity);
+    }, 0);
+
     userId
       ? startTransition(async () => {
           addOptimisticCartState({ type: "DELETE", payload: id });
           toast.success("Item removed from cart!", {
             position: "top-center",
           });
-
+          setCount(cartItemCount);
           await deleteCartItem(id);
         })
       : () => {

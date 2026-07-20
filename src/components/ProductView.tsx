@@ -92,8 +92,8 @@ const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
     : {
         ...product,
         userId: userId || "",
-        color: null,
-        size: null,
+        color: "N/A",
+        size: "N/A",
         quantity: selected.count,
         productId: product.id,
         isChecked: true,
@@ -176,14 +176,11 @@ const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
     }
   };
 
-  console.log(optimisticProduct, "cart items");
+  console.log(isCartItemExist, optimisticProduct);
 
   return (
     <div className="pb-10">
       <Breadcrumb />
-      {optimisticProduct.map((item) => {
-        return item.id;
-      })}
       <div className="flex flex-col sm:items-center lg:flex-row lg:items-start gap-5 lg:gap-10">
         <div className="shrink-0 w-full max-w-125">
           <div className="relative overflow-hidden w-full aspect-500/613 rounded-2xl bg-white flex items-center justify-center">
