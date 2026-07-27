@@ -292,7 +292,7 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
             </div>
           </div>
         </div>
-        {cartItems.length > 0 && <CrossSellList />}
+        {cartItems.length > 0 && <CrossSellList cartItems={cartProducts} />}
       </div>
       <Footer />
     </div>

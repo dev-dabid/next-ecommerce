@@ -3,15 +3,23 @@ import useCart from "@/hooks/useCart";
 import { useMemo } from "react";
 import { generateCartKey } from "../../lib/utils/cart";
 import { formattedPrice } from "../../lib/utils/money";
+import { CartProduct } from "@/types/types";
 import Image from "next/image";
 
-const CrossSellList = () => {
-  const { products } = useProducts();
-  const { cart } = useCart();
+type CrossSellListProps = {
+  cartItems: CartProduct[];
+};
 
-  const cartIds = new Set(Array.from(cart.values()).map((item) => item.id));
+const CrossSellList = ({ cartItems }: CrossSellListProps) => {
+  const { products } = useProducts();
+  // const { cart } = useCart();
+
+  const currentCart = new Map(cartItems.map((item) => [item.id, item]));
+  const cartIds = new Set(
+    Array.from(currentCart.values()).map((item) => item.id),
+  );
   const cartKeywords = new Set(
-    Array.from(cart.values()).flatMap((item) => item.keywords),
+    Array.from(currentCart.values()).flatMap((item) => item.keywords),
   );
 
   const relatedProducts = products.filter((item) => {
