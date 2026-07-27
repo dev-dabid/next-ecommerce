@@ -25,9 +25,9 @@ const Header = async () => {
           <NavigationLinks />
         </div>
         <div className="flex items-center gap-4">
-          <div className="hidden lg:block">
+          {/* <div className="hidden lg:block">
             <Input />
-          </div>
+          </div> */}
 
           <Link href={"/cart"}>
             <CartBadge userId={userId} initialCount={cartCount} />
