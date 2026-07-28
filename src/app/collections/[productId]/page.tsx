@@ -7,7 +7,6 @@ import {
 import ProductView from "@/components/ProductView";
 import RelatedProducts from "@/components/RelatedProducts";
 import Footer from "@/components/Footer";
-import prisma from "@/lib/prisma";
 
 type ProductPageProps = {
   params: Promise<{

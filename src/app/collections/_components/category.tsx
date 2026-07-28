@@ -6,7 +6,7 @@ type CategoryProps = {
   setIsChecked: Dispatch<SetStateAction<Set<string>>>;
 };
 
-const Category = ({ category, isChecked, setIsChecked }: CategoryProps) => {
+export function Category({ category, isChecked, setIsChecked }: CategoryProps) {
   const categoryText = category
     .split(" ")
     .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
@@ -29,6 +29,4 @@ const Category = ({ category, isChecked, setIsChecked }: CategoryProps) => {
       <p>{categoryText}</p>
     </div>
   );
-};
-
-export default Category;
+}

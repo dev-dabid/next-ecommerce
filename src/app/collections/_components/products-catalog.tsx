@@ -3,13 +3,12 @@
 import useProducts from "@/hooks/useProducts";
 import { useState, useEffect, useMemo, useRef } from "react";
 import Breadcrumb from "@/components/Breadcrumb";
-import FilterDropdown from "./FilterDropdown";
-import ProductCard from "../../components/ProductCard";
-import Category from "./Category";
+import { FilterDropdown } from "./filter-dropdown";
+import ProductCard from "@/components/ProductCard";
+import { Category } from "./category";
 import Footer from "@/components/Footer";
-import { Product } from "@/types/types";
 
-const ProductCatalog = () => {
+export function ProductCatalog() {
   const { products } = useProducts();
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(8);
@@ -136,6 +135,4 @@ const ProductCatalog = () => {
       <Footer />
     </div>
   );
-};
-
-export default ProductCatalog;
+}

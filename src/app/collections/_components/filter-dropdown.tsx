@@ -9,10 +9,8 @@ import useProducts from "@/hooks/useProducts";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDown } from "lucide-react";
 
-const FilterDropdown = ({ title, menuItem }: FilterDropdownProps) => {
+export function FilterDropdown({ title, menuItem }: FilterDropdownProps) {
   const { filters, setFilter } = useProducts();
-
-  console.log(filters);
 
   return (
     <Menu>
@@ -44,6 +42,4 @@ const FilterDropdown = ({ title, menuItem }: FilterDropdownProps) => {
       )}
     </Menu>
   );
-};
-
-export default FilterDropdown;
+}
