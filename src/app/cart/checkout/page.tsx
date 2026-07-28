@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
-import CheckoutPage from "./CheckoutPage";
+import { CheckoutPage } from "./_components/checkout-page";
 import { mapCartItemData } from "@/actions/helper";
 
 export default async function Checkout() {

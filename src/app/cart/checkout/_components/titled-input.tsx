@@ -16,7 +16,12 @@ type TitledInputProps = {
   setInput: (name: string, value: string) => void;
 };
 
-const TitledInput = ({ title, name, value, setInput }: TitledInputProps) => {
+export function TitledInput({
+  title,
+  name,
+  value,
+  setInput,
+}: TitledInputProps) {
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -39,6 +44,4 @@ const TitledInput = ({ title, name, value, setInput }: TitledInputProps) => {
       </div>
     </div>
   );
-};
-
-export default TitledInput;
+}

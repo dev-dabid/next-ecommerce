@@ -3,10 +3,10 @@
 import useCart from "@/hooks/useCart";
 import useCartTotals from "@/hooks/useCartTotals";
 import Breadcrumb from "@/components/Breadcrumb";
-import TitledInput from "./TitledInput";
-import OrderSummary from "../OrderSummary";
+import { TitledInput } from "./titled-input";
+import { OrderSummary } from "../../_components/order-summary";
 import { submitOrderData } from "@/actions/cart";
-import CircleTag from "./CircleTag";
+import { CircleTag } from "./circle-tag";
 import { Radio, RadioGroup } from "@headlessui/react";
 import { useState, useEffect } from "react";
 import { formattedPrice } from "@/lib/utils/money";
@@ -20,7 +20,7 @@ type CheckoutPageProps = {
   userId: string;
 };
 
-const CheckoutPage = ({ userId, cartItems }: CheckoutPageProps) => {
+export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   const router = useRouter();
   const { form, getInputValue, resetForm } = useCart();
 
@@ -226,6 +226,4 @@ const CheckoutPage = ({ userId, cartItems }: CheckoutPageProps) => {
       <Footer />
     </div>
   );
-};
-
-export default CheckoutPage;
+}
