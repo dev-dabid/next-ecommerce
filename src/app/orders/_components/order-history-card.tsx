@@ -1,4 +1,4 @@
-import Orders, { OrderWithRelations } from "./page";
+import { OrderWithRelations } from "../page";
 import Image from "next/image";
 import { formattedPrice } from "@/lib/utils/money";
 import { useRouter } from "next/navigation";
@@ -7,7 +7,7 @@ type OrderHistoryCardProps = {
   order: OrderWithRelations;
 };
 
-const OrderHistoryCard = ({ order }: OrderHistoryCardProps) => {
+export function OrderHistoryCard({ order }: OrderHistoryCardProps) {
   const router = useRouter();
 
   const months: { [key: number]: string } = {
@@ -89,6 +89,4 @@ const OrderHistoryCard = ({ order }: OrderHistoryCardProps) => {
       </div>
     </div>
   );
-};
-
-export default OrderHistoryCard;
+}

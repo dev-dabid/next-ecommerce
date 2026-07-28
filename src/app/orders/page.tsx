@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
-import OrdersPage from "./OrdersPage";
+import { OrdersPage } from "./_components/orders-page";
 import { Prisma } from "@prisma/client";
 
 const orderWithItems = Prisma.validator<Prisma.OrderDefaultArgs>()({

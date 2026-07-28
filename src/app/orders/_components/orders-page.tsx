@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import OrderHistoryCard from "./OrderHistoryCard";
+import { OrderHistoryCard } from "./order-history-card";
 import Footer from "@/components/Footer";
-import { OrderWithRelations } from "./page";
+import { OrderWithRelations } from "../page";
 
 type OrdersPageProps = {
   orderList: OrderWithRelations[];
 };
 
-const OrdersPage = ({ orderList }: OrdersPageProps) => {
+export function OrdersPage({ orderList }: OrdersPageProps) {
   const [selectedFilter, setSelectedFilter] = useState("all");
 
   const filters = [
@@ -75,6 +75,4 @@ const OrdersPage = ({ orderList }: OrdersPageProps) => {
       <Footer />
     </div>
   );
-};
-
-export default OrdersPage;
+}
