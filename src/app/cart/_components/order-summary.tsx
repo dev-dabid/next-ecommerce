@@ -19,14 +19,14 @@ type OrderSummaryProps = {
   userId?: string;
 };
 
-const OrderSummary = ({
+export function OrderSummary({
   cartItems,
   shipMethod,
   buttonTitle,
   onNavigate,
   isPending,
   userId,
-}: OrderSummaryProps) => {
+}: OrderSummaryProps) {
   const { cart } = useCart();
 
   const {
@@ -103,6 +103,4 @@ const OrderSummary = ({
       </div>
     </div>
   );
-};
-
-export default OrderSummary;
+}

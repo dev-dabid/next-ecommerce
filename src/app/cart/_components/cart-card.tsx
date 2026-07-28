@@ -1,10 +1,9 @@
 import type { CartProduct } from "@/types/types";
 import Image from "next/image";
-import { formattedPrice } from "../../lib/utils/money";
+import { formattedPrice } from "@/lib/utils/money";
 import { Minus } from "lucide-react";
 import { Plus } from "lucide-react";
 import { generateCartKey } from "@/lib/utils/cart";
-import { decreaseCartItemCount, increaseCartItemCount } from "@/actions/cart";
 
 type CartCardProps = {
   product: CartProduct;
@@ -14,13 +13,13 @@ type CartCardProps = {
   decrementCartItemCount: (id: string, localKey: string) => void;
 };
 
-const CartCard = ({
+export function CartCard({
   product,
   removeCartItem,
   selectCartItem,
   incrementCartItemCount,
   decrementCartItemCount,
-}: CartCardProps) => {
+}: CartCardProps) {
   const { id, image, name, quantity, priceCents, color, size, isChecked } =
     product;
 
@@ -109,6 +108,4 @@ const CartCard = ({
       </div>
     </div>
   );
-};
-
-export default CartCard;
+}

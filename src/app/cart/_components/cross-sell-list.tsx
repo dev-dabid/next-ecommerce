@@ -1,8 +1,5 @@
 import useProducts from "@/hooks/useProducts";
-import useCart from "@/hooks/useCart";
-import { useMemo } from "react";
-import { generateCartKey } from "../../lib/utils/cart";
-import { formattedPrice } from "../../lib/utils/money";
+import { formattedPrice } from "@/lib/utils/money";
 import { CartProduct } from "@/types/types";
 import Image from "next/image";
 
@@ -10,7 +7,7 @@ type CrossSellListProps = {
   cartItems: CartProduct[];
 };
 
-const CrossSellList = ({ cartItems }: CrossSellListProps) => {
+export function CrossSellList({ cartItems }: CrossSellListProps) {
   const { products } = useProducts();
   // const { cart } = useCart();
 
@@ -32,7 +29,7 @@ const CrossSellList = ({ cartItems }: CrossSellListProps) => {
   const crossListProducts = relatedProducts.slice(0, 4);
 
   return (
-    <div className="w-full max-w-[1200px] mx-auto p-4 mt-20">
+    <div className="w-full max-w-300 mx-auto p-4 mt-20">
       <h2 className="text-xl font-bold mb-4">You might also like</h2>
       <div className="flex flex-nowrap overflow-x-auto gap-6 pb-4 lg:grid lg:grid-cols-4 lg:overflow-x-visible">
         {crossListProducts.map((item) => (
@@ -56,6 +53,6 @@ const CrossSellList = ({ cartItems }: CrossSellListProps) => {
       </div>
     </div>
   );
-};
+}
 
 export default CrossSellList;

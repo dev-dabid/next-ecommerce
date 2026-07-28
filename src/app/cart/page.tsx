@@ -1,5 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
-import CartPage from "./CartPage";
+import { CartPage } from "./_components/cart-page";
 import { findUserCartProducts } from "@/actions/cart";
 
 export const dynamic = "force-dynamic";

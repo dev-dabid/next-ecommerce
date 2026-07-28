@@ -8,16 +8,15 @@ import {
   decreaseCartItemCount,
   deleteCartItems,
 } from "@/actions/cart";
-import { useMemo, useState, useOptimistic, use, useTransition } from "react";
+import { useState, useOptimistic, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { CartProduct } from "@/types/types";
 import Link from "next/link";
-import CartCard from "./CartCard";
-import OrderSummary from "./OrderSummary";
-import CrossSellList from "./CrossSellList";
+import { CartCard } from "./cart-card";
+import { OrderSummary } from "./order-summary";
+import { CrossSellList } from "./cross-sell-list";
 import Footer from "@/components/Footer";
-import { Shield, MoveLeft, Truck, CarIcon } from "lucide-react";
-import { generateCartKey } from "@/lib/utils/cart";
+import { Shield, MoveLeft, Truck } from "lucide-react";
 import { toast } from "sonner";
 
 type CartPageProps = {
@@ -32,7 +31,7 @@ type CartAction =
   | { type: "INCREMENT"; payload: String }
   | { type: "DECREMENT"; payload: string };
 
-const CartPage = ({ userId, cartProducts }: CartPageProps) => {
+export function CartPage({ userId, cartProducts }: CartPageProps) {
   const {
     updateQuantity,
     inputQuantity,
@@ -297,6 +296,4 @@ const CartPage = ({ userId, cartProducts }: CartPageProps) => {
       <Footer />
     </div>
   );
-};
-
-export default CartPage;
+}
