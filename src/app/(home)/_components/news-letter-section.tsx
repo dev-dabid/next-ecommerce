@@ -1,6 +1,6 @@
-import NewsLetterInput from "./NewsLetterInput";
+import { NewsLetterInput } from "./news-letter-input";
 
-const NewsLetterSection = () => {
+export function NewsLetterSection() {
   return (
     <div className="py-[clamp(1rem,5vw,5rem)]">
       <div className="max-w-300 mx-auto bg-sky-400 flex justify-center items-center rounded-2xl py-[clamp(1rem,5vw,5rem)] flex-col px-5">
@@ -20,6 +20,4 @@ const NewsLetterSection = () => {
       </div>
     </div>
   );
-};
-
-export default NewsLetterSection;
+}

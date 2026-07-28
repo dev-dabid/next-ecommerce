@@ -5,7 +5,7 @@ type CardProps = {
   image?: string | StaticImageData;
 };
 
-const CategoryCard = ({ name, image }: CardProps) => {
+export function CategoryCard({ name, image }: CardProps) {
   return (
     <div className="relative rounded-2xl bg-white p-5 max-h-50 max-w-50 lg:max-w-full lg:max-h-70 shadow-lg shrink-0 scroll-snap-start">
       <div className="absolute inset-0 bg-linear-to-b hover:from-white/15 active:from-white/30 from-white/5 to-gray-950/50 rounded-2xl z-10"></div>
@@ -25,6 +25,4 @@ const CategoryCard = ({ name, image }: CardProps) => {
       </p>
     </div>
   );
-};
-
-export default CategoryCard;
+}

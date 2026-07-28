@@ -1,4 +1,4 @@
-const NewsLetterInput = () => {
+export function NewsLetterInput() {
   return (
     <div className="flex flex-col lg:flex-row gap-2 w-full">
       <div className="bg-white py-4 px-4 rounded-xl lg:flex-1">
@@ -13,6 +13,4 @@ const NewsLetterInput = () => {
       </button>
     </div>
   );
-};
-
-export default NewsLetterInput;
+}

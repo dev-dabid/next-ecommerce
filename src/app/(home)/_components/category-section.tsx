@@ -1,4 +1,4 @@
-import CategoryCard from "./CategoryCard";
+import { CategoryCard } from "./category-card";
 import { Product } from "@/types/types";
 import DefaultImage from "@/images/backpack.jpg";
 
@@ -6,7 +6,7 @@ type CategorySectionProps = {
   products: Product[];
 };
 
-const CategorySection = ({ products }: CategorySectionProps) => {
+export function CategorySection({ products }: CategorySectionProps) {
   const homepageCategories = [
     "apparel",
     "accessories",
@@ -50,6 +50,4 @@ const CategorySection = ({ products }: CategorySectionProps) => {
       </div>
     </div>
   );
-};
-
-export default CategorySection;
+}

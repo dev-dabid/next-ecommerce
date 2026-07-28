@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Woman from "@/images/woman.png";
 
-const Hero = () => {
+export function Hero() {
   return (
     <div className="flex flex-col lg:flex-row items-center justify-around bg-white py-[clamp(2rem,10vw,5rem)] px-[clamp(1.5rem,5vw,4rem)] rounded-3xl mt-[clamp(1rem,5vw,5rem)] gap-[clamp(4rem,2vw,5rem)] max-w-300 mx-auto">
       <div className="flex flex-col">
@@ -37,6 +37,4 @@ const Hero = () => {
       </div>
     </div>
   );
-};
-
-export default Hero;
+}

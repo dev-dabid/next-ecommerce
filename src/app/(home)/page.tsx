@@ -1,11 +1,10 @@
 "use client";
 
 import useProducts from "@/hooks/useProducts";
-import { useState, useEffect } from "react";
-import Hero from "./Hero";
-import CategorySection from "./CategorySection";
-import TrendSection from "./TrendSection";
-import NewsLetterSection from "./NewsLetterSection";
+import { Hero } from "./_components/hero.tsx";
+import { CategorySection } from "./_components/category-section";
+import { TrendSection } from "./_components/trend-section";
+import { NewsLetterSection } from "./_components/news-letter-section";
 import Footer from "@/components/Footer";
 
 export default function Home() {

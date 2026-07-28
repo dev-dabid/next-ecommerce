@@ -1,11 +1,11 @@
 import { Product } from "@/types/types";
-import TrendCard from "./TrendCard";
+import TrendCard from "./trend-card";
 
 type TrendSectionProps = {
   products: Product[];
 };
 
-const TrendSection = ({ products }: TrendSectionProps) => {
+export function TrendSection({ products }: TrendSectionProps) {
   const trendProducts = products
     .filter((product) => product.rating.count > 100)
     .slice(0, 4);
@@ -31,6 +31,4 @@ const TrendSection = ({ products }: TrendSectionProps) => {
       </div>
     </div>
   );
-};
-
-export default TrendSection;
+}
