@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
-import SuccessPage from "./SuccessPage";
+import { SuccessPage } from "./_components/success-page";
 import { redirect } from "next/navigation";
 import { Prisma } from "@prisma/client";
 

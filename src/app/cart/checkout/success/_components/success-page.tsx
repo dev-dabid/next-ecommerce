@@ -1,17 +1,17 @@
 "use client";
 
 import useCart from "@/hooks/useCart";
-import SuccessCard from "./SuccessCard";
+import { SuccessCard } from "./success-card";
 import Footer from "@/components/Footer";
 import Link from "next/link";
-import { OrderWithItems } from "./page";
+import { OrderWithItems } from "../page";
 import { formattedPrice } from "@/lib/utils/money";
 
 interface SuccessPageProps {
   order: OrderWithItems;
 }
 
-export default function Success({ order }: SuccessPageProps) {
+export function SuccessPage({ order }: SuccessPageProps) {
   const { orderSummary } = useCart();
   const recipient = orderSummary.recipient;
   const calculatedSubTotalCents = order.orderItem.reduce((total, item) => {

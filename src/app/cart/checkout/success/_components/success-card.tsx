@@ -1,14 +1,13 @@
-import { CartProduct } from "@/types/types";
 import Image from "next/image";
 import { formattedPrice } from "@/lib/utils/money";
-import { OrderWithItems } from "./page";
+import { OrderWithItems } from "../page";
 
 type OrderItemWithProduct = OrderWithItems["orderItem"][number];
 
 type SuccessCardProps = {
   cartItem: OrderItemWithProduct;
 };
-const SuccessCard = ({ cartItem }: SuccessCardProps) => {
+export function SuccessCard({ cartItem }: SuccessCardProps) {
   const { image, priceCents, name } = cartItem.product;
   const quantity = cartItem.quantity;
 
@@ -39,6 +38,4 @@ const SuccessCard = ({ cartItem }: SuccessCardProps) => {
       <p className="font-semibold text-lg shrink-0">{displayPrice}</p>
     </div>
   );
-};
-
-export default SuccessCard;
+}
