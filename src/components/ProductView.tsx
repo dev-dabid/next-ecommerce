@@ -71,7 +71,7 @@ const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
     };
 
     fetchProduct();
-  }, []);
+  }, [cartItems]);
 
   const { optimisticAdd, optimisticRollback, addToCart, count, cart } =
     useCart();
