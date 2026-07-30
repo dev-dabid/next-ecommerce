@@ -1,11 +1,12 @@
 import { StateCreator } from "zustand";
-import type { CartState } from "@/types/types";
+import type { CartState, CartProduct } from "@/types/types";
 import { cartItemCount } from "@/actions/cart";
 import { generateCartKey } from "@/lib/utils/cart";
 import { NewspaperIcon } from "lucide-react";
 
 export const createCartSlice: StateCreator<CartState> = (set, get) => ({
   cart: new Map(),
+  cartItems: [],
   count: 0,
   form: {
     firstName: "",
@@ -38,6 +39,15 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
   },
 
   setCount: (count) => set({ count: count }),
+
+  getCartItems: (cart: CartProduct[]) => set({ cartItems: cart }),
+
+  reduceCartItemCount: () => {
+    const cartCount = get().cartItems.reduce((t, i) => (t = t + i.quantity), 0);
+    cartCount - 1;
+
+    set({ count: cartCount });
+  },
 
   addToCart: (productItem) => {
     const newCart = new Map(get().cart);

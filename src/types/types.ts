@@ -63,12 +63,15 @@ export type Summary = {
 
 export interface CartState {
   count: number;
+  cartItems: CartProduct[];
   cart: Map<Id, CartProduct>;
   form: FormFields;
   orderSummary: Summary;
 
   addToCart: (productItem: CartProduct) => void;
   setCount: (count: number) => void;
+  getCartItems: (cart: CartProduct[]) => void;
+  reduceCartItemCount: () => void;
   optimisticAdd: (quantity: number) => void;
   optimisticRollback: (quantity: number) => void;
   updateCartCount: () => void;

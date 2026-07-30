@@ -8,7 +8,7 @@ import {
   decreaseCartItemCount,
   deleteCartItems,
 } from "@/actions/cart";
-import { useState, useOptimistic, useTransition } from "react";
+import { useState, useEffect, useOptimistic, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { CartProduct } from "@/types/types";
 import Link from "next/link";
@@ -82,10 +82,19 @@ export function CartPage({ userId, cartProducts }: CartPageProps) {
       }
     }
   });
+
+  useEffect(() => {
+    const cartCount = optimisticCartState.reduce(
+      (t, i) => (t = t + i.quantity),
+      0,
+    );
+    setCount(cartCount);
+  }, [optimisticCartState]);
+
   const [isPending, startTransition] = useTransition();
   const [isConfirmingClear, setIsConfirmingClear] = useState(false);
   const router = useRouter();
-  const { cart, setCount } = useCart();
+  const { cart, setCount, getCartItems, reduceCartItemCount } = useCart();
 
   const cartLocal = Array.from(cart.values());
 
@@ -119,16 +128,12 @@ export function CartPage({ userId, cartProducts }: CartPageProps) {
   };
 
   const decrementCartItemCount = (id: string, localKey: string) => {
-    const cartItemCount = optimisticCartState.reduce((total, item) => {
-      return (total = total + item.quantity);
-    }, 0);
     userId
       ? startTransition(async () => {
           addOptimisticCartState({
             type: "DECREMENT",
             payload: id,
           });
-          setCount(cartItemCount);
           await decreaseCartItemCount(id, userId);
         })
       : updateQuantity(localKey, 1, "reduce");
