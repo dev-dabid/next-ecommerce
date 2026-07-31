@@ -3,6 +3,7 @@ import useStore from "@/store/store";
 const useCart = () => {
   const count = useStore((state) => state.count);
   const cart = useStore((state) => state.cart);
+  const cartArray = useStore((state) => state.cartArray);
   const form = useStore((state) => state.form);
   const orderSummary = useStore((state) => state.orderSummary);
 
@@ -24,6 +25,7 @@ const useCart = () => {
   return {
     count,
     cart,
+    cartArray,
     form,
     orderSummary,
     addToCart,

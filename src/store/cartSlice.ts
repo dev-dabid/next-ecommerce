@@ -6,7 +6,7 @@ import { NewspaperIcon } from "lucide-react";
 
 export const createCartSlice: StateCreator<CartState> = (set, get) => ({
   cart: new Map(),
-  cartItems: [],
+  cartArray: [],
   count: 0,
   form: {
     firstName: "",
@@ -40,10 +40,10 @@ export const createCartSlice: StateCreator<CartState> = (set, get) => ({
 
   setCount: (count) => set({ count: count }),
 
-  getCartItems: (cart: CartProduct[]) => set({ cartItems: cart }),
+  getCartItems: (cart: CartProduct[]) => set({ cartArray: cart }),
 
   reduceCartItemCount: () => {
-    const cartCount = get().cartItems.reduce((t, i) => (t = t + i.quantity), 0);
+    const cartCount = get().cartArray.reduce((t, i) => (t = t + i.quantity), 0);
     cartCount - 1;
 
     set({ count: cartCount });

@@ -63,7 +63,7 @@ export type Summary = {
 
 export interface CartState {
   count: number;
-  cartItems: CartProduct[];
+  cartArray: CartProduct[];
   cart: Map<Id, CartProduct>;
   form: FormFields;
   orderSummary: Summary;

@@ -1,6 +1,6 @@
 "use client";
 
-import { addToCartDB, isExisting } from "@/actions/cart";
+import { addToCartDB, isExisting, findUserCartProducts } from "@/actions/cart";
 import {
   useOptimistic,
   useTransition,
@@ -9,7 +9,7 @@ import {
 } from "react";
 import useCart from "@/hooks/useCart";
 import { useState } from "react";
-import { CartItemWithProduct, Product } from "@/types/types";
+import { CartItemWithProduct, CartProduct, Product } from "@/types/types";
 import Image from "next/image";
 import { formattedPrice } from "@/lib/utils/money";
 import Breadcrumb from "./Breadcrumb";
@@ -26,7 +26,7 @@ import { CartItem } from "@prisma/client";
 type ProductViewProps = {
   userId: string | null;
   product: Product;
-  cartItems: CartItem[];
+  cartItems: CartProduct[];
 };
 
 const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
@@ -75,8 +75,16 @@ const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
   //   fetchProduct();
   // }, [cartItems]);
 
-  const { optimisticAdd, optimisticRollback, addToCart, count, cart } =
-    useCart();
+  const {
+    optimisticAdd,
+    optimisticRollback,
+    addToCart,
+    count,
+    cart,
+    cartArray,
+    getCartItems,
+    setCount,
+  } = useCart();
 
   const { image, name, priceCents, rating, id, keywords } = product;
 
@@ -131,6 +139,17 @@ const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
             );
           } else {
             await addToCartDB(userId, productItem);
+
+            const userCartItems = await findUserCartProducts(userId || "");
+
+            if (userCartItems) {
+              const cartItemCount = userCartItems.data.reduce(
+                (t, i) => (t = t + i.quantity),
+                0,
+              );
+              setCount(cartItemCount);
+            }
+
             toast.success("Added to cart!", {
               position: "top-center",
             });
