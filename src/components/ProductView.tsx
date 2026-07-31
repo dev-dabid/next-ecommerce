@@ -18,7 +18,7 @@ import SizeSelector from "./SizeSelector";
 import ColorSelector from "./ColorSelector";
 import QuantitySelector from "./QuantitySelector";
 import FavoriteToggle from "./FavoriteToggle";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { generateCartKey } from "@/lib/utils/cart";
 import { CartItem } from "@prisma/client";
@@ -51,27 +51,29 @@ const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
     count: 1,
   });
 
-  const [isCartItemExist, setIsCartItemExist] = useState<string>();
+  const [isPending, startTransition] = useTransition();
 
-  useEffect(() => {
-    if (!userId) return;
+  // const [isCartItemExist, setIsCartItemExist] = useState<string>();
 
-    const color = product.keywords.includes("apparel")
-      ? selected.color.name
-      : "N/A";
-    const size = product.keywords.includes("apparel")
-      ? selected.size.name
-      : "N/A";
+  // useEffect(() => {
+  //   if (!userId) return;
 
-    const fetchProduct = async () => {
-      const cartItem = await isExisting(userId, product.id, color, size);
-      if (cartItem.success) {
-        setIsCartItemExist(cartItem.data?.id);
-      }
-    };
+  //   const color = product.keywords.includes("apparel")
+  //     ? selected.color.name
+  //     : "N/A";
+  //   const size = product.keywords.includes("apparel")
+  //     ? selected.size.name
+  //     : "N/A";
 
-    fetchProduct();
-  }, [cartItems]);
+  //   const fetchProduct = async () => {
+  //     const cartItem = await isExisting(userId, product.id, color, size);
+  //     if (cartItem.success) {
+  //       setIsCartItemExist(cartItem.data?.id);
+  //     }
+  //   };
+
+  //   fetchProduct();
+  // }, [cartItems]);
 
   const { optimisticAdd, optimisticRollback, addToCart, count, cart } =
     useCart();
@@ -100,62 +102,45 @@ const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
         createdAt: new Date(),
       };
 
-  const [optimisticProduct, addOptimisticProduct] = useOptimistic(
-    cartItems,
-    (currentCartstate, payload: string) => {
-      const newCart = new Map(currentCartstate.map((item) => [item.id, item]));
-
-      const newProduct = newCart.get(payload);
-
-      if (newProduct) {
-        newCart.set(payload, {
-          ...newProduct,
-          quantity: selected.count,
-        });
-      } else {
-        newCart.set(payload, productItem);
-      }
-
-      return Array.from(newCart.values());
-    },
-  );
-
-  const optimisticAddToCart = async () => {
-    const color = keywords.includes("apparel") ? selected.color.name : null;
-    const size = keywords.includes("apparel") ? selected.size.name : null;
-
-    const itemId = generateCartKey(product.id, color, size);
-
-    const cartItem = optimisticProduct.filter((item) => itemId === item.id);
+  const addToCartAction = () => {
+    const color = product.keywords.includes("apparel")
+      ? selected.color.name
+      : "N/A";
+    const size = product.keywords.includes("apparel")
+      ? selected.size.name
+      : "N/A";
 
     if (userId) {
-      try {
-        startTransition(async () => {
-          const itemFound = optimisticProduct.filter(
-            (item) => "cmrrrs8wb002cjkvs0vssxu6s" === item.id,
-          );
+      startTransition(async () => {
+        try {
+          const cartItem = await isExisting(userId, product.id, color, size);
 
-          console.log(itemFound);
-
-          addOptimisticProduct(itemId);
-          toast.success("Added to cart!", {
+          if (cartItem.data && cartItem.data.quantity >= 10) {
+            toast.warning("Max quantity exceeded!", {
+              position: "top-center",
+            });
+          } else if (
+            selected.count > 10 ||
+            (cartItem.data && cartItem.data.quantity + selected.count > 10)
+          ) {
+            toast.warning(
+              "Cannot add to cart. You can only have a maximum of 10 items for this product.",
+              {
+                position: "top-center",
+              },
+            );
+          } else {
+            await addToCartDB(userId, productItem);
+            toast.success("Added to cart!", {
+              position: "top-center",
+            });
+          }
+        } catch {
+          toast.error("Error adding product to cart!", {
             position: "top-center",
           });
-
-          await addToCartDB(userId, productItem);
-        });
-
-        // const data = await isExisting(userId, product.id, color, size);
-
-        // if (data.data?.quantity === 10)
-        //   return toast.warning("Max product quantity exceeded!", {
-        //     position: "top-center",
-        //   });
-
-        optimisticAdd(selected.count);
-      } catch (error) {
-        optimisticRollback(selected.count);
-      }
+        }
+      });
     } else {
       const color = keywords.includes("apparel") ? selected.color.name : null;
       const size = keywords.includes("apparel") ? selected.size.name : null;
@@ -164,19 +149,75 @@ const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
 
       const product = cart.get(cartKey);
 
-      if (product?.quantity === 10)
-        return toast.warning("Max product quantity exceeded!", {
+      if (product) {
+        if (product.quantity >= 10)
+          return toast.warning("Max product quantity exceeded!", {
+            position: "top-center",
+          });
+      } else {
+        addToCart(productItem);
+        toast.success("Added to cart!", {
           position: "top-center",
         });
-
-      addToCart(productItem);
-      toast.success("Added to cart!", {
-        position: "top-center",
-      });
+      }
     }
   };
 
-  console.log(isCartItemExist, optimisticProduct);
+  // const optimisticAddToCart = async () => {
+  //   const color = keywords.includes("apparel") ? selected.color.name : null;
+  //   const size = keywords.includes("apparel") ? selected.size.name : null;
+
+  //   const itemId = generateCartKey(product.id, color, size);
+
+  //   const cartItem = optimisticProduct.filter((item) => itemId === item.id);
+
+  //   if (userId) {
+  //     try {
+  //       startTransition(async () => {
+  //         const itemFound = optimisticProduct.filter(
+  //           (item) => "cmrrrs8wb002cjkvs0vssxu6s" === item.id,
+  //         );
+
+  //         console.log(itemFound);
+
+  //         addOptimisticProduct(itemId);
+  //         toast.success("Added to cart!", {
+  //           position: "top-center",
+  //         });
+
+  //         await addToCartDB(userId, productItem);
+  //       });
+
+  //       const data = await isExisting(userId, product.id, color, size);
+
+  //       if (data.data?.quantity === 10)
+  //         return toast.warning("Max product quantity exceeded!", {
+  //           position: "top-center",
+  //         });
+
+  //       optimisticAdd(selected.count);
+  //     } catch (error) {
+  //       optimisticRollback(selected.count);
+  //     }
+  //   } else {
+  //     const color = keywords.includes("apparel") ? selected.color.name : null;
+  //     const size = keywords.includes("apparel") ? selected.size.name : null;
+
+  //     const cartKey = generateCartKey(id, color, size);
+
+  //     const product = cart.get(cartKey);
+
+  //     if (product?.quantity === 10)
+  //       return toast.warning("Max product quantity exceeded!", {
+  //         position: "top-center",
+  //       });
+
+  //     addToCart(productItem);
+  //     toast.success("Added to cart!", {
+  //       position: "top-center",
+  //     });
+  //   }
+  // };
 
   return (
     <div className="pb-10">
@@ -239,14 +280,19 @@ const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
 
                 <div className="flex gap-3">
                   <button
-                    className="hover:bg-sky-600 active:bg-sky-500 cursor-pointer text-center text-white font-semibold bg-sky-500 w-full max-w-[434.69px] py-4 rounded-xl"
+                    disabled={isPending}
+                    className="disabled:bg-sky-500 disabled:cursor-not-allowed hover:bg-sky-600 active:bg-sky-500 cursor-pointer text-center text-white font-semibold bg-sky-500 w-full max-w-[434.69px] py-4 rounded-xl flex justify-center"
                     onClick={() => {
-                      optimisticAddToCart();
+                      addToCartAction();
                     }}
                   >
-                    <p className="flex justify-center items-center gap-3">
-                      <ShoppingCart /> Add to Cart
-                    </p>
+                    {isPending ? (
+                      <Loader2 className="animate-spin" />
+                    ) : (
+                      <p className="flex justify-center items-center gap-3">
+                        <ShoppingCart /> Add to Cart
+                      </p>
+                    )}
                   </button>
                   <FavoriteToggle
                     userId={userId || ""}
