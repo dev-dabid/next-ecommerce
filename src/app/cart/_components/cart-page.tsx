@@ -186,12 +186,10 @@ export function CartPage({ userId, cartProducts }: CartPageProps) {
           setCount(cartItemCount);
           await deleteCartItem(id);
         })
-      : () => {
-          removeItem(localKey);
-          toast.success("Item removed from cart!", {
-            position: "top-center",
-          });
-        };
+      : removeItem(localKey);
+    toast.success("Item removed from cart!", {
+      position: "top-center",
+    });
   };
 
   const handleCancel = () => {
