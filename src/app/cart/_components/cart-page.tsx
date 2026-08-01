@@ -1,6 +1,7 @@
 "use client";
 
 import useCart from "@/hooks/useCart";
+import { useClerk } from "@clerk/nextjs";
 import {
   deleteCartItem,
   updateCheckCartItem,
@@ -32,6 +33,8 @@ type CartAction =
   | { type: "DECREMENT"; payload: string };
 
 export function CartPage({ userId, cartProducts }: CartPageProps) {
+  const { openSignIn } = useClerk();
+
   const {
     updateQuantity,
     inputQuantity,
@@ -208,7 +211,11 @@ export function CartPage({ userId, cartProducts }: CartPageProps) {
   const onNavigate = () => {
     const link = `/cart/checkout`;
 
-    router.push(link);
+    if (userId) {
+      router.push(link);
+    } else {
+      openSignIn();
+    }
   };
 
   return (
