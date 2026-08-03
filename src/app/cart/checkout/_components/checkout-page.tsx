@@ -56,6 +56,18 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
+    fetch("/api/webhooks/checkout", {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({}),
+    });
+  });
+
+  useEffect(() => {
     setIsMounted(true);
   }, []);
 
