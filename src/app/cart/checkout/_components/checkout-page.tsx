@@ -54,18 +54,36 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/webhooks/checkout", {
-      method: "POST",
+    const initializePayment = async () => {
+      try {
+        const response = await fetch("/api/webhooks/checkout", {
+          method: "POST",
 
-      headers: {
-        "Content-Type": "application/json",
-      },
+          headers: {
+            "Content-Type": "application/json",
+          },
 
-      body: JSON.stringify({}),
-    });
-  });
+          body: JSON.stringify({
+            userId: userId,
+            shippingPrice: selected.price,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (data.clientSecret) {
+          setClientSecret(data.clientSecret);
+        }
+      } catch (err) {
+        console.error("Cannot load payment gateway:", err);
+      }
+    };
+
+    initializePayment();
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -110,6 +128,8 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
       }
     });
   };
+
+  console.log(clientSecret);
 
   return (
     <div>
