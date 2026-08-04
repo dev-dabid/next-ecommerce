@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import Stripe from "stripe";
+import prisma from "@/lib/prisma";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2026-01-28.clover" as any,
@@ -8,10 +9,42 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const substotal = body.amount;
+    const userId = body.userId;
+    const shippingPrice = body.shippingPrice;
+
+    const result = await prisma.cartItem.findMany({
+      where: {
+        userId,
+        isChecked: true,
+      },
+
+      select: {
+        quantity: true,
+        product: {
+          select: {
+            priceCents: true,
+          },
+        },
+      },
+    });
+
+    const totalCents = result.reduce((sum, item) => {
+      return sum + item.product.priceCents * item.quantity;
+    }, 0);
+
+    if (!totalCents || totalCents < 50) {
+      return NextResponse.json(
+        {
+          error: "Cart is empty, cannot process payment!",
+        },
+        {
+          status: 404,
+        },
+      );
+    }
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: substotal,
+      amount: totalCents + shippingPrice,
       currency: "usd",
       payment_method_types: ["card"],
     });
