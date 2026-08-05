@@ -64,7 +64,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   const [isPending, startTransition] = useTransition();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
 
-  const initializePayment = async () => {
+  const initializePayment = async (newValue: SelectedType) => {
     try {
       const response = await fetch("/api/webhooks/checkout", {
         method: "POST",
@@ -75,7 +75,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
 
         body: JSON.stringify({
           userId: userId,
-          shipping: selected,
+          shipping: newValue,
         }),
       });
 
@@ -90,7 +90,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   };
 
   useEffect(() => {
-    initializePayment();
+    initializePayment(selected);
   }, []);
 
   useEffect(() => {
@@ -114,7 +114,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
     setSelected(newValue);
     startTransition(async () => {
       try {
-        await initializePayment();
+        await initializePayment(newValue);
       } catch (err) {
         console.error("Cannot update shipping type:", err);
         toast.error("Failed to update shipping type!", {

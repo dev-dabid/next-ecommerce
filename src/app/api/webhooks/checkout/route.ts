@@ -16,7 +16,6 @@ export async function POST(req: NextRequest) {
     }
 
     const userId = body.userId;
-    const shippingPrice = body.shipping.price;
     const result = await prisma.cartItem.findMany({
       where: {
         userId,
@@ -37,14 +36,19 @@ export async function POST(req: NextRequest) {
       return sum + item.product.priceCents * item.quantity;
     }, 0);
     const FREE_SHIPPING_THRESHOLD = 50000;
+    const shippingType = body.shipping.type;
 
+    const shippingPrice = shippingType === "STANDARD" ? 0 : 3500;
     const hasFreeShipping =
       totalCents >= FREE_SHIPPING_THRESHOLD || totalCents === 0;
     const actualShippingFee = hasFreeShipping ? 0 : 1000;
     const estimatedTaxCents = Math.round(totalCents * 0.07);
 
+    if (shippingType === "STANDARD") console.log("hatdog");
+
     console.log(
       totalCents + shippingPrice + actualShippingFee + estimatedTaxCents,
+      shippingType,
     );
 
     if (!totalCents || totalCents < 50) {
@@ -66,6 +70,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       clientSecret: paymentIntent.client_secret,
+      ShippingType: shippingType,
     });
   } catch (error: any) {
     console.error("There is Error from Endpoint:", error);
