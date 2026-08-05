@@ -9,9 +9,14 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const userId = body.userId;
-    const shippingPrice = body.shippingPrice;
+    const ALLOWED_SHIPPING = ["STANDARD", "EXPRESS"];
 
+    if (!ALLOWED_SHIPPING.includes(body.shipping.type)) {
+      return NextResponse.json({ error: "Invalid shipping!" }, { status: 400 });
+    }
+
+    const userId = body.userId;
+    const shippingPrice = body.shipping.price;
     const result = await prisma.cartItem.findMany({
       where: {
         userId,
@@ -31,6 +36,16 @@ export async function POST(req: NextRequest) {
     const totalCents = result.reduce((sum, item) => {
       return sum + item.product.priceCents * item.quantity;
     }, 0);
+    const FREE_SHIPPING_THRESHOLD = 50000;
+
+    const hasFreeShipping =
+      totalCents >= FREE_SHIPPING_THRESHOLD || totalCents === 0;
+    const actualShippingFee = hasFreeShipping ? 0 : 1000;
+    const estimatedTaxCents = Math.round(totalCents * 0.07);
+
+    console.log(
+      totalCents + shippingPrice + actualShippingFee + estimatedTaxCents,
+    );
 
     if (!totalCents || totalCents < 50) {
       return NextResponse.json(

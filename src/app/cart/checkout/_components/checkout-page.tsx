@@ -68,7 +68,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
 
           body: JSON.stringify({
             userId: userId,
-            shippingPrice: selected.price,
+            shipping: selected,
           }),
         });
 
@@ -83,7 +83,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
     };
 
     initializePayment();
-  }, []);
+  }, [selected]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -131,6 +131,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
 
   console.log(clientSecret);
 
+  console.log(totalCents + selected.price);
   return (
     <div>
       <div className="max-w-300 mx-auto mb-20">
