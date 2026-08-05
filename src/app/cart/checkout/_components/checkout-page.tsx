@@ -14,10 +14,18 @@ import Footer from "@/components/Footer";
 import { useRouter } from "next/navigation";
 import { CartProduct } from "@/types/types";
 import { useTransition } from "react";
+import { Select } from "@prisma/client/runtime/client";
 
 type CheckoutPageProps = {
   cartItems: CartProduct[];
   userId: string;
+};
+
+type SelectedType = {
+  type: string;
+  title: string;
+  days: string;
+  price: number;
 };
 
 export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
@@ -56,34 +64,34 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   const [isPending, startTransition] = useTransition();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
 
-  useEffect(() => {
-    const initializePayment = async () => {
-      try {
-        const response = await fetch("/api/webhooks/checkout", {
-          method: "POST",
+  const initializePayment = async () => {
+    try {
+      const response = await fetch("/api/webhooks/checkout", {
+        method: "POST",
 
-          headers: {
-            "Content-Type": "application/json",
-          },
+        headers: {
+          "Content-Type": "application/json",
+        },
 
-          body: JSON.stringify({
-            userId: userId,
-            shipping: selected,
-          }),
-        });
+        body: JSON.stringify({
+          userId: userId,
+          shipping: selected,
+        }),
+      });
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (data.clientSecret) {
-          setClientSecret(data.clientSecret);
-        }
-      } catch (err) {
-        console.error("Cannot load payment gateway:", err);
+      if (data.clientSecret) {
+        setClientSecret(data.clientSecret);
       }
-    };
+    } catch (err) {
+      console.error("Cannot load payment gateway:", err);
+    }
+  };
 
+  useEffect(() => {
     initializePayment();
-  }, [selected]);
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -100,6 +108,18 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   if (!isReady || cartItems.length === 0) {
     return null;
   }
+
+  const updateShippingType = (newValue: SelectedType) => {
+    setSelected(newValue);
+
+    startTransition(async () => {
+      try {
+        await initializePayment();
+      } catch (err) {
+        console.error("Cannot update shipping type:", err);
+      }
+    });
+  };
 
   const handlePlaceOrder = () => {
     const summary = {
@@ -217,7 +237,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
               <div className="flex  flex-1">
                 <RadioGroup
                   value={selected}
-                  onChange={setSelected}
+                  onChange={(newValue) => updateShippingType(newValue)}
                   className="flex flex-1 gap-5 mt-7 flex-col lg:flex-row"
                   by="type"
                 >
