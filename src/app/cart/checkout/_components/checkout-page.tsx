@@ -14,7 +14,7 @@ import Footer from "@/components/Footer";
 import { useRouter } from "next/navigation";
 import { CartProduct } from "@/types/types";
 import { useTransition } from "react";
-import { Select } from "@prisma/client/runtime/client";
+import { toast } from "sonner";
 
 type CheckoutPageProps = {
   cartItems: CartProduct[];
@@ -110,13 +110,17 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   }
 
   const updateShippingType = (newValue: SelectedType) => {
+    const preVal = selected;
     setSelected(newValue);
-
     startTransition(async () => {
       try {
         await initializePayment();
       } catch (err) {
         console.error("Cannot update shipping type:", err);
+        toast.error("Failed to update shipping type!", {
+          position: "top-center",
+        });
+        setSelected(preVal);
       }
     });
   };
@@ -139,8 +143,6 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
 
       if (!response) return;
 
-      console.log(response);
-
       if (response.success) {
         router.push(`/cart/checkout/success?id=${response.orderId}`);
       } else {
@@ -149,9 +151,6 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
     });
   };
 
-  console.log(clientSecret);
-
-  console.log(totalCents + selected.price);
   return (
     <div>
       <div className="max-w-300 mx-auto mb-20">
@@ -239,6 +238,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
                   value={selected}
                   onChange={(newValue) => updateShippingType(newValue)}
                   className="flex flex-1 gap-5 mt-7 flex-col lg:flex-row"
+                  disabled={isPending}
                   by="type"
                 >
                   {shipMethods.map((method) => (

@@ -1,6 +1,7 @@
 import type { CartProduct } from "@/types/types";
 import useCartTotals from "@/hooks/useCartTotals";
 import useCart from "@/hooks/useCart";
+import { Loader2 } from "lucide-react";
 
 type ShippingMethod = {
   type: string;
@@ -82,11 +83,11 @@ export function OrderSummary({
 
           {isPending ? (
             <button
-              className={`${isCartEmpty ? "bg-sky-800 cursor-not-allowed" : "bg-sky-400 cursor-pointer hover:bg-sky-500 active:bg-sky-700"} text-white  py-4 rounded-xl mt-2 w-full `}
+              className={`${isCartEmpty || isPending ? "bg-sky-800 cursor-not-allowed" : "bg-sky-400  hover:bg-sky-500 active:bg-sky-700"} flex justify-center text-white  py-4 rounded-xl mt-2 w-full `}
               onClick={onNavigate}
               disabled={isPending}
             >
-              {buttonTitle}
+              {isPending ? <Loader2 className="animate-spin" /> : buttonTitle}
             </button>
           ) : (
             <button
