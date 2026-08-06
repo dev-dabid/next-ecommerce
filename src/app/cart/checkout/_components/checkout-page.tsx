@@ -15,6 +15,8 @@ import { useRouter } from "next/navigation";
 import { CartProduct } from "@/types/types";
 import { useTransition } from "react";
 import { toast } from "sonner";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
 type CheckoutPageProps = {
   cartItems: CartProduct[];
@@ -27,6 +29,10 @@ type SelectedType = {
   days: string;
   price: number;
 };
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
+);
 
 export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   const router = useRouter();
@@ -62,7 +68,11 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isPending, startTransition] = useTransition();
-  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [clientSecret, setClientSecret] = useState<string>("");
+
+  const options = {
+    clientSecret: clientSecret,
+  };
 
   const initializePayment = async (newValue: SelectedType) => {
     try {
@@ -266,13 +276,25 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
             </div>
           </div>
           <div className="flex w-full lg:max-w-100 items-start">
-            <OrderSummary
-              cartItems={cartItems}
-              shipMethod={selected}
-              buttonTitle={"PLACE ORDER"}
-              onNavigate={() => {}}
-              isPending={isPending}
-            />
+            {clientSecret ? (
+              <Elements stripe={stripePromise} options={options}>
+                <OrderSummary
+                  cartItems={cartItems}
+                  shipMethod={selected}
+                  buttonTitle={"PLACE ORDER"}
+                  onNavigate={() => {}}
+                  isPending={isPending}
+                />
+              </Elements>
+            ) : (
+              <OrderSummary
+                cartItems={cartItems}
+                shipMethod={selected}
+                buttonTitle={"PLACE ORDER"}
+                onNavigate={() => {}}
+                isPending={isPending}
+              />
+            )}
           </div>
         </div>
       </div>
