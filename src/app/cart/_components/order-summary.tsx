@@ -81,15 +81,16 @@ export function OrderSummary({
             </div>
           </div> */}
 
-          {isPending ? (
-            <button
-              className={`${isCartEmpty || isPending ? "bg-sky-800 cursor-not-allowed" : "bg-sky-400  hover:bg-sky-500 active:bg-sky-700"} flex justify-center text-white  py-4 rounded-xl mt-2 w-full `}
-              onClick={onNavigate}
-              disabled={isPending}
-            >
-              {isPending ? <Loader2 className="animate-spin" /> : buttonTitle}
-            </button>
-          ) : (
+          <button
+            type="submit"
+            form="checkout-form"
+            className={`${isCartEmpty || isPending ? "bg-sky-800 cursor-not-allowed" : "bg-sky-400  hover:bg-sky-500 active:bg-sky-700"} flex justify-center text-white  py-4 rounded-xl mt-2 w-full `}
+            onClick={onNavigate}
+            disabled={isPending}
+          >
+            {isPending ? <Loader2 className="animate-spin" /> : buttonTitle}
+          </button>
+          {/* 
             <button
               type="submit"
               form="checkout-form"
@@ -98,8 +99,7 @@ export function OrderSummary({
               disabled={isCartEmpty}
             >
               {buttonTitle}
-            </button>
-          )}
+            </button> */}
         </div>
       </div>
     </div>
