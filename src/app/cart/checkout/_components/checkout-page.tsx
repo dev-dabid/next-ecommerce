@@ -17,6 +17,7 @@ import { useTransition } from "react";
 import { toast } from "sonner";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import { CheckoutForm } from "./checkout-form";
 
 type CheckoutPageProps = {
   cartItems: CartProduct[];
@@ -68,6 +69,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [isOpen, setIsOpen] = useState(false);
   const [clientSecret, setClientSecret] = useState<string>("");
 
   const options = {
@@ -161,6 +163,10 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
     });
   };
 
+  const openCheckoutForm = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   return (
     <div>
       <div className="max-w-300 mx-auto mb-20">
@@ -170,7 +176,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
           <div className="flex flex-col flex-1">
             <form
               id="checkout-form"
-              action={handlePlaceOrder}
+              action={openCheckoutForm}
               className="flex flex-col"
             >
               <CircleTag count={1} title={"Shipping Information"} />
@@ -276,26 +282,27 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
             </div>
           </div>
           <div className="flex w-full lg:max-w-100 items-start">
-            {clientSecret ? (
-              <Elements stripe={stripePromise} options={options}>
-                <OrderSummary
-                  cartItems={cartItems}
-                  shipMethod={selected}
-                  buttonTitle={"PLACE ORDER"}
-                  onNavigate={() => {}}
-                  isPending={isPending}
-                />
-              </Elements>
-            ) : (
-              <OrderSummary
+            <OrderSummary
+              cartItems={cartItems}
+              shipMethod={selected}
+              buttonTitle={"PLACE ORDER"}
+              onNavigate={() => {}}
+              isPending={isPending}
+            />
+
+            {/* <OrderSummary
                 cartItems={cartItems}
                 shipMethod={selected}
                 buttonTitle={"PLACE ORDER"}
                 onNavigate={() => {}}
                 isPending={isPending}
-              />
-            )}
+              /> */}
           </div>
+          {isOpen && (
+            <Elements stripe={stripePromise} options={options}>
+              <CheckoutForm />
+            </Elements>
+          )}
         </div>
       </div>
       <Footer />
