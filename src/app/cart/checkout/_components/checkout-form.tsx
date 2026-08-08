@@ -6,8 +6,13 @@ import {
   useElements,
   PaymentElement,
 } from "@stripe/react-stripe-js";
+import { Loader2 } from "lucide-react";
 
-export function CheckoutForm() {
+type CheckoutFormProps = {
+  isPending: boolean;
+};
+
+export function CheckoutForm({ isPending }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -22,9 +27,7 @@ export function CheckoutForm() {
 
     const { error: submitError } = await elements.submit();
     if (submitError) {
-      setErrorMessage(
-        submitError.message || "May mali sa mga detalye ng card.",
-      );
+      setErrorMessage(submitError.message || "Card details error!");
       setLoading(false);
       return;
     }
@@ -55,10 +58,16 @@ export function CheckoutForm() {
         </div>
       )}
       <button
-        disabled={!stripe || loading}
-        className="w-full mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 disabled:opacity-50 font-medium transition-colors"
+        disabled={!stripe || loading || isPending}
+        className="flex justify-center items-center w-full mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 disabled:opacity-50 font-medium transition-colors"
       >
-        {loading ? "Processing Payment..." : "Pay Now"}
+        {isPending ? (
+          <Loader2 className="animate-spin" />
+        ) : loading ? (
+          "Processing Payment..."
+        ) : (
+          "Pay Now"
+        )}
       </button>
     </form>
   );
