@@ -282,13 +282,21 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
             </div>
           </div>
           <div className="flex w-full lg:max-w-100 items-start">
-            <OrderSummary
-              cartItems={cartItems}
-              shipMethod={selected}
-              buttonTitle={"PLACE ORDER"}
-              onNavigate={() => {}}
-              isPending={isPending}
-            />
+            {isOpen ? (
+              <Elements stripe={stripePromise} options={options}>
+                <div className="w-full">
+                  <CheckoutForm />
+                </div>
+              </Elements>
+            ) : (
+              <OrderSummary
+                cartItems={cartItems}
+                shipMethod={selected}
+                buttonTitle={"PLACE ORDER"}
+                onNavigate={() => {}}
+                isPending={isPending}
+              />
+            )}
 
             {/* <OrderSummary
                 cartItems={cartItems}
@@ -298,13 +306,9 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
                 isPending={isPending}
               /> */}
           </div>
-          {isOpen && (
-            <Elements stripe={stripePromise} options={options}>
-              <CheckoutForm />
-            </Elements>
-          )}
         </div>
       </div>
+
       <Footer />
     </div>
   );
