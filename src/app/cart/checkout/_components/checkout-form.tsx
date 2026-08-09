@@ -35,12 +35,12 @@ export function CheckoutForm({ isPending }: CheckoutFormProps) {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/payment-success`,
+        return_url: `${window.location.origin}/success`,
       },
     });
 
     if (error) {
-      setErrorMessage(error.message || "Hindi natuloy ang pagbabayad.");
+      setErrorMessage(error.message || "Payment unsuccessful.");
     }
 
     setLoading(false);
