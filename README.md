@@ -20,6 +20,8 @@ bun dev
 
 \*\* NAKAKAPAGOD, BINAHA BAHAY NAMIN NGAYONG ARAW KAYA KAUNTING COMMIT MUNA. NAWALA PA MATINO KONG MOUSE, LUMA AT PANGET NA MOUSE MUNA MAKAPAG COMMIT LANG. SORRY
 
+\*\* LIKHAIT ASSESSMENT BUG 001 - DONE. WALA MUNA CODE NGAYON SORRY
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
