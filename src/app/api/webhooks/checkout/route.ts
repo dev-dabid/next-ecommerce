@@ -66,6 +66,9 @@ export async function POST(req: NextRequest) {
       amount: totalCents + shippingPrice,
       currency: "usd",
       payment_method_types: ["card"],
+      metadata: {
+        userId: userId,
+      },
     });
 
     return NextResponse.json({
