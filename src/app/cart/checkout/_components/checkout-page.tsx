@@ -88,6 +88,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
         body: JSON.stringify({
           userId: userId,
           shipping: newValue,
+          recipient: form,
         }),
       });
 
