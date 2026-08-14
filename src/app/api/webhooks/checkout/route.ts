@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
       },
 
       select: {
+        id: true,
         quantity: true,
         product: {
           select: {
@@ -44,12 +45,10 @@ export async function POST(req: NextRequest) {
     const actualShippingFee = hasFreeShipping ? 0 : 1000;
     const estimatedTaxCents = Math.round(totalCents * 0.07);
 
-    if (shippingType === "STANDARD") console.log("hatdog");
-
-    console.log(
-      totalCents + shippingPrice + actualShippingFee + estimatedTaxCents,
-      shippingType,
-    );
+    // console.log(
+    //   totalCents + shippingPrice + actualShippingFee + estimatedTaxCents,
+    //   shippingType,
+    // );
 
     if (!totalCents || totalCents < 50) {
       return NextResponse.json(
@@ -68,8 +67,11 @@ export async function POST(req: NextRequest) {
       payment_method_types: ["card"],
       metadata: {
         userId: userId,
+        cart: JSON.stringify([result]),
       },
     });
+
+    // console.log(paymentIntent);
 
     return NextResponse.json({
       clientSecret: paymentIntent.client_secret,
