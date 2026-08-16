@@ -2,6 +2,7 @@ import useProducts from "@/hooks/useProducts";
 import { formattedPrice } from "@/lib/utils/money";
 import { CartProduct } from "@/types/types";
 import Image from "next/image";
+import Link from "next/link";
 
 type CrossSellListProps = {
   cartItems: CartProduct[];
@@ -35,7 +36,7 @@ export function CrossSellList({ cartItems }: CrossSellListProps) {
         {crossListProducts.map((item) => (
           <div
             key={item.id}
-            className="group cursor-pointer w-[70%] shrink-0 lg:w-full"
+            className="group cursor-pointer w-[70%] shrink-0 lg:w-full relative"
           >
             <div className="relative aspect-square w-full bg-white rounded-lg overflow-hidden">
               <Image
@@ -46,7 +47,12 @@ export function CrossSellList({ cartItems }: CrossSellListProps) {
                 className="object-contain p-2 group-hover:scale-105 transition-transform"
               />
             </div>
-            <p className="mt-2 text-sm font-medium">{item.name}</p>
+            <Link
+              href={`/collections/${item.id}`}
+              className="mt-2 text-sm font-medium after:absolute after:inset-0"
+            >
+              {item.name}
+            </Link>
             <p className="text-gray-400">${formattedPrice(item.priceCents)}</p>
           </div>
         ))}
