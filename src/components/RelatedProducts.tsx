@@ -24,7 +24,7 @@ const RelatedProducts = ({ products }: RelatedProductsProps) => {
           <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide lg:grid lg:grid-cols-4 lg:gap-6 mt-4 pb-4 px-4 lg:px-0">
             {filteredProducts.map((product, index) => (
               <div
-                className="flex flex-col min-w-[70%] sm:min-w-[40%] lg:min-w-full snap-start group"
+                className="flex flex-col min-w-[70%] sm:min-w-[40%] lg:min-w-full snap-start group relative"
                 key={index}
               >
                 <div className="relative aspect-square overflow-hidden rounded-2xl bg-white mb-3">
@@ -38,8 +38,13 @@ const RelatedProducts = ({ products }: RelatedProductsProps) => {
                 </div>
 
                 <div className="flex flex-col flex-1">
-                  <h2 className="text-sm font-semibold text-zinc-900 line-clamp-2 min-h-[2.5rem] ">
-                    {product.name}
+                  <h2 className="text-sm font-semibold text-zinc-900 line-clamp-2 min-h-10 ">
+                    <Link
+                      href={`/collections/${product.id}`}
+                      className="after:absolute after:inset-0"
+                    >
+                      {product.name}
+                    </Link>
                   </h2>
                   <p className="mt-1 text-sky-600 font-bold">
                     ${formattedPrice(product.priceCents)}
