@@ -15,6 +15,7 @@ export function ProductCatalog() {
   const [isDragging, setIsDragging] = useState(false);
   const [positionX, setPositionX] = useState(0);
   const dragOffsetX = useRef(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   const total = products.length;
   const uniqueKeywords = useMemo(() => {
@@ -64,8 +65,22 @@ export function ProductCatalog() {
         </div>
 
         <div className="flex flex-col lg:flex-row lg:justify-between gap-5">
-          <div className="flex lg:hidden">
+          <div className="flex lg:hidden relative">
             <FilterDropdown title="Categories" />
+            {isOpen && (
+              <div className="flex flex-wrap absolute z-1000 bg-white gap-5 top-12 p-3 rounded-md">
+                {uniqueKeywords.map((item) => {
+                  return (
+                    <Category
+                      key={item}
+                      category={item}
+                      isChecked={isChecked}
+                      setIsChecked={setIsChecked}
+                    />
+                  );
+                })}
+              </div>
+            )}
           </div>
           <div className="hidden lg:flex flex-col max-w-65 w-full">
             <div>

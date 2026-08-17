@@ -14,32 +14,34 @@ export function FilterDropdown({ title, menuItem }: FilterDropdownProps) {
 
   return (
     <Menu>
-      {({ open }) => (
-        <>
-          <MenuButton className="data-active:bg-blue-300 data-hover:bg-sky-100 data-hover:text-sky-400 data-hover:border-sky-400 flex items-center gap-2 border border-gray-300 py-2 px-5 rounded-3xl font-semibold focus:outline-none text-sm w-fit">
-            {title}
-            <ChevronDown
-              size={15}
-              className={`transition-transform duration-70 ${open ? "rotate-180" : ""} pb-0.5`}
-            />
-          </MenuButton>
-          <MenuItems
-            className="bg-white w-auto pl-2 rounded focus:outline-none"
-            anchor="bottom"
-          >
-            {menuItem?.map((item, index) => (
-              <MenuItem key={index}>
-                <button
-                  onClick={() => setFilter("category", item)}
-                  className="block w-full text-start data-focus:bg-blue-100"
-                >
-                  {item}
-                </button>
-              </MenuItem>
-            ))}
-          </MenuItems>
-        </>
-      )}
+      {({ open }) => {
+        return (
+          <>
+            <MenuButton className="data-active:bg-blue-300 data-hover:bg-sky-100 data-hover:text-sky-400 data-hover:border-sky-400 flex items-center gap-2 border border-gray-300 py-2 px-5 rounded-3xl font-semibold focus:outline-none text-sm w-fit">
+              {title}
+              <ChevronDown
+                size={15}
+                className={`transition-transform duration-70 ${open ? "rotate-180" : ""} pb-0.5`}
+              />
+            </MenuButton>
+            <MenuItems
+              className="bg-white w-auto pl-2 rounded focus:outline-none"
+              anchor="bottom"
+            >
+              {menuItem?.map((item, index) => (
+                <MenuItem key={index}>
+                  <button
+                    onClick={() => setFilter("category", item)}
+                    className="block w-full text-start data-focus:bg-blue-100"
+                  >
+                    {item}
+                  </button>
+                </MenuItem>
+              ))}
+            </MenuItems>
+          </>
+        );
+      }}
     </Menu>
   );
 }
