@@ -90,7 +90,18 @@ export async function submitOrderData(userId: string, summary: SummaryData) {
         },
       });
 
-      const ordersMap = summary.orders.map((item) => {
+      const getCartItems = await tx.cartItem.findMany({
+        where: {
+          userId: userId,
+          isChecked: true,
+        },
+
+        include: {
+          product: true,
+        },
+      });
+
+      const ordersMap = getCartItems.map((item) => {
         const finalProductId = item.productId || item.id;
 
         return {
@@ -99,7 +110,7 @@ export async function submitOrderData(userId: string, summary: SummaryData) {
           color: item.color ?? null,
           size: item.size ?? null,
           quantity: item.quantity,
-          priceCents: item.priceCents,
+          priceCents: item.product.priceCents,
         };
       });
 
