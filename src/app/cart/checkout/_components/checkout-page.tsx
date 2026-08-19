@@ -286,7 +286,11 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
             {isOpen ? (
               <Elements stripe={stripePromise} options={options}>
                 <div className="w-full">
-                  <CheckoutForm isPending={isPending} />
+                  <CheckoutForm
+                    isPending={isPending}
+                    updateShipping={updateShippingType}
+                    selected={selected}
+                  />
                 </div>
               </Elements>
             ) : (

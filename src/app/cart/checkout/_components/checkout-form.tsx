@@ -8,17 +8,32 @@ import {
 } from "@stripe/react-stripe-js";
 import { Loader2 } from "lucide-react";
 
-type CheckoutFormProps = {
-  isPending: boolean;
+type SelectedType = {
+  type: string;
+  title: string;
+  days: string;
+  price: number;
 };
 
-export function CheckoutForm({ isPending }: CheckoutFormProps) {
+type CheckoutFormProps = {
+  isPending: boolean;
+  updateShipping: (newValue: SelectedType) => void;
+  selected: SelectedType;
+};
+
+export function CheckoutForm({
+  isPending,
+  updateShipping,
+  selected,
+}: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
+    updateShipping(selected);
+
     e.preventDefault();
     if (!stripe || !elements) return;
 
