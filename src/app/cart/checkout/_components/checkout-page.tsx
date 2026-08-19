@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 import { formattedPrice } from "@/lib/utils/money";
 import Footer from "@/components/Footer";
 import { useRouter } from "next/navigation";
-import { CartProduct } from "@/types/types";
+import { CartProduct, FormFields } from "@/types/types";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import { loadStripe } from "@stripe/stripe-js";
@@ -76,7 +76,11 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
     clientSecret: clientSecret,
   };
 
-  const initializePayment = async (newValue: SelectedType) => {
+  const initializePayment = async (
+    newValue: SelectedType,
+    userId: string,
+    form: FormFields,
+  ) => {
     try {
       const response = await fetch("/api/webhooks/checkout", {
         method: "POST",
@@ -103,7 +107,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   };
 
   useEffect(() => {
-    initializePayment(selected);
+    initializePayment(selected, userId, form);
   }, []);
 
   useEffect(() => {
@@ -122,12 +126,24 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
     return null;
   }
 
-  const updateShippingType = (newValue: SelectedType) => {
+  const executePaymentInitialization = async (
+    shippingType: SelectedType,
+    userId: string,
+    form: FormFields,
+  ) => {
+    return await initializePayment(shippingType, userId, form);
+  };
+
+  const updateShippingType = (
+    newValue: SelectedType,
+    userId: string,
+    form: FormFields,
+  ) => {
     const preVal = selected;
     setSelected(newValue);
     startTransition(async () => {
       try {
-        await initializePayment(newValue);
+        await executePaymentInitialization(newValue, userId, form);
       } catch (err) {
         console.error("Cannot update shipping type:", err);
         toast.error("Failed to update shipping type!", {
@@ -253,7 +269,9 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
               <div className="flex  flex-1">
                 <RadioGroup
                   value={selected}
-                  onChange={(newValue) => updateShippingType(newValue)}
+                  onChange={(newValue) =>
+                    updateShippingType(newValue, userId, form)
+                  }
                   className="flex flex-1 gap-5 mt-7 flex-col lg:flex-row"
                   disabled={isPending}
                   by="type"
@@ -288,8 +306,10 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
                 <div className="w-full">
                   <CheckoutForm
                     isPending={isPending}
-                    updateShipping={updateShippingType}
+                    updateShipping={executePaymentInitialization}
                     selected={selected}
+                    userId={userId}
+                    form={form}
                   />
                 </div>
               </Elements>

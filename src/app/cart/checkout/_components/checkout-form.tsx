@@ -6,6 +6,7 @@ import {
   useElements,
   PaymentElement,
 } from "@stripe/react-stripe-js";
+import { FormFields } from "@/types/types";
 import { Loader2 } from "lucide-react";
 
 type SelectedType = {
@@ -17,14 +18,22 @@ type SelectedType = {
 
 type CheckoutFormProps = {
   isPending: boolean;
-  updateShipping: (newValue: SelectedType) => void;
+  updateShipping: (
+    newValue: SelectedType,
+    userId: string,
+    form: FormFields,
+  ) => Promise<void>;
   selected: SelectedType;
+  userId: string;
+  form: FormFields;
 };
 
 export function CheckoutForm({
   isPending,
   updateShipping,
   selected,
+  userId,
+  form,
 }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
@@ -32,7 +41,7 @@ export function CheckoutForm({
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    updateShipping(selected);
+    await updateShipping(selected, userId, form);
 
     e.preventDefault();
     if (!stripe || !elements) return;
