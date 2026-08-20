@@ -71,6 +71,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
   const [clientSecret, setClientSecret] = useState<string>("");
+  const [isPaymentMode, setIsPaymentMode] = useState(false);
 
   const options = {
     clientSecret: clientSecret,
@@ -181,7 +182,13 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   };
 
   const openCheckoutForm = () => {
-    setIsOpen((prev) => !prev);
+    startTransition(async () => {
+      try {
+        await initializePayment(selected, userId, form);
+        setIsPaymentMode(true);
+        setIsOpen((prev) => !prev);
+      } catch (err) {}
+    });
   };
 
   return (
@@ -197,72 +204,74 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
               className="flex flex-col"
             >
               <CircleTag count={1} title={"Shipping Information"} />
-              <div className="mt-5">
-                <div className="flex flex-col lg:flex-row gap-4">
-                  <TitledInput
-                    title={"FIRST NAME"}
-                    name={"firstName"}
-                    value={form.firstName}
-                    setInput={getInputValue}
-                  />
-                  <TitledInput
-                    title={"LAST NAME"}
-                    name={"lastName"}
-                    value={form.lastName}
-                    setInput={getInputValue}
-                  />
-                </div>
-                <div className="flex flex-col lg:flex-row gap-4 mt-6">
-                  <TitledInput
-                    title={"MOBILE NUMBER"}
-                    name={"phone"}
-                    value={form.phone}
-                    setInput={getInputValue}
-                  />
-                  <TitledInput
-                    title={"EMAIL ADDRESS"}
-                    name={"email"}
-                    value={form.email}
-                    setInput={getInputValue}
-                  />
-                </div>
-                <div className="flex flex-col lg:flex-row gap-4 mt-6">
-                  <TitledInput
-                    title={"STREET ADDRESS"}
-                    name={"streetAddress"}
-                    value={form.streetAddress}
-                    setInput={getInputValue}
-                  />
-                  <TitledInput
-                    title={"BARANGAY"}
-                    name={"barangay"}
-                    value={form.barangay}
-                    setInput={getInputValue}
-                  />
-                </div>
-                <div className="flex flex-col lg:flex-row gap-4 mt-6">
-                  <TitledInput
-                    title={"CITY"}
-                    name={"city"}
-                    value={form.city}
-                    setInput={getInputValue}
-                  />
-                  <div className="flex gap-4 w-full">
+              <fieldset disabled={isPaymentMode}>
+                <div className="mt-5">
+                  <div className="flex flex-col lg:flex-row gap-4">
                     <TitledInput
-                      title={"PROVINCE"}
-                      name={"province"}
-                      value={form.province}
+                      title={"FIRST NAME"}
+                      name={"firstName"}
+                      value={form.firstName}
                       setInput={getInputValue}
                     />
                     <TitledInput
-                      title={"ZIP CODE"}
-                      name={"zipCode"}
-                      value={form.zipCode}
+                      title={"LAST NAME"}
+                      name={"lastName"}
+                      value={form.lastName}
                       setInput={getInputValue}
                     />
                   </div>
+                  <div className="flex flex-col lg:flex-row gap-4 mt-6">
+                    <TitledInput
+                      title={"MOBILE NUMBER"}
+                      name={"phone"}
+                      value={form.phone}
+                      setInput={getInputValue}
+                    />
+                    <TitledInput
+                      title={"EMAIL ADDRESS"}
+                      name={"email"}
+                      value={form.email}
+                      setInput={getInputValue}
+                    />
+                  </div>
+                  <div className="flex flex-col lg:flex-row gap-4 mt-6">
+                    <TitledInput
+                      title={"STREET ADDRESS"}
+                      name={"streetAddress"}
+                      value={form.streetAddress}
+                      setInput={getInputValue}
+                    />
+                    <TitledInput
+                      title={"BARANGAY"}
+                      name={"barangay"}
+                      value={form.barangay}
+                      setInput={getInputValue}
+                    />
+                  </div>
+                  <div className="flex flex-col lg:flex-row gap-4 mt-6">
+                    <TitledInput
+                      title={"CITY"}
+                      name={"city"}
+                      value={form.city}
+                      setInput={getInputValue}
+                    />
+                    <div className="flex gap-4 w-full">
+                      <TitledInput
+                        title={"PROVINCE"}
+                        name={"province"}
+                        value={form.province}
+                        setInput={getInputValue}
+                      />
+                      <TitledInput
+                        title={"ZIP CODE"}
+                        name={"zipCode"}
+                        value={form.zipCode}
+                        setInput={getInputValue}
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </fieldset>
             </form>
             <div className="flex flex-col mt-15">
               <CircleTag count={2} title={"Shipping Method"} />

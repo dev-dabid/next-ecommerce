@@ -41,7 +41,8 @@ export function CheckoutForm({
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    await updateShipping(selected, userId, form);
+    console.log("handle submit click");
+    // await updateShipping(selected, userId, form);
 
     e.preventDefault();
     if (!stripe || !elements) return;
