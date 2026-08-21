@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import {
   useStripe,
   useElements,
@@ -26,6 +26,10 @@ type CheckoutFormProps = {
   selected: SelectedType;
   userId: string;
   form: FormFields;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  isPaymentMode: boolean;
+  setIsPaymentMode: Dispatch<SetStateAction<boolean>>;
 };
 
 export function CheckoutForm({
@@ -34,6 +38,10 @@ export function CheckoutForm({
   selected,
   userId,
   form,
+  isOpen,
+  setIsOpen,
+  isPaymentMode,
+  setIsPaymentMode,
 }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
@@ -71,11 +79,19 @@ export function CheckoutForm({
     setLoading(false);
   };
 
+  const returnToSummary = () => {
+    setIsOpen(false);
+    setIsPaymentMode(false);
+  };
+
   return (
     <form
       onSubmit={handleSubmit}
       className="p-6 border rounded-lg bg-white shadow-md"
     >
+      <button className="mb-2 text-end flex" onClick={returnToSummary}>
+        Return to Summary
+      </button>
       <PaymentElement />
       {errorMessage && (
         <div className="text-red-500 mt-2 text-sm font-semibold">

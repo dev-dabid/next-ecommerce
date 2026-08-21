@@ -186,8 +186,10 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
       try {
         await initializePayment(selected, userId, form);
         setIsPaymentMode(true);
-        setIsOpen((prev) => !prev);
-      } catch (err) {}
+        setIsOpen(true);
+      } catch (err) {
+        console.log("Cannot proceed to payment mode.");
+      }
     });
   };
 
@@ -201,7 +203,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
             <form
               id="checkout-form"
               action={openCheckoutForm}
-              className="flex flex-col"
+              className={`flex flex-col relative ${isPaymentMode ? "after:inset-0 after:absolute  after:bg-gray-400/40" : ""} `}
             >
               <CircleTag count={1} title={"Shipping Information"} />
               <fieldset disabled={isPaymentMode}>
@@ -319,6 +321,10 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
                     selected={selected}
                     userId={userId}
                     form={form}
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    isPaymentMode={isPaymentMode}
+                    setIsPaymentMode={setIsPaymentMode}
                   />
                 </div>
               </Elements>
