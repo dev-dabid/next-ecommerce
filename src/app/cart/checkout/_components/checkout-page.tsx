@@ -112,6 +112,26 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
   }, []);
 
   useEffect(() => {
+    const clickGuard = () => {
+      window.addEventListener("click", (e: MouseEvent) => {
+        const target = e.target as HTMLElement;
+
+        if (target.classList.contains("recipient-guard")) {
+          toast.warning("Return to summary mode to edit recipient!", {
+            position: "top-center",
+          });
+        }
+
+        console.log(target.classList);
+      });
+    };
+
+    clickGuard();
+
+    () => window.removeEventListener("click", clickGuard);
+  }, []);
+
+  useEffect(() => {
     setIsMounted(true);
   }, []);
 
@@ -203,12 +223,12 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
             <form
               id="checkout-form"
               action={openCheckoutForm}
-              className={`flex flex-col relative ${isPaymentMode ? "after:inset-0 after:absolute  after:bg-gray-400/40" : ""} `}
+              className={`recipient-guard flex flex-col relative ${isPaymentMode ? "after:inset-0 after:absolute  after:bg-gray-400/40" : ""} `}
             >
               <CircleTag count={1} title={"Shipping Information"} />
               <fieldset disabled={isPaymentMode}>
                 <div className="mt-5">
-                  <div className="flex flex-col lg:flex-row gap-4">
+                  <div className="recipient-guard flex flex-col lg:flex-row gap-4 z-40">
                     <TitledInput
                       title={"FIRST NAME"}
                       name={"firstName"}
