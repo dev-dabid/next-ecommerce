@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
     }
 
     const userId = body.userId;
+    const recipient = body.recipient;
     const result = await prisma.cartItem.findMany({
       where: {
         userId,
@@ -68,6 +69,7 @@ export async function POST(req: NextRequest) {
       metadata: {
         userId: userId,
         cart: JSON.stringify([result]),
+        recipient: JSON.stringify(recipient),
       },
     });
 
