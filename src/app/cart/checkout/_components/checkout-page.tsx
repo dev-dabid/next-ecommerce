@@ -107,9 +107,9 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
     }
   };
 
-  useEffect(() => {
-    initializePayment(selected, userId, form);
-  }, []);
+  // useEffect(() => {
+  //   initializePayment(selected, userId, form);
+  // }, []); BUGGG HAHAHAHA LOL
 
   useEffect(() => {
     const clickGuard = () => {

@@ -37,30 +37,50 @@ export async function POST(req: Request) {
   if (event.type === "payment_intent.succeeded") {
     const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
-    const userId = paymentIntent.metadata.userId;
-    const recipient = JSON.parse(paymentIntent.metadata.recipient);
+    const fullPaymentIntent = await stripe.paymentIntents.retrieve(
+      paymentIntent.id,
+    );
+
+    console.log("=========================================");
+    console.log(
+      "LOG METADATA",
+      JSON.stringify(fullPaymentIntent.metadata, null, 2),
+    );
+    console.log("=========================================");
+
+    const userId = fullPaymentIntent.metadata?.userId;
+    const recipientForm = fullPaymentIntent.metadata?.recipient;
+
+    if (!recipientForm) {
+      console.error("DATA INCOMPLETE: No recipient found in metadata!");
+      return NextResponse.json(
+        { error: "Recipient metadata is undefined" },
+        { status: 400 },
+      );
+    }
+
+    const recipient = JSON.parse(recipientForm);
 
     if (!userId) {
       console.error("No userId found in metadata paymentIntent!");
       return NextResponse.json(
-        { error: "Missing metadata fields" },
+        { error: "Missing userId metadata" },
         { status: 400 },
       );
     }
 
     const amountPaid = paymentIntent.amount;
-
     console.log(`Payment Succeeded! User: ${userId} | Amount: ${amountPaid}`);
 
     try {
-      submitOrderData(userId, recipient);
+      await submitOrderData(userId, recipient);
       console.log(
         "Database updated: Order created and Cart cleared successfully!",
       );
     } catch (dbError) {
       console.error("Prisma Database Error:", dbError);
       return NextResponse.json(
-        { error: "Internal Database Error" },
+        { error: "Internal Database Error", message: String(dbError) },
         { status: 500 },
       );
     }
