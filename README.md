@@ -24,6 +24,8 @@ bun dev
 
 \*\* GITHUB SERVER DOWN. MIGHT INSTALL GROK
 
+\*\* BUGBOG SA BYAHE AT WALANG TULOG SA INTERVIEW SA MAKATI. WALA MUNA CODE SORRY
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
