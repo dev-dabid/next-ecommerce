@@ -20,7 +20,16 @@ interface ProductData {
 }
 
 interface SummaryData {
-  recipient: FormFields;
+  // recipient: FormFields;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  streetAddress: string;
+  barangay: string;
+  city: string;
+  province: string;
+  zipCode: string;
   orders: CartProduct[];
   actualTotalCents: number;
   shippingMethod: string;
@@ -69,24 +78,29 @@ export async function deleteCartItems(userId: string) {
   }
 }
 
-export async function submitOrderData(userId: string, summary: SummaryData) {
+export async function submitOrderData(
+  userId: string,
+  summary: SummaryData,
+  amountPaid: number,
+) {
   try {
+    const recipient = summary;
     const result = await prisma.$transaction(async (tx) => {
       const firstOrder = await tx.order.create({
         data: {
           userId,
-          totalPrice: summary.actualTotalCents,
-          barangay: summary.recipient.barangay,
-          city: summary.recipient.city,
-          shippingFee: summary.shippingFee,
-          firstName: summary.recipient.firstName,
-          lastName: summary.recipient.lastName,
-          phone: summary.recipient.phone,
-          email: summary.recipient.email,
-          streetAddress: summary.recipient.streetAddress,
-          province: summary.recipient.province,
-          zipCode: summary.recipient.zipCode,
-          shippingType: summary.shippingMethod,
+          totalPrice: amountPaid,
+          barangay: recipient.barangay,
+          city: recipient.city,
+          shippingFee: recipient.shippingFee,
+          firstName: recipient.firstName,
+          lastName: recipient.lastName,
+          phone: recipient.phone,
+          email: recipient.email,
+          streetAddress: recipient.streetAddress,
+          province: recipient.province,
+          zipCode: recipient.zipCode,
+          shippingType: recipient.shippingMethod,
         },
       });
 

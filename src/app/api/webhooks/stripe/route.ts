@@ -79,10 +79,12 @@ export async function POST(req: Request) {
     }
 
     const amountPaid = paymentIntent.amount;
+
     console.log(`Payment Succeeded! User: ${userId} | Amount: ${amountPaid}`);
 
     try {
-      await submitOrderData(userId, recipient);
+      console.log(recipient);
+      await submitOrderData(userId, recipient, amountPaid);
       console.log(
         "Database updated: Order created and Cart cleared successfully!",
       );
