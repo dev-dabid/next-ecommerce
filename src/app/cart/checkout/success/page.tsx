@@ -3,7 +3,10 @@ import prisma from "@/lib/prisma";
 import { SuccessPage } from "./_components/success-page";
 import { redirect } from "next/navigation";
 import { Prisma } from "@prisma/client";
+import { PollingLoader } from "./_components/polling-loader";
 import Stripe from "stripe";
+
+export const dynamic = "force-dynamic";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -29,18 +32,17 @@ export default async function Success({ searchParams }: PageProps) {
   if (!paymentIntentId) redirect("/cart");
 
   const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-  const dbOrderId = paymentIntent.metadata?.db_order_id;
+  const dbOrderId = paymentIntent.metadata.db_order_id;
 
-  console.log("stripe payment_intent_id: ", paymentIntent);
-  console.log("database order_id: ", dbOrderId);
+  // console.log("stripe: ", paymentIntent);
+  // console.log("stripe payment_intent_id: ", paymentIntent.id);
+  // console.log("database order_id: ", dbOrderId);
 
-  if (!dbOrderId) {
-    return <div>Setting up your order... Please wait</div>;
-  }
+  if (!dbOrderId) return <PollingLoader />;
 
   const order = await prisma.order.findUnique({
     where: {
-      id: paymentIntentId,
+      id: dbOrderId,
       userId,
     },
 
@@ -53,7 +55,9 @@ export default async function Success({ searchParams }: PageProps) {
     },
   });
 
-  if (!order) redirect("/cart");
+  // console.log(order);
+
+  if (!order) return;
 
   return <SuccessPage order={order} />;
 }

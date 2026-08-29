@@ -97,6 +97,8 @@ export async function POST(req: Request) {
         );
       }
 
+      console.log("db query: ", response);
+
       console.log(
         "Database updated: Order created and Cart cleared successfully!",
       );
