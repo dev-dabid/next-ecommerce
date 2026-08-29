@@ -65,15 +65,18 @@ export function CheckoutForm({
       return;
     }
 
-    const { error } = await stripe.confirmPayment({
+    const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/success`,
+        return_url: `${window.location.origin}/cart/checkout/success?id={PAYMENT_INTENT_ID}`,
       },
+      redirect: "if_required",
     });
 
     if (error) {
-      setErrorMessage(error.message || "Payment unsuccessful.");
+      console.error(error.message);
+    } else if (paymentIntent) {
+      window.location.href = `/cart/checkout/success?id=${paymentIntent.id}`;
     }
 
     setLoading(false);

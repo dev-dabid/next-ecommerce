@@ -83,8 +83,20 @@ export async function POST(req: Request) {
     console.log(`Payment Succeeded! User: ${userId} | Amount: ${amountPaid}`);
 
     try {
-      console.log(recipient);
-      await submitOrderData(userId, recipient, amountPaid);
+      const response = await submitOrderData(userId, recipient, amountPaid);
+
+      if (response && "orderId" in response) {
+        await stripe.paymentIntents.update(paymentIntent.id, {
+          metadata: {
+            db_order_id: response.orderId,
+          },
+        });
+
+        console.log(
+          `Stripe metadata updated with DB Order ID: ${response.orderId}`,
+        );
+      }
+
       console.log(
         "Database updated: Order created and Cart cleared successfully!",
       );

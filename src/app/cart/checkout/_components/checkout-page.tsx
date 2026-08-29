@@ -175,31 +175,31 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
     });
   };
 
-  const handlePlaceOrder = () => {
-    const summary = {
-      recipient: form,
-      orders: [...cartItems],
-      actualTotalCents: actualTotalCents + selected.price,
-      shippingMethod: selected.type,
-      shippingFee: selected.price,
-      actualShippingFee: actualShippingFee,
-      hasFreeShipping: hasFreeShipping,
-    };
+  // const handlePlaceOrder = () => {
+  //   const summary = {
+  //     recipient: form,
+  //     orders: [...cartItems],
+  //     actualTotalCents: actualTotalCents + selected.price,
+  //     shippingMethod: selected.type,
+  //     shippingFee: selected.price,
+  //     actualShippingFee: actualShippingFee,
+  //     hasFreeShipping: hasFreeShipping,
+  //   };
 
-    startTransition(async () => {
-      const response = (await submitOrderData(userId, summary)) as
-        | { success: true; orderId: string }
-        | { success: false; message: string };
+  //   startTransition(async () => {
+  //     const response = (await submitOrderData(userId, summary, )) as
+  //       | { success: true; orderId: string }
+  //       | { success: false; message: string };
 
-      if (!response) return;
+  //     if (!response) return;
 
-      if (response.success) {
-        router.push(`/cart/checkout/success?id=${response.orderId}`);
-      } else {
-        alert(response.message);
-      }
-    });
-  };
+  //     if (response.success) {
+  //       router.push(`/cart/checkout/success?id=${response.orderId}`);
+  //     } else {
+  //       alert(response.message);
+  //     }
+  //   });
+  // };
 
   const openCheckoutForm = () => {
     startTransition(async () => {
