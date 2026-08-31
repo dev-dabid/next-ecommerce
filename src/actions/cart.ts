@@ -82,6 +82,7 @@ export async function submitOrderData(
   userId: string,
   summary: SummaryData,
   amountPaid: number,
+  modeOfPayment: string,
 ) {
   try {
     const recipient = summary;
@@ -101,6 +102,7 @@ export async function submitOrderData(
           province: recipient.province,
           zipCode: recipient.zipCode,
           shippingType: recipient.shippingMethod,
+          status: modeOfPayment,
         },
       });
 

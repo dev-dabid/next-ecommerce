@@ -83,7 +83,12 @@ export async function POST(req: Request) {
     console.log(`Payment Succeeded! User: ${userId} | Amount: ${amountPaid}`);
 
     try {
-      const response = await submitOrderData(userId, recipient, amountPaid);
+      const response = await submitOrderData(
+        userId,
+        recipient,
+        amountPaid,
+        "PAID",
+      );
 
       if (response && "orderId" in response) {
         await stripe.paymentIntents.update(paymentIntent.id, {
