@@ -29,6 +29,14 @@ const Header = async () => {
             <Input />
           </div> */}
 
+          {cartCount === 0 ? (
+            <Link href={`/collections`}>
+              <div className="bg-sky-400 text-white px-4 py-2 rounded-md text-sm mr-4 font-semibold hover:-translate-y-1 hover:bg-sky-500 active:bg-sky-600 transition-all">
+                Shop Now
+              </div>
+            </Link>
+          ) : null}
+
           <Link href={"/cart"}>
             <CartBadge userId={userId} initialCount={cartCount} />
           </Link>
