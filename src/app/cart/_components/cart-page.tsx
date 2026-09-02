@@ -180,19 +180,26 @@ export function CartPage({ userId, cartProducts }: CartPageProps) {
       return (total = total + item.quantity);
     }, 0);
 
+    const removeItemLocal = () => {
+      removeItem(localKey);
+      toast.success("Item removed from cart!", {
+        position: "top-center",
+      });
+    };
+
     userId
       ? startTransition(async () => {
           addOptimisticCartState({ type: "DELETE", payload: id });
-          toast.success("Item removed from cart!", {
-            position: "top-center",
-          });
           setCount(cartItemCount);
           await deleteCartItem(id);
+          toast.success("Item removed from cart!!!", {
+            position: "top-center",
+          });
+          toast.success("Hatdog", {
+            position: "top-center",
+          });
         })
-      : removeItem(localKey);
-    toast.success("Item removed from cart!", {
-      position: "top-center",
-    });
+      : removeItemLocal();
   };
 
   const handleCancel = () => {
