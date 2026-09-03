@@ -7,6 +7,7 @@ import { FilterDropdown } from "./filter-dropdown";
 import ProductCard from "@/components/ProductCard";
 import { Category } from "./category";
 import Footer from "@/components/Footer";
+import { Button } from "@/components/Button";
 
 export function ProductCatalog() {
   const { products } = useProducts();
@@ -85,7 +86,7 @@ export function ProductCatalog() {
           <div className="hidden lg:flex flex-col max-w-65 w-full">
             <div>
               <h2>CATEGORY</h2>
-              <div>
+              <div className="flex flex-col">
                 <div className="my-5 max-h-48 overflow-y-auto pr-2">
                   {uniqueKeywords.map((item) => {
                     return (
@@ -98,9 +99,9 @@ export function ProductCatalog() {
                     );
                   })}
                 </div>
-                <button onClick={() => setIsChecked(new Set())}>
-                  Clear all
-                </button>
+                <Button action={() => setIsChecked(new Set())}>
+                  <p className="text-white font-semibold">Clear All</p>
+                </Button>
               </div>
               {/* <div className="w-fit">
                 <div
