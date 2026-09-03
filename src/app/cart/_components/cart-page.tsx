@@ -192,10 +192,7 @@ export function CartPage({ userId, cartProducts }: CartPageProps) {
           addOptimisticCartState({ type: "DELETE", payload: id });
           setCount(cartItemCount);
           await deleteCartItem(id);
-          toast.success("Item removed from cart!!!", {
-            position: "top-center",
-          });
-          toast.success("Hatdog", {
+          toast.success("Item removed from cart!", {
             position: "top-center",
           });
         })
