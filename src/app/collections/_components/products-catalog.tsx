@@ -87,7 +87,7 @@ export function ProductCatalog() {
             <div>
               <h2>CATEGORY</h2>
               <div className="flex flex-col">
-                <div className="my-5 max-h-48 overflow-y-auto pr-2">
+                <div className="my-5 max-h-48 overflow-y-auto pr-2 flex flex-col gap-2">
                   {uniqueKeywords.map((item) => {
                     return (
                       <Category
