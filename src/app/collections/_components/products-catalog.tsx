@@ -83,7 +83,7 @@ export function ProductCatalog() {
               </div>
             )}
           </div>
-          <div className="hidden lg:flex flex-col max-w-65 w-full">
+          <div className="hidden lg:flex flex-col max-w-65 w-full sticky top-20 h-fit">
             <div>
               <h2>CATEGORY</h2>
               <div className="flex flex-col">
