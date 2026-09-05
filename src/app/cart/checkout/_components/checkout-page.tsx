@@ -313,7 +313,13 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
                       value={method}
                       className="cursor-pointer relative border-2 border-transparent bg-white data-checked:border-sky-300 flex items-center p-4 w-full justify-between rounded-lg"
                     >
-                      <div className="absolute inset-0"></div>
+                      <div
+                        className={`${selected.title === method.title && isPending ? "bg-gray-300/50" : ""} absolute inset-0 flex justify-center items-center`}
+                      >
+                        {selected.title === method.title && isPending ? (
+                          <p className="font-semibold">Loading...</p>
+                        ) : null}
+                      </div>
                       <div>
                         <h2 className="mb-1 text-lg font-semibold">
                           {method.title}
