@@ -227,7 +227,7 @@ export function CheckoutPage({ userId, cartItems }: CheckoutPageProps) {
             >
               <CircleTag count={1} title={"Shipping Information"} />
               <fieldset disabled={isPaymentMode}>
-                <div className="mt-5">
+                <div className="mt-5 px-3 lg:px-0">
                   <div className="recipient-guard flex flex-col lg:flex-row gap-4 z-40">
                     <TitledInput
                       title={"FIRST NAME"}
