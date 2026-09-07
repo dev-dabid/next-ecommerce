@@ -161,18 +161,19 @@ const ProductView = ({ userId, product, cartItems }: ProductViewProps) => {
         }
       });
     } else {
-      const color = keywords.includes("apparel") ? selected.color.name : null;
-      const size = keywords.includes("apparel") ? selected.size.name : null;
+      const color = keywords.includes("apparel") ? selected.color.name : "N/A";
+      const size = keywords.includes("apparel") ? selected.size.name : "N/A";
 
       const cartKey = generateCartKey(id, color, size);
 
       const product = cart.get(cartKey);
 
-      if (product) {
-        if (product.quantity >= 10)
-          return toast.warning("Max product quantity exceeded!", {
-            position: "top-center",
-          });
+      console.log(product, cart, cartKey);
+
+      if (product && product.quantity + selected.count > 10) {
+        toast.warning("Max product quantity exceeded!", {
+          position: "top-center",
+        });
       } else {
         addToCart(productItem);
         toast.success("Added to cart!", {
