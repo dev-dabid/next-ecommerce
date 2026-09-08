@@ -1,5 +1,5 @@
 import Input from "@/components/Input";
-import { ShoppingBag, Gem, CircleUserRound } from "lucide-react";
+import { ShoppingBag, Gem, CircleUserRound, User, Heart } from "lucide-react";
 import { SignOutButton, SignInButton, UserButton } from "@clerk/nextjs";
 import NavigationLinks from "./NavigationLinks";
 import CartBadge from "./CartBadge";
@@ -22,40 +22,48 @@ const Header = async () => {
             <Gem className="text-sky-500" size={32} />
             <p className="font-semibold text-xl">Lumina</p>
           </div>
-          <NavigationLinks />
+          <div className="flex gap-5 items-center">
+            <NavigationLinks />
+            {cartCount === 0 ? (
+              <Link href={`/collections`}>
+                <div className="bg-sky-400 text-white px-4 py-2 rounded-md text-sm mr-4 font-semibold hover:-translate-y-1 hover:bg-sky-500 active:bg-sky-600 transition-all">
+                  Shop Now
+                </div>
+              </Link>
+            ) : null}
+          </div>
         </div>
         <div className="flex items-center gap-4">
           {/* <div className="hidden lg:block">
             <Input />
           </div> */}
 
-          {cartCount === 0 ? (
-            <Link href={`/collections`}>
-              <div className="bg-sky-400 text-white px-4 py-2 rounded-md text-sm mr-4 font-semibold hover:-translate-y-1 hover:bg-sky-500 active:bg-sky-600 transition-all">
-                Shop Now
-              </div>
-            </Link>
-          ) : null}
+          <Link href={""}>
+            <Heart />
+          </Link>
 
           <Link href={"/cart"}>
             <CartBadge userId={userId} initialCount={cartCount} />
           </Link>
 
-          {userId ? null : (
-            <div>
+          {userId ? (
+            <div className="flex items-center">
+              <MyUserButton />
+            </div>
+          ) : (
+            <button className="block cursor-pointer">
               <SignOutButton>
                 <SignInButton mode="modal">
-                  <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
-                    Sign In
-                  </button>
+                  <div className="flex gap-2">
+                    <User />
+                    <p className="font-semibold hidden md:flex">
+                      LogIn / Register
+                    </p>
+                  </div>
                 </SignInButton>
               </SignOutButton>
-            </div>
+            </button>
           )}
-
-          <div className="flex items-center">
-            <MyUserButton />
-          </div>
         </div>
       </div>
     </header>
