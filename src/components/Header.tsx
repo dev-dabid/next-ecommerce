@@ -38,7 +38,7 @@ const Header = async () => {
             <Input />
           </div> */}
 
-          <Link href={""}>
+          <Link href={"/wishlist"}>
             <Heart />
           </Link>
 
