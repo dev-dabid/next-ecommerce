@@ -1,6 +1,7 @@
 "use client";
 
 import useProducts from "@/hooks/useProducts";
+import Image from "next/image";
 
 type Wishlist = {
   id: string;
@@ -21,17 +22,26 @@ export function WishlistPage({ wishlist }: WishlistPageProps) {
   );
 
   return (
-    <div className="max-w-300 mx-auto">
+    <div className="max-w-300 mx-auto h-screen">
       <h1 className="font-bold text-5xl">Wishlist</h1>
-      <div className="grid grid-cols-3 gap-5">
-        {wishProducts.map((product) => {
-          return (
-            <div className="relative">
-              <div className="absolute inset-0 bg-red-50"></div>
-              <div>{product?.name}</div>
-            </div>
-          );
-        })}
+      <div className="flex flex-col">
+        <div className="grid grid-cols-[repeat(4,minmax(400px,1fr))] gap-5">
+          {wishProducts.map((product) => {
+            return (
+              <div className=" relative h-full" key={product?.id}>
+                <div className="relative h-full">
+                  <Image
+                    className="object-contain h-full w-auto"
+                    src={`/${product?.image}`}
+                    alt={product?.name || ""}
+                    fill
+                  />
+                </div>
+                <div>{product?.name}</div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
