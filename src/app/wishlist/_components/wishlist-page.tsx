@@ -22,26 +22,32 @@ export function WishlistPage({ wishlist }: WishlistPageProps) {
   );
 
   return (
-    <div className="max-w-300 mx-auto h-screen">
-      <h1 className="font-bold text-5xl">Wishlist</h1>
-      <div className="flex flex-col">
-        <div className="grid grid-cols-[repeat(4,minmax(400px,1fr))] gap-5">
-          {wishProducts.map((product) => {
-            return (
-              <div className=" relative h-full" key={product?.id}>
-                <div className="relative h-full">
-                  <Image
-                    className="object-contain h-full w-auto"
-                    src={`/${product?.image}`}
-                    alt={product?.name || ""}
-                    fill
-                  />
-                </div>
-                <div>{product?.name}</div>
+    <div className="max-w-[1200px] mx-auto min-h-screen p-5">
+      <h1 className="font-bold text-5xl mb-6">Wishlist</h1>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        {wishProducts.map((product) => {
+          return (
+            <div
+              className="flex flex-col border rounded-lg p-3 bg-white"
+              key={product?.id}
+            >
+              <div className="relative aspect-square w-full mb-3">
+                <Image
+                  className="object-contain"
+                  src={`/${product?.image}`}
+                  alt={product?.name || "Product Image"}
+                  fill
+                  sizes="(max-w-7xl) 25vw, 100vw"
+                />
               </div>
-            );
-          })}
-        </div>
+
+              <div className="font-semibold text-lg mt-auto">
+                {product?.name}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
