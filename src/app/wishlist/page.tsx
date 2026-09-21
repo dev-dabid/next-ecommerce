@@ -7,7 +7,7 @@ export default async function Wishlist() {
   const { userId } = await auth();
 
   if (!userId) {
-    return <WishlistPage wishlist={[]} />;
+    return <WishlistPage userId="" wishlist={[]} />;
   }
 
   const wishlist = await prisma.favorite.findMany({
@@ -18,7 +18,7 @@ export default async function Wishlist() {
 
   return (
     <div>
-      <WishlistPage wishlist={wishlist} />
+      <WishlistPage userId={userId} wishlist={wishlist} />
     </div>
   );
 }
