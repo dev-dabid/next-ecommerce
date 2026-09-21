@@ -2,10 +2,16 @@ import { Product } from "@/types/types";
 import Image from "next/image";
 
 type WishlistCardProps = {
+  userId: string;
   product: Product;
+  removeFavorite: (userId: string, id: string) => Promise<void>;
 };
 
-export function WishlistCard({ product }: WishlistCardProps) {
+export function WishlistCard({
+  userId,
+  product,
+  removeFavorite,
+}: WishlistCardProps) {
   return (
     <div className="flex flex-col border rounded-lg p-3 bg-white">
       <div className="relative aspect-square w-full mb-3">
@@ -19,6 +25,7 @@ export function WishlistCard({ product }: WishlistCardProps) {
       </div>
 
       <div className="font-semibold text-lg mt-auto">{product?.name}</div>
+      <button onClick={() => removeFavorite(userId, product.id)}>remove</button>
     </div>
   );
 }

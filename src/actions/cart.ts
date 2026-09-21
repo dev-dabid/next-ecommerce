@@ -36,6 +36,25 @@ interface SummaryData {
   shippingFee: number;
 }
 
+export async function removeFavorite(userId: string, productId: string) {
+  try {
+    const deleteFavorite = await prisma.favorite.delete({
+      where: {
+        userId_productId: {
+          userId,
+          productId,
+        },
+      },
+    });
+
+    revalidatePath("/wishlist");
+
+    console.log("Success!", deleteFavorite);
+  } catch (error: any) {
+    console.error("Failed:", error.message);
+  }
+}
+
 export async function isExisting(
   userId: string,
   productId: string,
