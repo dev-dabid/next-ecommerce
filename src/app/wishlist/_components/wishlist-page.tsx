@@ -3,6 +3,7 @@
 import { WishlistCard } from "./wishlist-card";
 import useProducts from "@/hooks/useProducts";
 import { removeFavorite } from "@/actions/cart";
+import { useMemo } from "react";
 import { toast } from "sonner";
 import { Product } from "@/types/types";
 
@@ -22,7 +23,10 @@ export function WishlistPage({ userId, wishlist }: WishlistPageProps) {
   const { products } = useProducts();
 
   const wishlistMap = new Map(wishlist.map((item) => [item.productId, item]));
-  const wishProducts = products.filter((item) => wishlistMap.has(item.id));
+  const wishProducts = useMemo(
+    () => products.filter((item) => wishlistMap.has(item.id)),
+    [products, wishlist],
+  );
 
   return (
     <div className="max-w-300 mx-auto min-h-screen p-5">
