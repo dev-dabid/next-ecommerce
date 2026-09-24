@@ -1,5 +1,6 @@
 import { Product } from "@/types/types";
 import Image from "next/image";
+import Link from "next/link";
 
 type WishlistCardProps = {
   userId: string;
@@ -14,6 +15,7 @@ export function WishlistCard({
 }: WishlistCardProps) {
   return (
     <div className="flex flex-col border rounded-lg p-3 bg-white">
+      <button onClick={() => removeFavorite(userId, product.id)}>remove</button>
       <div className="relative aspect-square w-full mb-3">
         <Image
           className="object-contain"
@@ -25,7 +27,9 @@ export function WishlistCard({
       </div>
 
       <div className="font-semibold text-lg mt-auto">{product?.name}</div>
-      <button onClick={() => removeFavorite(userId, product.id)}>remove</button>
+      <Link href={`collections/${product.id}`}>
+        <button>View</button>
+      </Link>
     </div>
   );
 }
