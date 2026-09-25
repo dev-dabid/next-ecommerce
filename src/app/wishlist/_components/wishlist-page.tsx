@@ -28,6 +28,20 @@ export function WishlistPage({ userId, wishlist }: WishlistPageProps) {
     [products, wishlist],
   );
 
+  const removeItem = async (userId: string, productId: string) => {
+    try {
+      await removeFavorite(userId, productId);
+      toast.success("Item removed from wishlists!", {
+        position: "top-center",
+      });
+    } catch (error) {
+      console.error("Remove item error:", error);
+      toast.error("Item remove unsuccesful!", {
+        position: "top-center",
+      });
+    }
+  };
+
   return (
     <div className="max-w-300 mx-auto min-h-screen p-5">
       <h1 className="font-bold text-5xl mb-6">Wishlist</h1>
@@ -41,7 +55,7 @@ export function WishlistPage({ userId, wishlist }: WishlistPageProps) {
                   key={product.name}
                   userId={userId}
                   product={product}
-                  removeFavorite={removeFavorite}
+                  removeFavorite={removeItem}
                 />
               )
             );
