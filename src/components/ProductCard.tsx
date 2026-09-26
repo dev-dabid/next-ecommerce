@@ -29,9 +29,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
             height={200}
           />
         </div>
-        <div className="flex gap-2 justify-between mt-3 font-semibold text-[clamp(0.75rem,4vw,1.125rem)]">
+        <div className="flex gap-1 flex-col mt-3 text-[clamp(0.75rem,4vw,1.125rem)]">
           <p className="truncate">{name}</p>
-          <p>${formattedPrice(priceCents)}</p>
+          <p className="font-semibold">${formattedPrice(priceCents)}</p>
         </div>
       </div>
     </div>
