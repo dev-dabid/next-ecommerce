@@ -5,6 +5,7 @@ import useProducts from "@/hooks/useProducts";
 import { removeFavorite } from "@/actions/cart";
 import { useMemo } from "react";
 import { toast } from "sonner";
+import RelatedProducts from "@/components/RelatedProducts";
 import { Product } from "@/types/types";
 
 type Wishlist = {
@@ -47,19 +48,22 @@ export function WishlistPage({ userId, wishlist }: WishlistPageProps) {
       <h1 className="font-bold text-5xl mb-6">Wishlist</h1>
 
       {wishlist.length ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {wishProducts.map((product) => {
-            return (
-              product && (
-                <WishlistCard
-                  key={product.name}
-                  userId={userId}
-                  product={product}
-                  removeFavorite={removeItem}
-                />
-              )
-            );
-          })}
+        <div className="flex flex-col">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {wishProducts.map((product) => {
+              return (
+                product && (
+                  <WishlistCard
+                    key={product.name}
+                    userId={userId}
+                    product={product}
+                    removeFavorite={removeItem}
+                  />
+                )
+              );
+            })}
+          </div>
+          <RelatedProducts products={wishProducts} />
         </div>
       ) : (
         <div className="flex justify-center">
