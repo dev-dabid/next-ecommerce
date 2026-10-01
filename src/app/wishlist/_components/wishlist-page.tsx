@@ -28,6 +28,16 @@ export function WishlistPage({ userId, wishlist }: WishlistPageProps) {
     () => products.filter((item) => wishlistMap.has(item.id)),
     [products, wishlist],
   );
+  const wishProductsKeys = wishProducts.flatMap((item) => item.keywords);
+  const wishFilteredProducts = products.filter((item) => {
+    const isInProduct = wishProducts.find((product) => product.id === item.id);
+    const isInKeys = wishProductsKeys.some((key) => key === item.keywords[0]);
+
+    return !isInProduct && isInKeys;
+  });
+
+  console.log(wishProductsKeys);
+  const wishFilteredSliced = wishFilteredProducts.slice(0, 4);
 
   const removeItem = async (userId: string, productId: string) => {
     try {
@@ -63,7 +73,7 @@ export function WishlistPage({ userId, wishlist }: WishlistPageProps) {
               );
             })}
           </div>
-          <RelatedProducts products={wishProducts} />
+          <RelatedProducts products={wishFilteredSliced} />
         </div>
       ) : (
         <div className="flex justify-center">
