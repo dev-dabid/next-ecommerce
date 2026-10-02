@@ -10,11 +10,23 @@ export default async function Wishlist() {
     return <WishlistPage userId="" wishlist={[]} />;
   }
 
+  const orders = await prisma.order.findMany({
+    where: {
+      userId,
+    },
+
+    include: {
+      orderItem: true,
+    },
+  });
+
   const wishlist = await prisma.favorite.findMany({
     where: {
       userId,
     },
   });
+
+  console.log(orders);
 
   return (
     <div>

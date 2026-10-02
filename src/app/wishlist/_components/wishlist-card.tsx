@@ -35,6 +35,7 @@ export function WishlistCard({
       <div className="font-semibold text-lg mt-auto truncate">
         {product?.name}
       </div>
+      <p>Ordered times: 0</p>
       <Link className="flex" href={`collections/${product.id}`}>
         <button className="flex-1 mt-2 py-1 bg-sky-400 text-white font-semibold hover:bg-sky-500 active:bg-sky-300 rounded">
           View
