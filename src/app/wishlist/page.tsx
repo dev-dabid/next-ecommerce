@@ -2,12 +2,23 @@ import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { WishlistPage } from "./_components/wishlist-page";
+import { Prisma } from "@prisma/client";
+
+export type OrderItems = Prisma.OrderGetPayload<{
+  include: {
+    orderItem: {
+      include: {
+        product: true;
+      };
+    };
+  };
+}>;
 
 export default async function Wishlist() {
   const { userId } = await auth();
 
   if (!userId) {
-    return <WishlistPage userId="" wishlist={[]} />;
+    return <WishlistPage userId="" wishlist={[]} orders={[]} />;
   }
 
   const orders = await prisma.order.findMany({
@@ -16,7 +27,11 @@ export default async function Wishlist() {
     },
 
     include: {
-      orderItem: true,
+      orderItem: {
+        include: {
+          product: true,
+        },
+      },
     },
   });
 
@@ -30,7 +45,7 @@ export default async function Wishlist() {
 
   return (
     <div>
-      <WishlistPage userId={userId} wishlist={wishlist} />
+      <WishlistPage userId={userId} wishlist={wishlist} orders={orders} />
     </div>
   );
 }

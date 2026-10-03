@@ -6,6 +6,7 @@ import { removeFavorite } from "@/actions/cart";
 import { useMemo } from "react";
 import { toast } from "sonner";
 import RelatedProducts from "@/components/RelatedProducts";
+import { OrderItems } from "../page";
 import { Product } from "@/types/types";
 
 type Wishlist = {
@@ -18,11 +19,14 @@ type Wishlist = {
 type WishlistPageProps = {
   userId: string;
   wishlist: Wishlist[];
+  orders: OrderItems[];
 };
 
-export function WishlistPage({ userId, wishlist }: WishlistPageProps) {
+export function WishlistPage({ userId, wishlist, orders }: WishlistPageProps) {
   const { products } = useProducts();
 
+  const orderItemsMap = orders.map((item) => item.orderItem);
+  const orderItemsProduct = orderItemsMap.map((item) => item);
   const wishlistMap = new Map(wishlist.map((item) => [item.productId, item]));
   const wishProducts = useMemo(
     () => products.filter((item) => wishlistMap.has(item.id)),
@@ -36,7 +40,6 @@ export function WishlistPage({ userId, wishlist }: WishlistPageProps) {
     return !isInProduct && isInKeys;
   });
 
-  console.log(wishProductsKeys);
   const wishFilteredSliced = wishFilteredProducts.slice(0, 4);
 
   const removeItem = async (userId: string, productId: string) => {
@@ -52,6 +55,8 @@ export function WishlistPage({ userId, wishlist }: WishlistPageProps) {
       });
     }
   };
+
+  console.log(orderItemsProduct);
 
   return (
     <div className="max-w-300 mx-auto min-h-screen p-5">
