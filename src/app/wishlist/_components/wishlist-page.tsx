@@ -25,8 +25,10 @@ type WishlistPageProps = {
 export function WishlistPage({ userId, wishlist, orders }: WishlistPageProps) {
   const { products } = useProducts();
 
-  const orderItemsMap = orders.map((item) => item.orderItem);
-  const orderItemsProduct = orderItemsMap.map((item) => item);
+  const orderProductItems = orders.flatMap((item) => item.orderItem);
+  const orderProductMap = new Map(
+    orderProductItems.map((item) => [item.id, item]),
+  );
   const wishlistMap = new Map(wishlist.map((item) => [item.productId, item]));
   const wishProducts = useMemo(
     () => products.filter((item) => wishlistMap.has(item.id)),
@@ -56,7 +58,7 @@ export function WishlistPage({ userId, wishlist, orders }: WishlistPageProps) {
     }
   };
 
-  console.log(orderItemsProduct);
+  console.log(orderProductItems);
 
   return (
     <div className="max-w-300 mx-auto min-h-screen p-5">

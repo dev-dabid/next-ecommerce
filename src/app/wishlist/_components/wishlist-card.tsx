@@ -7,6 +7,7 @@ type WishlistCardProps = {
   userId: string;
   product: Product;
   removeFavorite: (userId: string, id: string) => Promise<void>;
+  // orderTimes: Product | undefined
 };
 
 export function WishlistCard({
