@@ -26,9 +26,9 @@ export function WishlistPage({ userId, wishlist, orders }: WishlistPageProps) {
   const { products } = useProducts();
 
   const orderProductItems = orders.flatMap((item) => item.orderItem);
-  const orderProductMap = new Map(
-    orderProductItems.map((item) => [item.id, item]),
-  );
+  // const orderProductMap = new Map(
+  //   orderProductItems.map((item) => [item.id, item]),
+  // );
   const wishlistMap = new Map(wishlist.map((item) => [item.productId, item]));
   const wishProducts = useMemo(
     () => products.filter((item) => wishlistMap.has(item.id)),
@@ -75,6 +75,7 @@ export function WishlistPage({ userId, wishlist, orders }: WishlistPageProps) {
                     userId={userId}
                     product={product}
                     removeFavorite={removeItem}
+                    orderProducts={orderProductItems}
                   />
                 )
               );

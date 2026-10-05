@@ -2,11 +2,13 @@ import { Product } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { X } from "lucide-react";
+import { OrderItems } from "@/app/cart/checkout/success/page";
 
 type WishlistCardProps = {
   userId: string;
   product: Product;
   removeFavorite: (userId: string, id: string) => Promise<void>;
+  orderProducts: OrderItems[];
   // orderTimes: Product | undefined
 };
 
@@ -14,7 +16,12 @@ export function WishlistCard({
   userId,
   product,
   removeFavorite,
+  orderProducts,
 }: WishlistCardProps) {
+  const orderTimesCount = orderProducts.reduce((total, item) => {
+    return product.id === item.productId ? total + item.quantity : total;
+  }, 0);
+
   return (
     <div className="flex flex-col relative border rounded-lg p-3 bg-white">
       <button
@@ -36,7 +43,7 @@ export function WishlistCard({
       <div className="font-semibold text-lg mt-auto truncate">
         {product?.name}
       </div>
-      <p>Ordered times: 0</p>
+      <p>Ordered times: {orderTimesCount}</p>
       <Link className="flex" href={`collections/${product.id}`}>
         <button className="flex-1 mt-2 py-1 bg-sky-400 text-white font-semibold hover:bg-sky-500 active:bg-sky-300 rounded">
           View

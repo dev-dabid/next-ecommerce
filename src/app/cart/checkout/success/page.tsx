@@ -20,6 +20,12 @@ export type OrderWithItems = Prisma.OrderGetPayload<{
   };
 }>;
 
+export type OrderItems = Prisma.OrderItemGetPayload<{
+  include: {
+    product: true;
+  };
+}>;
+
 interface PageProps {
   searchParams: Promise<{ id?: string }>;
 }
