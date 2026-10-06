@@ -102,6 +102,25 @@ export function ProductCatalog() {
                 <Button action={() => setIsChecked(new Set())}>
                   <p className="text-white font-semibold">Clear All</p>
                 </Button>
+
+                <div>
+                  {Array.from(isChecked).map((item, index) => {
+                    return (
+                      <button
+                        key={index}
+                        onClick={() =>
+                          setIsChecked((prev) => {
+                            const newKeys = new Set(prev);
+                            newKeys.delete(item);
+                            return newKeys;
+                          })
+                        }
+                      >
+                        {item}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
               {/* <div className="w-fit">
                 <div
