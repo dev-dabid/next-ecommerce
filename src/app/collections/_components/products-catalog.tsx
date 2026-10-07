@@ -8,6 +8,7 @@ import ProductCard from "@/components/ProductCard";
 import { Category } from "./category";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/Button";
+import { X } from "lucide-react";
 
 export function ProductCatalog() {
   const { products } = useProducts();
@@ -103,11 +104,12 @@ export function ProductCatalog() {
                   <p className="text-white font-semibold">Clear All</p>
                 </Button>
 
-                <div>
+                <div className="flex flex-wrap mt-5 items-start gap-2">
                   {Array.from(isChecked).map((item, index) => {
                     return (
                       <button
                         key={index}
+                        className="bg-sky-400 grow py-2 px-2 rounded text-white flex justify-center items-center gap-2"
                         onClick={() =>
                           setIsChecked((prev) => {
                             const newKeys = new Set(prev);
@@ -117,6 +119,7 @@ export function ProductCatalog() {
                         }
                       >
                         {item}
+                        <X size={20} />
                       </button>
                     );
                   })}
