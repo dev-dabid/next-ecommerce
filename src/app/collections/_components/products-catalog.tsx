@@ -47,6 +47,21 @@ export function ProductCatalog() {
     setVisible((prev) => Math.min(prev + 8, total));
   };
 
+  const firstChar = (chars: string) => {
+    const charsSplit = chars.split(" ");
+    const capitalizeFirstChar = charsSplit.map((char) => {
+      const firstChar = char.charAt(0).toUpperCase();
+      const charSliced = char.slice(1);
+
+      return firstChar + charSliced;
+    });
+    const charsJoin = capitalizeFirstChar.join(" ");
+
+    return charsJoin;
+  };
+
+  console.log(firstChar("mens wear"));
+
   if (!mounted) return null;
 
   return (
@@ -118,7 +133,7 @@ export function ProductCatalog() {
                           })
                         }
                       >
-                        {item}
+                        {firstChar(item)}
                         <X size={20} />
                       </button>
                     );
