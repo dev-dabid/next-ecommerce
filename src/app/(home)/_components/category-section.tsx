@@ -1,6 +1,7 @@
 import { CategoryCard } from "./category-card";
 import { Product } from "@/types/types";
 import DefaultImage from "@/images/backpack.jpg";
+import Link from "next/link";
 
 type CategorySectionProps = {
   products: Product[];
@@ -31,12 +32,12 @@ export function CategorySection({ products }: CategorySectionProps) {
           <p className="text-[clamp(1.1rem,5vw,2rem)] font-bold relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-[32%] after:h-1.25after:bg-sky-400 after:origin-left after:scale-x-100 after:rounded-2xl inline-block">
             Shop by Category
           </p>
-          <a
+          <Link
             className="text-[clamp(0.875rem,2vw,1.2rem)] flex items-center gap-1 text-sky-400"
-            href=""
+            href={`/collections`}
           >
             View All
-          </a>
+          </Link>
         </div>
         <div className="flex gap-2 overflow-x-auto snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-5 lg:overflow-visible mt-10">
           {homepageCategories.map((category, index) => (
