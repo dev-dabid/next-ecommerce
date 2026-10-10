@@ -8,7 +8,8 @@ import ProductCard from "@/components/ProductCard";
 import { Category } from "./category";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/Button";
-import { X } from "lucide-react";
+import { X, Shirt, Watch, Footprints, Tv } from "lucide-react";
+import Link from "next/link";
 
 export function ProductCatalog() {
   const { products } = useProducts();
@@ -100,10 +101,27 @@ export function ProductCatalog() {
             )}
           </div>
           <div className="hidden lg:flex flex-col max-w-65 w-full sticky top-20 h-fit">
+            <div className="flex flex-col mb-6 gap-2 text-xl">
+              <Link href={`/collections/`} className="flex items-center gap-3">
+                <Shirt className="text-sky-400" /> Apparel
+              </Link>
+              <Link href={`/collections/`} className="flex items-center gap-3">
+                <Watch className="text-sky-400" />
+                Accessories
+              </Link>
+              <Link href={`/collections/`} className="flex items-center gap-3">
+                <Footprints className="text-sky-400" />
+                Footwear
+              </Link>
+              <Link href={`/collections/`} className="flex items-center gap-3">
+                <Tv className="text-sky-400" />
+                Appliances
+              </Link>
+            </div>
             <div>
-              <h2>CATEGORY</h2>
+              <h2 className="font-semibold text-xl">CATEGORY</h2>
               <div className="flex flex-col">
-                <div className="my-5 max-h-48 overflow-y-auto pr-2 flex flex-col gap-2">
+                <div className="my-2 max-h-48 overflow-y-auto pr-2 flex flex-col gap-2">
                   {uniqueKeywords.map((item) => {
                     return (
                       <Category
