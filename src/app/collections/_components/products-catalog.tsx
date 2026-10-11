@@ -102,19 +102,32 @@ export function ProductCatalog() {
           </div>
           <div className="hidden lg:flex flex-col max-w-65 w-full sticky top-20 h-fit">
             <div className="flex flex-col mb-6 gap-2 text-xl">
-              <Link href={`/collections/`} className="flex items-center gap-3">
-                <Shirt className="text-sky-400" /> Apparel
+              <Link
+                href={`/collections/`}
+                className="flex items-center gap-3 text-gray-600 hover:text-gray-400 active:text-gray-500 group"
+              >
+                <Shirt className="text-sky-400 group-hover:text-sky-300 group-active:text-sky-500" />
+                Apparel
               </Link>
-              <Link href={`/collections/`} className="flex items-center gap-3">
-                <Watch className="text-sky-400" />
+              <Link
+                href={`/collections/`}
+                className="flex items-center gap-3 text-gray-600 hover:text-gray-400 active:text-gray-500 group"
+              >
+                <Watch className="text-sky-400 group-hover:text-sky-300 group-active:text-sky-500" />
                 Accessories
               </Link>
-              <Link href={`/collections/`} className="flex items-center gap-3">
-                <Footprints className="text-sky-400" />
+              <Link
+                href={`/collections/`}
+                className="flex items-center gap-3 text-gray-600 hover:text-gray-400 active:text-gray-500 group"
+              >
+                <Footprints className="text-sky-400 group-hover:text-sky-300 group-active:text-sky-500" />
                 Footwear
               </Link>
-              <Link href={`/collections/`} className="flex items-center gap-3">
-                <Tv className="text-sky-400" />
+              <Link
+                href={`/collections/`}
+                className="flex items-center gap-3 text-gray-600 hover:text-gray-400 active:text-gray-500 group"
+              >
+                <Tv className="text-sky-400 group-hover:text-sky-300 group-active:text-sky-500" />
                 Appliances
               </Link>
             </div>
