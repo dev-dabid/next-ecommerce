@@ -10,6 +10,11 @@ export function CategoryCatalog({
   categoryType,
   products,
 }: CategoryCatalogProps) {
-  console.log(products);
-  return <div></div>;
+  return (
+    <div>
+      {products.map((item) => {
+        return <div>{item.name}</div>;
+      })}
+    </div>
+  );
 }

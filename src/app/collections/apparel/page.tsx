@@ -26,15 +26,19 @@ export default async function Apparel() {
     };
   });
 
-  const productApparel = productsMap.filter((item) =>
-    item.keywords.find((k) => k === "apparel"),
-  );
+  const productApparel = productsMap.filter((item) => {
+    const apparel = item.keywords.find((k) => k === "apparel");
+    const mens = item.keywords.find((k) => k === "mens");
+    const womens = item.keywords.find((k) => k === "womens");
+
+    return apparel || mens || womens;
+  });
 
   return (
     <div>
       <CategoryCatalog
         userId={userId}
-        categoryType={"mens"}
+        categoryType={"apparel"}
         products={productApparel}
       />
     </div>

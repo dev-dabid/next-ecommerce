@@ -103,7 +103,7 @@ export function ProductCatalog() {
           <div className="hidden lg:flex flex-col max-w-65 w-full sticky top-20 h-fit">
             <div className="flex flex-col mb-6 gap-2 text-xl">
               <Link
-                href={`/collections/`}
+                href={`/collections/apparel`}
                 className="flex items-center gap-3 text-gray-600 hover:text-gray-400 active:text-gray-500 group"
               >
                 <Shirt className="text-sky-400 group-hover:text-sky-300 group-active:text-sky-500" />
