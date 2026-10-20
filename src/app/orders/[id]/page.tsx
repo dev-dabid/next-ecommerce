@@ -9,7 +9,12 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
 
   return (
     <div>
-      <div>{id}</div>
+      <div className="max-w-300 mx-auto">
+        <div>
+          <div>{id}</div>
+        </div>
+        <div></div>
+      </div>
     </div>
   );
 }
