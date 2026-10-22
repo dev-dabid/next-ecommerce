@@ -46,9 +46,10 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
     <div>
       <div className="max-w-300 mx-auto">
         <div>
-          <div>
-            {id}
-            Placed on {displayDate}
+          <div className="flex flex-col">
+            <h4>ORDER OVERVIEW</h4>
+            <p>{id}</p>
+            <p>Placed on {displayDate}</p>
           </div>
         </div>
         <div></div>
