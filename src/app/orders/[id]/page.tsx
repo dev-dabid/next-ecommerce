@@ -42,14 +42,22 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
 
   const displayDate = `${calendar[month]} ${day}, ${year}`;
 
+  const deliveryStatus = order.status;
+
   return (
     <div>
       <div className="max-w-300 mx-auto">
-        <div>
+        <div className="flex justify-between py-10 border-b border-gray-200">
           <div className="flex flex-col">
-            <h4>ORDER OVERVIEW</h4>
-            <p>{id}</p>
+            <h3 className="text-sky-400 font-semibold">ORDER OVERVIEW</h3>
+            <h2 className="font-bold text-3xl my-2">#{id}</h2>
             <p>Placed on {displayDate}</p>
+          </div>
+          <div className="flex flex-col justify-end items-end">
+            <h3 className="bg-sky-100 text-sky-400 font-semibold px-3 rounded-full ">
+              {deliveryStatus}
+            </h3>
+            <p className="italic">Estimated Delivery: Oct 30, 2026</p>
           </div>
         </div>
         <div></div>
