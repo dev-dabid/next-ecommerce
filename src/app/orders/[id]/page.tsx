@@ -54,6 +54,7 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
     "Delivered",
   ];
 
+  // MISSING VARIABLE SOLVED: EXISTENCE OF THE ORDER ITSELF IS THE STATUS OR ORDER PLACED
   // MISSING VARIABLE SOLVED: APPROVAL FIELD MISSING WHETHER THE SAID STATUS WAS APPROVED OR PENDING
 
   return (
