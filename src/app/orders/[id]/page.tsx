@@ -54,6 +54,8 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
     "Delivered",
   ];
 
+  // MISSING VARIABLE SOLVED: APPROVAL FIELD MISSING WHETHER THE SAID STATUS WAS APPROVED OR PENDING
+
   return (
     <div>
       <div className="max-w-300 mx-auto">
