@@ -73,6 +73,13 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
   // MISSING VARIABLE SOLVED: APPROVAL FIELD MISSING WHETHER THE SAID STATUS WAS APPROVED OR PENDING
   // AHEAD NUMBER FLAG LOGIC SOLVED: I COULD JUST USE THE AHEAD INDEX OF MATCH STATUSES FOR LESSER STATUS CHECK
 
+  const farthestStatusIndex = () => {
+    const statusCollection = status.map((stat) => stat.stat);
+    const statusIndex = statusCollection.indexOf(deliveryStatus);
+
+    return statusIndex;
+  };
+
   return (
     <div>
       <div className="max-w-300 mx-auto">
@@ -94,10 +101,16 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
             <div className="flex flex-col">
               <h1 className="font-bold text-2xl">Live Tracking</h1>
               <div className="flex flex-col justify-start mt-10 gap-10 before:content-[''] before:w-[2px] before:h-full before:left-3.5  before:absolute before:bg-gray-200 relative">
-                {status.map((status) => {
+                {status.map((status, index) => {
                   const isApproved = false;
+                  const statusIndex = farthestStatusIndex();
 
-                  if (id && status.stat === "ORDER-PLACED") {
+                  if (
+                    (status.stat === deliveryStatus &&
+                      index === statusIndex &&
+                      isApproved) ||
+                    index < statusIndex
+                  ) {
                     return (
                       <div className="flex justify-start gap-10 z-20">
                         <div>
@@ -112,26 +125,11 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                         </div>
                       </div>
                     );
-                  }
-
-                  if (status.stat === deliveryStatus && isApproved) {
-                    return (
-                      <div className="flex justify-start gap-10 z-20">
-                        <div>
-                          <Check
-                            size={30}
-                            className="bg-sky-400 rounded-full p-1 text-white"
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <h2 className="font-semibold">{status.name}</h2>
-                          <p className="text-sm text-gray-500">Oct 24, 2024 </p>
-                        </div>
-                      </div>
-                    );
-                  }
-
-                  if (status.stat === deliveryStatus && isApproved === false) {
+                  } else if (
+                    status.stat === deliveryStatus &&
+                    index === statusIndex &&
+                    isApproved === false
+                  ) {
                     return (
                       <div className="flex justify-start gap-10 z-20">
                         <div className="w-7.5 h-7.5 rounded-full border-5 border-sky-400"></div>
@@ -141,9 +139,7 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                         </div>
                       </div>
                     );
-                  }
-
-                  if (status.stat !== deliveryStatus) {
+                  } else {
                     return (
                       <div className="flex justify-start gap-10 z-20">
                         <div className="w-7.5 h-7.5 rounded-full bg-gray-400/15"></div>
