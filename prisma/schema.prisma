@@ -90,6 +90,15 @@ model OrderItem {
   createdAt DateTime @default(now())
 }
 
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
 model Order {
   id String @id @default(cuid())
   user User @relation(fields: [userId], references: [id])
@@ -107,7 +116,7 @@ model Order {
   province String
   zipCode String
   
-  status String @default("PENDING")
+  status OrderStatus @default(PENDING)
   paymentMethod String @default("CASH_ON_DELIVERY")
   shippingType String @default("STANDARD")
 
@@ -115,4 +124,9 @@ model Order {
   updatedAt DateTime @updatedAt
 
   orderItem OrderItem[]
+}
+
+model Store {
+  id String @id @default(uuid())
+
 }
