@@ -120,6 +120,11 @@ model Order {
   paymentMethod String @default("CASH_ON_DELIVERY")
   shippingType String @default("STANDARD")
 
+  processingUpdateAt DateTime
+  shippedUpdateAt DateTime
+  outForDeliveryUpdateAt DateTime
+  deliveredUpdateAt DateTime
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
