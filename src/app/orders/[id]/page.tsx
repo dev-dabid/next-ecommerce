@@ -73,6 +73,11 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
   // MISSING VARIABLE SOLVED: APPROVAL FIELD MISSING WHETHER THE SAID STATUS WAS APPROVED OR PENDING
   // AHEAD NUMBER FLAG LOGIC SOLVED: I COULD JUST USE THE AHEAD INDEX OF MATCH STATUSES FOR LESSER STATUS CHECK
 
+  //  processedAt: Date | null;
+  //  shippedAt: Date | null;
+  //  dispatchedAt: Date | null;
+  //  deliveredAt: Date | null;
+
   const farthestStatusIndex = () => {
     const statusCollection = status.map((stat) => stat.stat);
     const statusIndex = statusCollection.indexOf(deliveryStatus);

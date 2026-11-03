@@ -121,7 +121,7 @@ export async function submitOrderData(
           province: recipient.province,
           zipCode: recipient.zipCode,
           shippingType: recipient.shippingMethod,
-          status: modeOfPayment,
+          status: "PAID",
         },
       });
 
