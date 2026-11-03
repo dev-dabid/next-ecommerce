@@ -40,9 +40,9 @@ export default async function Success({ searchParams }: PageProps) {
   const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
   const dbOrderId = paymentIntent.metadata.db_order_id;
 
-  // console.log("stripe: ", paymentIntent);
-  // console.log("stripe payment_intent_id: ", paymentIntent.id);
-  // console.log("database order_id: ", dbOrderId);
+  console.log("stripe: ", paymentIntent);
+  console.log("stripe payment_intent_id: ", paymentIntent.id);
+  console.log("database order_id: ", dbOrderId);
 
   if (!dbOrderId) return <PollingLoader />;
 
