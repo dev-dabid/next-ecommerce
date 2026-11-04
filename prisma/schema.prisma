@@ -97,40 +97,60 @@ enum OrderStatus {
   OUT_FOR_DELIVERY
   DELIVERED
   CANCELLED
+}
+
+enum PaymentStatus {
+  UNPAID
   PAID
+  REFUNDED
+  FAILED
+}
+
+enum PaymentMethod {
+  CASH_ON_DELIVERY
+  GCASH
+  MAYA
+  CREDIT_DEBIT_CARD
+}
+
+enum ShippingType {
+  STANDARD
+  EXPRESS
 }
 
 model Order {
-  id String @id @default(cuid())
-  user User @relation(fields: [userId], references: [id])
-  userId String
-  totalPrice Int
-  shippingFee Int @default(0)
+  id            String        @id @default(cuid())
+  user          User          @relation(fields: [userId], references: [id])
+  userId        String
+  totalPrice    Int           
+  shippingFee   Int           @default(0)
 
-  firstName String
-  lastName String
-  phone String
-  email String
+  firstName     String
+  lastName      String
+  phone         String
+  email         String
   streetAddress String 
-  barangay String
-  city String
-  province String
-  zipCode String
+  barangay      String
+  city          String
+  province      String
+  zipCode       String
   
-  status OrderStatus @default(PENDING)
-  paymentMethod String @default("CASH_ON_DELIVERY")
-  shippingType String @default("STANDARD")
+  orderStatus   OrderStatus   @default(PENDING)
+  paymentMethod PaymentMethod @default(CASH_ON_DELIVERY)
+  paymentStatus PaymentStatus @default(UNPAID)           
+  shippingType  ShippingType  @default(STANDARD)
 
-  processedAt DateTime?
-  shippedAt DateTime?
-  dispatchedAt DateTime?
-  deliveredAt DateTime?
+  processedAt   DateTime?
+  shippedAt     DateTime?
+  dispatchedAt  DateTime?
+  deliveredAt   DateTime?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
-  orderItem OrderItem[]
+  orderItem     OrderItem[]
 }
+
 
 model Store {
   id String @id @default(uuid())
