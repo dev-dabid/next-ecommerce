@@ -32,7 +32,7 @@ export function OrdersPage({ orderList }: OrdersPageProps) {
   ];
 
   const filteredOrder = orderList.filter((item) => {
-    return item.status === selectedFilter || selectedFilter === "all";
+    return item.orderStatus === selectedFilter || selectedFilter === "all";
   });
 
   return (

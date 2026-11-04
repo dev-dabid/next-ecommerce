@@ -18,7 +18,7 @@ export type OrderWithRelations = Prisma.OrderGetPayload<typeof orderWithItems>;
 export default async function Orders() {
   const { userId } = await auth();
 
-  if (!userId) return;
+  if (!userId) return <div>Hatdog</div>;
 
   const orderList = await prisma.order.findMany({
     where: {
@@ -34,5 +34,5 @@ export default async function Orders() {
     },
   });
 
-  return <OrdersPage orderList={orderList} />;
+  // return <OrdersPage orderList={orderList} />;
 }

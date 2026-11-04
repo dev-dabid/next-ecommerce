@@ -101,7 +101,14 @@ export async function submitOrderData(
   userId: string,
   summary: SummaryData,
   amountPaid: number,
-  modeOfPayment: string,
+  selectedPayment: "UNPAID" | "PAID" | "REFUNDED" | "FAILED",
+  orderStat:
+    | "PENDING"
+    | "PROCESSING"
+    | "SHIPPED"
+    | "OUT_FOR_DELIVERY"
+    | "DELIVERED"
+    | "CANCELLED",
 ) {
   try {
     const recipient = summary;
@@ -120,8 +127,9 @@ export async function submitOrderData(
           streetAddress: recipient.streetAddress,
           province: recipient.province,
           zipCode: recipient.zipCode,
-          shippingType: recipient.shippingMethod,
-          status: "PAID",
+          shippingType: recipient.shippingMethod as "STANDARD" | "EXPRESS",
+          paymentStatus: selectedPayment,
+          orderStatus: orderStat,
         },
       });
 

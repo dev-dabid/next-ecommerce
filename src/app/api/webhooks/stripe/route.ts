@@ -88,6 +88,7 @@ export async function POST(req: Request) {
         recipient,
         amountPaid,
         "PAID",
+        "PENDING",
       );
 
       if (response && "orderId" in response) {

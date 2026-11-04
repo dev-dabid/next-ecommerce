@@ -44,7 +44,7 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
 
   const displayDate = `${calendar[month]} ${day}, ${year}`;
 
-  const deliveryStatus = order.status;
+  const deliveryStatus = order.orderStatus;
 
   const status = [
     {
@@ -105,7 +105,7 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
           <div className="p-10 bg-white rounded-xl flex justify-between">
             <div className="flex flex-col">
               <h1 className="font-bold text-2xl">Live Tracking</h1>
-              <div className="flex flex-col justify-start mt-10 gap-10 before:content-[''] before:w-[2px] before:h-full before:left-3.5  before:absolute before:bg-gray-200 relative">
+              <div className="flex flex-col justify-start mt-10 gap-10 before:content-[''] before:w-0.5 before:h-full before:left-3.5  before:absolute before:bg-gray-200 relative">
                 {status.map((status, index) => {
                   const isApproved = false;
                   const statusIndex = farthestStatusIndex();

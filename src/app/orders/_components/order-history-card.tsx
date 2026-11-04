@@ -64,13 +64,13 @@ export function OrderHistoryCard({ order }: OrderHistoryCardProps) {
             <div className="flex flex-col text-sm">
               <p className="text-gray-500 font-semibold">STATUS</p>
               <p
-                className={`${order.status === "PENDING" ? "text-gray-600 bg-gray-100" : order.status === "SHIPPED" ? "text-blue-600 bg-blue-100" : order.status === "RETURNED" ? "text-red-600 bg-red-100" : "text-green-600 bg-green-100"} font-semibold py-1 px-4 rounded-full`}
+                className={`${order.orderStatus === "PENDING" ? "text-gray-600 bg-gray-100" : order.orderStatus === "SHIPPED" ? "text-blue-600 bg-blue-100" : order.orderStatus === "CANCELLED" ? "text-red-600 bg-red-100" : "text-green-600 bg-green-100"} font-semibold py-1 px-4 rounded-full`}
               >
-                {order.status === "PENDING"
+                {order.orderStatus === "PENDING"
                   ? "PROCESSING"
-                  : order.status === "DELIVERED"
+                  : order.orderStatus === "DELIVERED"
                     ? "DELIVERED"
-                    : order.status === "RETURNED"
+                    : order.orderStatus === "CANCELLED"
                       ? "RETURNED"
                       : "SHIPPED"}
               </p>
@@ -80,10 +80,10 @@ export function OrderHistoryCard({ order }: OrderHistoryCardProps) {
 
         <div className="ml-20 mr-10 max-w-30 w-full">
           <button
-            className={`${order.status === "SHIPPED" ? "bg-sky-400 text-white border-transparent hover:bg-sky-300 active:bg-sky-600" : "bg-white border-gray-300 hover:bg-gray-200 active:bg-gray-100"} cursor-pointer px-3 py-3 border rounded-lg w-full`}
+            className={`${order.orderStatus === "SHIPPED" ? "bg-sky-400 text-white border-transparent hover:bg-sky-300 active:bg-sky-600" : "bg-white border-gray-300 hover:bg-gray-200 active:bg-gray-100"} cursor-pointer px-3 py-3 border rounded-lg w-full`}
             onClick={handleNavigate}
           >
-            {order.status === "SHIPPED" ? "Track" : "Details"}
+            {order.orderStatus === "SHIPPED" ? "Track" : "Details"}
           </button>
         </div>
       </div>
