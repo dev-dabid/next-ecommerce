@@ -2,20 +2,28 @@ import prisma from "@/lib/prisma";
 
 import { Check, Circle } from "lucide-react";
 
+import type { Order } from "@prisma/client";
+
 type OrderDetailsParams = {
   params: {
     id: string;
   };
 };
 
+type StatusType = {
+  title: string;
+  stat: string;
+  approvalKey: string;
+};
+
 export default async function OrderDetails({ params }: OrderDetailsParams) {
   const { id } = await params;
 
-  const order = await prisma.order.findUnique({
+  const order = (await prisma.order.findUnique({
     where: {
       id: id,
     },
-  });
+  })) as Order;
 
   if (!order) {
     return <div>Hatdog</div>;
@@ -46,26 +54,31 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
 
   const deliveryStatus = order.orderStatus;
 
-  const status = [
+  const status: StatusType[] = [
     {
-      name: "Order Placed",
+      title: "Order Placed",
       stat: "ORDER-PLACED",
+      approvalKey: "",
     },
     {
-      name: "Processing",
+      title: "Processing",
       stat: "PENDING",
+      approvalKey: "processedAt",
     },
     {
-      name: "Shipped",
+      title: "Shipped",
       stat: "SHIPPED",
+      approvalKey: "shippedAt",
     },
     {
-      name: "Out for Delivery",
+      title: "Out for Delivery",
       stat: "OUT_FOR_DELIVERY",
+      approvalKey: "dispatchedAt",
     },
     {
-      name: "Delivered",
+      title: "Delivered",
       stat: "DELIVERED",
+      approvalKey: "deliveredAt",
     },
   ];
 
@@ -107,14 +120,10 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
               <h1 className="font-bold text-2xl">Live Tracking</h1>
               <div className="flex flex-col justify-start mt-10 gap-10 before:content-[''] before:w-0.5 before:h-full before:left-3.5  before:absolute before:bg-gray-200 relative">
                 {status.map((status, index) => {
-                  const isApproved = false;
-                  const statusIndex = farthestStatusIndex();
-
                   if (
-                    (status.stat === deliveryStatus &&
-                      index === statusIndex &&
-                      isApproved) ||
-                    index < statusIndex
+                    status.stat === "ORDER-PLACED" &&
+                    order &&
+                    order.orderStatus !== "CANCELLED"
                   ) {
                     return (
                       <div className="flex justify-start gap-10 z-20">
@@ -125,21 +134,39 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                           />
                         </div>
                         <div className="flex flex-col">
-                          <h2 className="font-semibold">{status.name}</h2>
+                          <h2 className="font-semibold">{status.title}</h2>
                           <p className="text-sm text-gray-500">Oct 24, 2024 </p>
                         </div>
                       </div>
                     );
-                  } else if (
-                    status.stat === deliveryStatus &&
-                    index === statusIndex &&
-                    isApproved === false
+                  }
+
+                  if (
+                    status.stat === order.orderStatus &&
+                    order[status.approvalKey as keyof Order] === null
                   ) {
                     return (
                       <div className="flex justify-start gap-10 z-20">
                         <div className="w-7.5 h-7.5 rounded-full border-5 border-sky-400"></div>
                         <div className="flex flex-col">
-                          <h2 className="font-semibold">{status.name}</h2>
+                          <h2 className="font-semibold">{status.title}</h2>
+                          <p className="text-sm text-gray-500">Oct 24, 2024 </p>
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  if (order[status.approvalKey as keyof Order]) {
+                    return (
+                      <div className="flex justify-start gap-10 z-20">
+                        <div>
+                          <Check
+                            size={30}
+                            className="bg-sky-400 rounded-full p-1 text-white"
+                          />
+                        </div>
+                        <div className="flex flex-col">
+                          <h2 className="font-semibold">{status.title}</h2>
                           <p className="text-sm text-gray-500">Oct 24, 2024 </p>
                         </div>
                       </div>
@@ -149,12 +176,61 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                       <div className="flex justify-start gap-10 z-20">
                         <div className="w-7.5 h-7.5 rounded-full bg-gray-400/15"></div>
                         <div className="flex flex-col">
-                          <h2 className="font-semibold">{status.name}</h2>
+                          <h2 className="font-semibold">{status.title}</h2>
                           <p className="text-sm text-gray-500">Oct 24, 2024 </p>
                         </div>
                       </div>
                     );
                   }
+
+                  // const isApproved = false;
+                  // const statusIndex = farthestStatusIndex();
+
+                  // if (
+                  //   (status.stat === deliveryStatus &&
+                  //     index === statusIndex &&
+                  //     isApproved) ||
+                  //   index < statusIndex
+                  // ) {
+                  //   return (
+                  //     <div className="flex justify-start gap-10 z-20">
+                  //       <div>
+                  //         <Check
+                  //           size={30}
+                  //           className="bg-sky-400 rounded-full p-1 text-white"
+                  //         />
+                  //       </div>
+                  //       <div className="flex flex-col">
+                  //         <h2 className="font-semibold">{status.name}</h2>
+                  //         <p className="text-sm text-gray-500">Oct 24, 2024 </p>
+                  //       </div>
+                  //     </div>
+                  //   );
+                  // } else if (
+                  //   status.stat === deliveryStatus &&
+                  //   index === statusIndex &&
+                  //   isApproved === false
+                  // ) {
+                  //   return (
+                  //     <div className="flex justify-start gap-10 z-20">
+                  //       <div className="w-7.5 h-7.5 rounded-full border-5 border-sky-400"></div>
+                  //       <div className="flex flex-col">
+                  //         <h2 className="font-semibold">{status.name}</h2>
+                  //         <p className="text-sm text-gray-500">Oct 24, 2024 </p>
+                  //       </div>
+                  //     </div>
+                  //   );
+                  // } else {
+                  //   return (
+                  //     <div className="flex justify-start gap-10 z-20">
+                  //       <div className="w-7.5 h-7.5 rounded-full bg-gray-400/15"></div>
+                  //       <div className="flex flex-col">
+                  //         <h2 className="font-semibold">{status.name}</h2>
+                  //         <p className="text-sm text-gray-500">Oct 24, 2024 </p>
+                  //       </div>
+                  //     </div>
+                  //   );
+                  // }
                 })}
               </div>
             </div>
