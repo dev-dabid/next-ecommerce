@@ -61,10 +61,10 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
     },
     {
       name: "Out for Delivery",
-      stat: "OUT-FOR-DELIVERY",
+      stat: "OUT_FOR_DELIVERY",
     },
     {
-      name: "DELIVERED",
+      name: "Delivered",
       stat: "DELIVERED",
     },
   ];
