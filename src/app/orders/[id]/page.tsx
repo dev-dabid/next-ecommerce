@@ -150,7 +150,9 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                         <div className="w-7.5 h-7.5 rounded-full border-5 border-sky-400"></div>
                         <div className="flex flex-col">
                           <h2 className="font-semibold">{status.title}</h2>
-                          <p className="text-sm text-gray-500">Oct 24, 2024 </p>
+                          <p className="text-sm text-gray-500">
+                            Pending Approval • Current Status
+                          </p>
                         </div>
                       </div>
                     );
@@ -176,8 +178,10 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                       <div className="flex justify-start gap-10 z-20">
                         <div className="w-7.5 h-7.5 rounded-full bg-gray-400/15"></div>
                         <div className="flex flex-col">
-                          <h2 className="font-semibold">{status.title}</h2>
-                          <p className="text-sm text-gray-500">Oct 24, 2024 </p>
+                          <h2 className="font-semibold text-gray-500/30">
+                            {status.title}
+                          </h2>
+                          <p className="text-sm text-gray-500"></p>
                         </div>
                       </div>
                     );
