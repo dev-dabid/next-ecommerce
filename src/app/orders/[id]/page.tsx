@@ -135,7 +135,7 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                         </div>
                         <div className="flex flex-col">
                           <h2 className="font-semibold">{status.title}</h2>
-                          <p className="text-sm text-gray-500">Oct 24, 2024 </p>
+                          <p className="text-sm text-gray-500">{displayDate}</p>
                         </div>
                       </div>
                     );
