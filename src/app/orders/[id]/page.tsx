@@ -50,9 +50,28 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
   const month = Number(date[0]);
   const day = date[1];
 
+  const time = order.createdAt;
+  const hours = time.getHours();
+  const minute = time.getMinutes();
+
+  console.log(hours + ":" + minute);
+
   const displayDate = `${calendar[month]} ${day}, ${year}`;
 
   const deliveryStatus = order.orderStatus;
+
+  const deliveryStatusMessage =
+    deliveryStatus === "PENDING"
+      ? "Awaiting Seller Confirmation"
+      : deliveryStatus === "PROCESSING"
+        ? "Preparing Order"
+        : deliveryStatus === "SHIPPED"
+          ? "Handed Over to Courier"
+          : deliveryStatus === "OUT_FOR_DELIVERY"
+            ? "Out for Delivery"
+            : deliveryStatus === "DELIVERED"
+              ? "Order Delivered"
+              : "Order Cancelled";
 
   const status: StatusType[] = [
     {
@@ -109,7 +128,7 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
           </div>
           <div className="flex flex-col justify-end items-end">
             <h3 className="bg-sky-100 text-sky-400 font-semibold px-3 rounded-full ">
-              {deliveryStatus}
+              {deliveryStatusMessage}
             </h3>
             <p className="italic mt-2">Estimated Delivery: Oct 30, 2026</p>
           </div>
