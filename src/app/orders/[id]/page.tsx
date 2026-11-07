@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { Check, Circle } from "lucide-react";
 
 import type { Order } from "@prisma/client";
+import { stat } from "fs";
 
 type OrderDetailsParams = {
   params: {
@@ -73,7 +74,7 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
               ? "Order Delivered"
               : "Order Cancelled";
 
-  const status: StatusType[] = [
+  const statusCollection: StatusType[] = [
     {
       title: "Order Placed",
       stat: "ORDER-PLACED",
@@ -110,13 +111,6 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
   //  dispatchedAt: Date | null;
   //  deliveredAt: Date | null;
 
-  const farthestStatusIndex = () => {
-    const statusCollection = status.map((stat) => stat.stat);
-    const statusIndex = statusCollection.indexOf(deliveryStatus);
-
-    return statusIndex;
-  };
-
   return (
     <div>
       <div className="max-w-300 mx-auto">
@@ -138,7 +132,7 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
             <div className="flex flex-col">
               <h1 className="font-bold text-2xl">Live Tracking</h1>
               <div className="flex flex-col justify-start mt-10 gap-10 before:content-[''] before:w-0.5 before:h-full before:left-3.5  before:absolute before:bg-gray-200 relative">
-                {status.map((status, index) => {
+                {statusCollection.map((status, index) => {
                   if (
                     status.stat === "ORDER-PLACED" &&
                     order &&
@@ -161,23 +155,12 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                   }
 
                   if (
-                    status.stat === order.orderStatus &&
-                    order[status.approvalKey as keyof Order] === null
+                    index < statusCollection.length - 1 &&
+                    order[status.approvalKey as keyof Order] &&
+                    order[
+                      statusCollection[index + 1].approvalKey as keyof Order
+                    ]
                   ) {
-                    return (
-                      <div className="flex justify-start gap-10 z-20">
-                        <div className="w-7.5 h-7.5 rounded-full border-5 border-sky-400"></div>
-                        <div className="flex flex-col">
-                          <h2 className="font-semibold">{status.title}</h2>
-                          <p className="text-sm text-gray-500">
-                            Pending Approval • Current Status
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  }
-
-                  if (order[status.approvalKey as keyof Order]) {
                     return (
                       <div className="flex justify-start gap-10 z-20">
                         <div>
@@ -192,7 +175,49 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                         </div>
                       </div>
                     );
-                  } else {
+                  }
+
+                  if (
+                    status.stat === "DELIVERED" &&
+                    order[status.approvalKey as keyof Order]
+                  ) {
+                    return (
+                      <div className="flex justify-start gap-10 z-20">
+                        <div>
+                          <Check
+                            size={30}
+                            className="bg-sky-400 rounded-full p-1 text-white"
+                          />
+                        </div>
+                        <div className="flex flex-col">
+                          <h2 className="font-semibold">{status.title}</h2>
+                          <p className="text-sm text-gray-500">Oct 24, 2024 </p>
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  if (
+                    index < statusCollection.length - 1 &&
+                    order[status.approvalKey as keyof Order] &&
+                    order[
+                      statusCollection[index + 1].approvalKey as keyof Order
+                    ] === null
+                  ) {
+                    return (
+                      <div className="flex justify-start gap-10 z-20">
+                        <div className="w-7.5 h-7.5 rounded-full border-5 border-sky-400"></div>
+                        <div className="flex flex-col">
+                          <h2 className="font-semibold">{status.title}</h2>
+                          <p className="text-sm text-gray-500">
+                            Pending Approval • Current Status
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  if (order[status.approvalKey as keyof Order] === null) {
                     return (
                       <div className="flex justify-start gap-10 z-20">
                         <div className="w-7.5 h-7.5 rounded-full bg-gray-400/15"></div>
