@@ -45,19 +45,23 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
     12: "December",
   };
 
-  const dateRaw = order.createdAt.toLocaleDateString();
-  const date = dateRaw.split("/");
-  const year = date[2];
-  const month = Number(date[0]);
-  const day = date[1];
+  const convertDate = (dateValue: Date) => {
+    const dateRaw = dateValue.toLocaleDateString();
+    const date = dateRaw.split("/");
+    const year = date[2];
+    const month = Number(date[0]);
+    const day = date[1];
+
+    const displayDate = `${calendar[month]} ${day}, ${year}`;
+
+    return displayDate;
+  };
 
   const time = order.createdAt;
   const hours = time.getHours();
   const minute = time.getMinutes();
 
   console.log(hours + ":" + minute);
-
-  const displayDate = `${calendar[month]} ${day}, ${year}`;
 
   const deliveryStatus = order.orderStatus;
 
@@ -118,7 +122,7 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
           <div className="flex flex-col">
             <h3 className="text-sky-400 font-semibold">ORDER OVERVIEW</h3>
             <h2 className="font-bold text-3xl my-2">#{id}</h2>
-            <p>Placed on {displayDate}</p>
+            <p>Placed on {convertDate(order.createdAt)}</p>
           </div>
           <div className="flex flex-col justify-end items-end">
             <h3 className="bg-sky-100 text-sky-400 font-semibold px-3 rounded-full ">
@@ -148,7 +152,9 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                         </div>
                         <div className="flex flex-col">
                           <h2 className="font-semibold">{status.title}</h2>
-                          <p className="text-sm text-gray-500">{displayDate}</p>
+                          <p className="text-sm text-gray-500">
+                            {convertDate(order.createdAt)}
+                          </p>
                         </div>
                       </div>
                     );
