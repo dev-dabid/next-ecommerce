@@ -137,6 +137,8 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
               <h1 className="font-bold text-2xl">Live Tracking</h1>
               <div className="flex flex-col justify-start mt-10 gap-10 before:content-[''] before:w-0.5 before:h-full before:left-3.5  before:absolute before:bg-gray-200 relative">
                 {statusCollection.map((status, index) => {
+                  const dateKey = order[status.approvalKey as keyof Order];
+
                   if (
                     status.stat === "ORDER-PLACED" &&
                     order &&
@@ -177,7 +179,11 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                         </div>
                         <div className="flex flex-col">
                           <h2 className="font-semibold">{status.title}</h2>
-                          <p className="text-sm text-gray-500">Oct 24, 2024 </p>
+                          <p className="text-sm text-gray-500">
+                            {dateKey instanceof Date
+                              ? convertDate(dateKey)
+                              : ""}
+                          </p>
                         </div>
                       </div>
                     );
@@ -216,7 +222,9 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                         <div className="flex flex-col">
                           <h2 className="font-semibold">{status.title}</h2>
                           <p className="text-sm text-gray-500">
-                            Pending Approval • Current Status
+                            {dateKey instanceof Date
+                              ? `${convertDate(dateKey)} • Current Status`
+                              : ""}
                           </p>
                         </div>
                       </div>
