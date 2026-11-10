@@ -57,6 +57,8 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
     return displayDate;
   };
 
+  const convertTime = (timeValue: Date) => {};
+
   const time = order.createdAt;
   const hours = time.getHours();
   const minute = time.getMinutes();
@@ -145,7 +147,10 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                     order.orderStatus !== "CANCELLED"
                   ) {
                     return (
-                      <div className="flex justify-start gap-10 z-20">
+                      <div
+                        key={status.stat}
+                        className="flex justify-start gap-10 z-20"
+                      >
                         <div>
                           <Check
                             size={30}
@@ -170,7 +175,10 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                     ]
                   ) {
                     return (
-                      <div className="flex justify-start gap-10 z-20">
+                      <div
+                        key={status.stat}
+                        className="flex justify-start gap-10 z-20"
+                      >
                         <div>
                           <Check
                             size={30}
@@ -194,7 +202,10 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                     order[status.approvalKey as keyof Order]
                   ) {
                     return (
-                      <div className="flex justify-start gap-10 z-20">
+                      <div
+                        key={status.stat}
+                        className="flex justify-start gap-10 z-20"
+                      >
                         <div>
                           <Check
                             size={30}
@@ -217,7 +228,10 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                     ] === null
                   ) {
                     return (
-                      <div className="flex justify-start gap-10 z-20">
+                      <div
+                        key={status.stat}
+                        className="flex justify-start gap-10 z-20"
+                      >
                         <div className="w-7.5 h-7.5 rounded-full border-5 border-sky-400"></div>
                         <div className="flex flex-col">
                           <h2 className="font-semibold">{status.title}</h2>
@@ -233,7 +247,10 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
 
                   if (order[status.approvalKey as keyof Order] === null) {
                     return (
-                      <div className="flex justify-start gap-10 z-20">
+                      <div
+                        key={status.stat}
+                        className="flex justify-start gap-10 z-20"
+                      >
                         <div className="w-7.5 h-7.5 rounded-full bg-gray-400/15"></div>
                         <div className="flex flex-col">
                           <h2 className="font-semibold text-gray-500/30">
