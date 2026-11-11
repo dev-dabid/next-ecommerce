@@ -57,13 +57,20 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
     return displayDate;
   };
 
-  const convertTime = (timeValue: Date) => {};
+  const convertTime = (timeValue: Date) => {
+    const hours = timeValue.getHours();
+    const minute = timeValue.getMinutes();
 
-  const time = order.createdAt;
-  const hours = time.getHours();
-  const minute = time.getMinutes();
+    const twelveHourFormat = hours > 12 ? hours - 12 : hours;
+    const ampm = hours > 12 ? "PM" : "AM";
 
-  console.log(hours + ":" + minute);
+    // const hasZeroHours =
+    //   twelveHourFormat < 10 ? `0${twelveHourFormat}` : twelveHourFormat;
+    const hasZeroMinutes = minute < 10 ? `0${minute}` : minute;
+    const displayTime = `${twelveHourFormat}:${hasZeroMinutes} ${ampm}`;
+
+    return displayTime;
+  };
 
   const deliveryStatus = order.orderStatus;
 
@@ -160,7 +167,7 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                         <div className="flex flex-col">
                           <h2 className="font-semibold">{status.title}</h2>
                           <p className="text-sm text-gray-500">
-                            {convertDate(order.createdAt)}
+                            {`${convertDate(order.createdAt)} • ${convertTime(order.createdAt)}`}
                           </p>
                         </div>
                       </div>
@@ -189,8 +196,8 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                           <h2 className="font-semibold">{status.title}</h2>
                           <p className="text-sm text-gray-500">
                             {dateKey instanceof Date
-                              ? convertDate(dateKey)
-                              : ""}
+                              ? `${convertDate(dateKey)} • ${convertTime(dateKey)}`
+                              : "Date Missing"}
                           </p>
                         </div>
                       </div>
@@ -214,7 +221,11 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                         </div>
                         <div className="flex flex-col">
                           <h2 className="font-semibold">{status.title}</h2>
-                          <p className="text-sm text-gray-500">Oct 24, 2024 </p>
+                          <p className="text-sm text-gray-500">
+                            {dateKey instanceof Date
+                              ? `${convertDate(dateKey)} • ${convertTime(dateKey)}`
+                              : "Date Missing"}
+                          </p>
                         </div>
                       </div>
                     );
@@ -238,7 +249,7 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
                           <p className="text-sm text-gray-500">
                             {dateKey instanceof Date
                               ? `${convertDate(dateKey)} • Current Status`
-                              : ""}
+                              : "Date Missing"}
                           </p>
                         </div>
                       </div>
