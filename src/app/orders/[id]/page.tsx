@@ -1,9 +1,10 @@
 import prisma from "@/lib/prisma";
 
+import { OrderItemsCard } from "./_components/order-items-card";
+
 import { Check, Circle } from "lucide-react";
 
 import type { Order } from "@prisma/client";
-import { stat } from "fs";
 
 type OrderDetailsParams = {
   params: {
@@ -20,11 +21,15 @@ type StatusType = {
 export default async function OrderDetails({ params }: OrderDetailsParams) {
   const { id } = await params;
 
-  const order = (await prisma.order.findUnique({
+  const order = await prisma.order.findUnique({
     where: {
       id: id,
     },
-  })) as Order;
+
+    include: {
+      orderItem: true,
+    },
+  });
 
   if (!order) {
     return <div>Hatdog</div>;
@@ -325,6 +330,14 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
               </div>
             </div>
             <div></div>
+          </div>
+        </div>
+        <div>
+          <h1>Order Items</h1>
+          <div>
+            {order.orderItem.map((item) => {
+              return <OrderItemsCard orderItem={item} />;
+            })}
           </div>
         </div>
       </div>
