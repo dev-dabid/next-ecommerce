@@ -6,6 +6,8 @@ import { Check, Circle } from "lucide-react";
 
 import type { Order } from "@prisma/client";
 
+import { Prisma } from "@prisma/client";
+
 type OrderDetailsParams = {
   params: {
     id: string;
@@ -18,6 +20,12 @@ type StatusType = {
   approvalKey: string;
 };
 
+export type OrderItemProductType = Prisma.OrderItemGetPayload<{
+  include: {
+    product: true;
+  };
+}>;
+
 export default async function OrderDetails({ params }: OrderDetailsParams) {
   const { id } = await params;
 
@@ -27,7 +35,11 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
     },
 
     include: {
-      orderItem: true,
+      orderItem: {
+        include: {
+          product: true,
+        },
+      },
     },
   });
 
