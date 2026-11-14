@@ -344,8 +344,8 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
             <div></div>
           </div>
         </div>
-        <div>
-          <h1>Order Items</h1>
+        <div className="flex flex-col my-5 gap-5">
+          <h1 className="text-2xl font-semibold">Order Items</h1>
           <div>
             {order.orderItem.map((item) => {
               return <OrderItemsCard orderItem={item} />;
