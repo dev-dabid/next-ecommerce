@@ -28,7 +28,7 @@ export function OrderItemsCard({ orderItem }: OrderItemsCardProps) {
             Hand-Blown Crystal Decanter Set
           </h2>
           <p className="text-gray-500">
-            Qty: {orderItem.quantity} • Lead-Free Crystal • Hand-Crafted
+            Qty: {orderItem.quantity} {categories.map((cat) => ` • ${cat}`)}
           </p>
         </div>
       </div>
