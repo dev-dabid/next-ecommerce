@@ -352,6 +352,14 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
             })}
           </div>
         </div>
+
+        <div className="flex justify-between">
+          <div>
+            <h2>PAYMENT SUMMARY</h2>
+          </div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
     </div>
   );
