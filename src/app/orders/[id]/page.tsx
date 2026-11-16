@@ -353,12 +353,27 @@ export default async function OrderDetails({ params }: OrderDetailsParams) {
           </div>
         </div>
 
-        <div className="flex justify-between">
+        <div className="flex flex-col items-start w-full min-w-50 ">
           <div>
             <h2>PAYMENT SUMMARY</h2>
           </div>
+          <div className="flex justify-between">
+            <p>Subtotal</p>
+            <p>$1,420.00</p>
+          </div>
+          <div className="flex justify-between">
+            <p>Shipping</p>
+            <p>Complimentary</p>
+          </div>
+          <div className="flex justify-between">
+            <p>Taxes</p>
+            <p>$113.60</p>
+          </div>
           <div></div>
-          <div></div>
+          <div className="flex justify-between">
+            <h2>Total</h2>
+            <h1>$1,533.60</h1>
+          </div>
         </div>
       </div>
     </div>
