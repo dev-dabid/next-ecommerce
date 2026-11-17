@@ -35,6 +35,8 @@ export function OrdersPage({ orderList }: OrdersPageProps) {
     return item.orderStatus === selectedFilter || selectedFilter === "all";
   });
 
+  console.log(orderList);
+
   return (
     <div className="">
       <div className="max-w-300 mx-auto mb-30">

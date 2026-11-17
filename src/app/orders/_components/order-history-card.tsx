@@ -46,7 +46,7 @@ export function OrderHistoryCard({ order }: OrderHistoryCardProps) {
             <div className="absolute inset-0 bg-linear-to-b from-gray-200/10 to-black/5 z-10 pointer-events-none" />
             <Image
               className="object-contain p-2 group-hover:scale-110 transition-transform duration-300"
-              src={`/${order.orderItem[0]}` || ""}
+              src={`/${order.orderItem[0].product.image}`}
               alt=""
               fill
               sizes="80px"
